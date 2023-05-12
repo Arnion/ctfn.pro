@@ -1,0 +1,22 @@
+<?php
+return [
+	'adminEmail' => '',
+	'platform' => '',
+	'adminName' => '',
+	'senderEmail' => '',
+	'senderName' => 'NFT Certificates in Education',
+	'site' => '',
+	'alert' => true,
+	'disabledsite' => true,
+	'pagination' => 30,
+	'postman_ip' => '',
+	'postman_passwd' => '',
+	'postman_login' => '',
+	'postman_domain' => '',
+    'user.passwordResetTokenExpire' => 3600,
+	'user.passwordMinLength' => 8,
+	'homeUrl' => '',
+	'apiUrl' => '',
+	'adminUrl' => '',
+	'cert_salt' => '',
+];
