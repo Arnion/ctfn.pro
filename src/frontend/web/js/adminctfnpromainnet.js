@@ -4,7 +4,7 @@
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.adminCtfnMainnet = {}));
 }(this, (function (exports) { 'use strict';
     //MAINNET
-    exports.CONTRACT_ADDRESS = "0xB7c2f76202afe44Aa320F02a5577F9aF0D6D1020";
+    exports.CONTRACT_ADDRESS = "";
     exports.CONTRACT_ADMIN = "";
     exports.DEPLOY_SCHOOL_PRICE = "0.01";
     exports.MINT_PRICE = "0.0003";
