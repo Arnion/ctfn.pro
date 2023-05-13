@@ -25,7 +25,7 @@ class SchoolToken
 	const NETWORK_TYPE_MAINNET = 'mainnet';
 	const NETWORK_TYPE_TESTNET = 'testnet';
 
-	const OPENSEA_API_KEY = '0d89d7ba819442a8b918a5845c5cc455'; // until 2024 | np@sheremetev.info
+	const OPENSEA_API_KEY = ''; // until 2024 | np@sheremetev.info
 	
 	const OPENSEA_API_URI_MAINNET = 'https://api.opensea.io/api/v1/';
 	const OPENSEA_API_URI_TESTNET = 'https://testnets-api.opensea.io/api/v1/';
@@ -45,59 +45,7 @@ class SchoolToken
 	}
 
 
-	public static function requestOpenseaApi($type = self::NETWORK_TYPE_MAINNET, $params = [], $scopeProfiles = false) {
-		
-		$url = '';
-		$query = '?';
-		$sub_query = '';
-
-		if ($type == self::NETWORK_TYPE_MAINNET) {
-			$url = self::OPENSEA_API_URI_MAINNET . 'assets';
-		} else if ($type == self::NETWORK_TYPE_TESTNET) {
-			$url = self::OPENSEA_API_URI_TESTNET . 'assets';
-		} else {
-			return ['error'=> 1, 'message'=>'wrong type'];
-		}
-		
-
-		if (!empty($params)) {
-			$query .= http_build_query($params);
-		} else {
-			return ['error'=> 1, 'message'=>'params is empty'];
-		}
-
-		if ($scopeProfiles) {
-
-			$columnData = [];
-			$column_to_find = '';
-			
-			if ($type == self::NETWORK_TYPE_MAINNET) {
-				$column_to_find = 'school_nft_address_mainnet';
-			}
-
-			if ($type == self::NETWORK_TYPE_TESTNET) {
-				$column_to_find = 'school_nft_address_testnet';
-			}
-
-			if (!empty($column_to_find)) {
-				$columnData = Yii::$app->db->createCommand("SELECT $column_to_find FROM {{%clients}} WHERE $column_to_find != ''")
-					->queryColumn();
-			}
-
-			if (!empty($columnData)) {
-				foreach($columnData as $row) {
-					$sub_query .= '&asset_contract_addresses=' . $row;
-				}
-			}
-		}
-
-		if (!empty($sub_query)) {
-			$query .= $sub_query;
-		}
-		
-		$url .= $query;
-		
-		// die($url);
+	public static function getMetaData($url) {
 
 		$curl = curl_init();
 
@@ -105,24 +53,14 @@ class SchoolToken
 			CURLOPT_URL => $url,
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING => "",
-			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_MAXREDIRS => 5,
 			CURLOPT_TIMEOUT => 30,
 			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 			CURLOPT_CUSTOMREQUEST => "GET",			
+			CURLOPT_HTTPHEADER => [
+				"accept: application/json"
+			],			
 		]);
-
-		if ($type == self::NETWORK_TYPE_MAINNET) {
-			curl_setopt($curl, CURLOPT_HTTPHEADER, [
-				"X-API-KEY: " . self::OPENSEA_API_KEY,
-				"accept: application/json"
-			]);
-		}
-
-		if ($type == self::NETWORK_TYPE_TESTNET) {
-			curl_setopt($curl, CURLOPT_HTTPHEADER, [
-				"accept: application/json"
-			]);
-		}
 
 		$response = curl_exec($curl);
 		$err = curl_error($curl);
@@ -130,9 +68,9 @@ class SchoolToken
 		curl_close($curl);
 
 		if ($err) {
-			return ['error'=> 1, 'message'=> "cURL Error #:" . $err];
+			return ['error'=> 1, 'message' => "cURL Error #:" . $err];
 		}
 
-		return ['error'=> 0, 'url' => $url, 'message'=> $response ];
+		return ['error'=> 0,'message' => 'Found', 'data' => json_decode($response, true) ];
 	}
 }
