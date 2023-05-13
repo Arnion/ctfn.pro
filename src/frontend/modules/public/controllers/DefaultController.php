@@ -18,6 +18,7 @@ use app\modules\public\components\PublicController;
 use frontend\components\SchoolToken;
 use common\models\Certificate;
 use app\modules\public\models\SearchCertificate;
+use app\modules\public\models\ViewContract;
 
 /**
  * Default controller for the `service` module
@@ -88,20 +89,25 @@ class DefaultController extends PublicController
 
 		$model = new ViewContract;
 
-		return $this->render('search_contract', [
+		if (Yii::$app->request->post()) {
+			$model->load(Yii::$app->request->post());
+		}
+
+		return $this->render('contract', [
 			'model' => $model,
 		]);
 	}
 
-	public function actionViewcontract($address, $tokenId) {
-
+	public function actionGetmetadata() {
+		header('Content-type: application/json');
 		$model = new ViewContract;
-
-		return $this->render('view_contract', [
-			'model' => $model,
-		]);
+		$data = [
+			'meta' => $model->getMetaData($_POST['metaURI'] ?? ''),
+			'params' => $model->clearMetaParams($_POST['params'] ?? '')
+		];
+		exit(json_encode($data));
 	}
-	
+
 	/**
 	 * action address
 	 */
@@ -116,5 +122,25 @@ class DefaultController extends PublicController
 		return $this->render('address', [
 			'model' => $model,
 		]);
+    }
+	
+    public function actionMeta($id, $hash, $type)
+    {
+		
+		if (!Certificate::validateHashCertificate($id, $hash)) {
+			throw new HttpException(404 , Yii::t('Error', '404'));
+		}
+		
+		$model = new CertificateWork;
+		$certificate = CertificateWork::findCertificate($id);
+		
+		if ($certificate == null) {
+			throw new HttpException(500 , Yii::t('Error', '500'));
+		}
+
+		$model->setAttributes($certificate->attributes, false);
+		$meta = $model->getMetaData($type);
+		
+		exit(json_encode($meta));
     }
 }

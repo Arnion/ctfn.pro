@@ -18,10 +18,6 @@ use yii\helpers\Url;
  */
 class PublicPage extends Model
 {
-	public $search_address;
-	public $search_contract;
-	public $search_token_id;
-
 	const SCENARIO_PAGE_CONTRACT = 'contract';
 	const SCENARIO_PAGE_ADDRESS = 'address';
     /**

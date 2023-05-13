@@ -9,29 +9,14 @@ use mihaildev\ckeditor\CKEditor;
 use app\modules\certificate\CertificateModule;
 use frontend\components\SchoolToken;
 
-$client = Clients::findUserId();
-
-$chainId = SchoolToken::BNB_TESTNET_CHAIN_ID;
-$contractAddress = $client->school_nft_address_testnet;
-$jsAdminObj = SchoolToken::JS_ADMIN_OBJECT_TESTNET;
-
 
 $this->registerJsFile('/js/ethers.umd.min.js', ['position' => yii\web\View::POS_END]);
 $this->registerJsFile('/js/schoolToken.js', ['position' => yii\web\View::POS_END]);
 
-if (!empty($client->is_mainnet)) {
-	$this->registerJsFile('/js/adminctfnpromainnet.js', ['position' => yii\web\View::POS_END]);
-	$jsAdminObj = SchoolToken::JS_ADMIN_OBJECT_MAINNET;
-	$chainId = SchoolToken::BNB_MAINNET_CHAIN_ID;
-	$contractAddress = $client->school_nft_address_mainnet;
-} else {
-	$this->registerJsFile('/js/adminctfnprotestnet.js', ['position' => yii\web\View::POS_END]);
-}
-
 $this->registerJs('
 	jQuery(document).ready(function($) {
 		$("#cf-modal-load").on("click", "[data-dismiss=\"modal\"]", function() {
-			$("#cf-modal-load").toggle();
+			resetModal();
 		});
 
 		SearchButton();
@@ -39,42 +24,285 @@ $this->registerJs('
 
 	let stateObj = {
 		loading: false,
-		reloadTokenBlock: false
+		reloadTokenBlock: false,
+		ctfnProData: {},
+		knownError: false,
 	};
+
+	function showModal(className, title, body) {
+
+		let modalElement = $("#cf-modal-load");
+		let modalTitleElement = $(modalElement).find(".modal-title");
+		let modalContentElement = $(modalElement).find(".modal-content");
+		let modalBodyElement = $(modalElement).find(".modal-body"); 
+
+		$(modalTitleElement).text("");
+		$(modalTitleElement).removeClass();
+		$(modalTitleElement).addClass("modal-title big-text-overflow");
+
+		$(modalBodyElement).text("");
+		$(modalBodyElement).removeClass();
+		$(modalBodyElement).addClass("modal-body big-text-overflow");
+		
+		$(modalContentElement).removeClass();
+		$(modalContentElement).addClass("modal-content");
+		
+		let alertClassName = "alert alert-light";
+		
+		if (className == "primary") {
+			alertClassName = "alert alert-primary";
+			$(modalTitleElement).addClass("text-white");
+			$(modalBodyElement).addClass("text-white");
+		} else if (className == "secondary") {
+			alertClassName = "alert alert-secondary";
+		} else if (className == "success") {
+			alertClassName = "alert alert-success";
+		} else if (className == "danger") {
+			alertClassName = "alert alert-danger";
+		} else if (className == "warning") {
+			alertClassName = "alert alert-warning";
+		} else if (className == "info") {
+			alertClassName = "alert alert-info";
+		} else if (className == "light") {
+			alertClassName = "alert alert-light";
+		} else if (className == "dark") {
+			alertClassName = "alert alert-dark";
+		}
+		
+		$(modalContentElement).addClass(alertClassName);
+
+		$(modalTitleElement).text(title);
+		$(modalBodyElement).text(body);
+
+		$("#cf-modal-load").toggle();
+	}
+
+	function resetModal() {
+
+		let modalElement = $("#cf-modal-load");
+		let modalTitleElement = $(modalElement).find(".modal-title");
+		let modalContentElement = $(modalElement).find(".modal-content");
+		let modalBodyElement = $(modalElement).find(".modal-body"); 
+
+		$(modalTitleElement).text("");
+		$(modalTitleElement).removeClass();
+		$(modalTitleElement).addClass("modal-title");
+
+		$(modalBodyElement).text("");
+		$(modalBodyElement).removeClass();
+		$(modalBodyElement).addClass("modal-body");
+		
+		$(modalContentElement).removeClass();
+		$(modalContentElement).addClass("modal-content");
+
+	}
 
 	function SearchButton() {
 		$("#searchToken").off("click");
 		$("#searchToken").on("click", async function() {
 
+			$("#certificateNotFound").fadeOut();
+			$("#certificateInfo").fadeOut();
+
+			renderReset();
+
+			stateObj.ctfnProData = {};
+			stateObj.knownError = false;
+
+			let contractAddress = $("#viewcontract-search_contract").val().trim();
+			let tokenId = parseInt($("#viewcontract-search_token_id").val().trim());
+			let is_mainnet = $("#viewcontract-is_mainnet").prop("checked");
+
+			console.log("contractAddress", contractAddress);
+			console.log("tokenId", tokenId);
+			console.log("is_mainnet", is_mainnet);
+
+			if (contractAddress.length == 0 || contractAddress == undefined) {
+				showModal("danger", "' . Yii::t('Frontend', 'Error') . '", "' . Yii::t('Frontend', 'Wrong contract address') . '");
+				return false;
+			}
+
+			if (!ethers.utils.isAddress(contractAddress)) {
+				showModal("danger", "' . Yii::t('Frontend', 'Error') . '", "' . Yii::t('Frontend', 'Wrong contract address') . '");
+				return false;
+			}
+
+			if (isNaN(tokenId) || tokenId == undefined) {
+				showModal("danger", "' . Yii::t('Frontend', 'Error') . '", "' . Yii::t('Frontend', 'Wrong token Id') . '");
+				return false;
+			}
+
+			if (isNaN(is_mainnet) || is_mainnet == undefined) {
+				showModal("danger", "' . Yii::t('Frontend', 'Error') . '", "' . Yii::t('Frontend', 'Reload page') . '");
+				return false;
+			}
+
 			if (stateObj.loading) {
 				return false;
 			}
+
 			stateObj.loading = true;
 			
 			$(this).removeClass("disabled");
 			$(this).addClass("disabled");
 			
-			$("#mintTokenSpinner").show();
+			$("#searchTokenSpinner").show();
+
+			let result = await processSearchToken(contractAddress, tokenId, is_mainnet);
+
+			if (result) {
+				
+				renderData(stateObj.ctfnProData);
+				
+			} else {
+
+				$("#certificateInfo").fadeOut();
+				$("#certificateNotFound").fadeIn();
+			}
 			
-			let result = await processMintToken();
+			$("#searchTokenSpinner").hide();
 			
-			$("#mintTokenSpinner").hide();
 			$(this).removeClass("disabled");
 			stateObj.loading = false;
 		});
 	}
 	
-	async function processMintToken() {
+	async function processSearchToken(contractAddress, tokenId, is_mainnet) {
+		
+		let paramsObj = {};
+
+		
 		try {
-			return await mintToken(studentAddress, newTokenUri);
+
+			let metaURI = await searchToken(contractAddress, tokenId, is_mainnet);
+			console.log("metaURI", metaURI);
+
+			let ownerAddress = await getOwnerOf(contractAddress, tokenId, is_mainnet);
+			console.log("ownerAddress", ownerAddress);
+			
+			paramsObj.contractAddress = contractAddress;
+			paramsObj.tokenId = tokenId;
+			paramsObj.ownerAddress = ownerAddress;
+			paramsObj.is_mainnet = is_mainnet;
+			
+			stateObj.ctfnProData = await getCtfnProData(metaURI, paramsObj);
+			
+			return true;
+
 		} catch(error) {
+			
 			console.log(error);
-			alert(error);
+
+			if (stateObj.knownError) {
+				showModal("danger", "' . Yii::t('Frontend', 'Error') . '", error);
+			} else {
+				return false;
+			}
 		}
+		
 		return false;
 	}
 
-	async function mintToken(studentAddress, newTokenUri) {
+	function renderData(ctfnProData) {
+		console.log("renderData", ctfnProData);
+
+		if (ctfnProData.meta.error || ctfnProData.params.error || !ctfnProData.meta.data || !ctfnProData.params.data) {
+			
+			$("#certificateInfo").fadeOut();
+			$("#certificateNotFound").fadeIn();
+
+			return false;
+		
+		}
+
+		if ("image" in ctfnProData.meta.data && ctfnProData.meta.data.image.length > 0) {
+			$("#certificateImg").prop("src", ctfnProData.meta.data.image);
+			$("#certificateImgBlock").show();
+		}
+
+		if ("is_mainnet" in ctfnProData.params.data) {
+			if (ctfnProData.params.data.is_mainnet) {
+				$(".network_type").text("Mainnet");
+			} else {
+				$(".network_type").text("Testnet");
+			}
+		}
+
+		if ("ctfn" in ctfnProData.params.data) {
+			$("#ctfnBlock").show();
+			$("#certificateCourse").text(ctfnProData.params.data.ctfn.course);
+			$("#certificateSchool").text(ctfnProData.params.data.ctfn.schoolName);
+		}
+
+		if ("ctfn" in ctfnProData.params.data) {
+			$("#ctfnBlock").show();
+			$("#certificateCourse").text(ctfnProData.params.data.ctfn.course);
+			$("#certificateSchool").text(ctfnProData.params.data.ctfn.schoolName);
+			$("#certificateName").parent().hide();
+		} else {
+			if ("name" in ctfnProData.meta.data) {
+				$("#ctfnBlock").show();
+				$("#certificateName").text(ctfnProData.meta.data.name);
+				$("#certificateCourse").parent().hide();
+				$("#certificateSchool").parent().hide();
+			}
+		}
+
+		if ("tokenId" in ctfnProData.params.data) {
+			$("#certificateTokenIdBlock").show();
+			$("#certificateTokenId").text(ctfnProData.params.data.tokenId);
+		}
+
+		if ("contractAddress" in ctfnProData.params.data) {
+			$("#certificateContractBlock").show();
+			$("#certificateContract").text(ctfnProData.params.data.contractAddress);
+		}
+
+		if ("contractAddress" in ctfnProData.params.data) {
+			$("#certificateContractBlock").show();
+			$("#certificateContract").text(ctfnProData.params.data.contractAddress);
+		}
+
+		if ("description" in ctfnProData.meta.data && ctfnProData.meta.data.description.length > 0) {
+			$("#certificateDescriptionBlock").show();
+			$("#certificateDescription").text(ctfnProData.meta.data.description);
+		}
+
+		if ("ownerAddress" in ctfnProData.params.data && ctfnProData.params.data.ownerAddress.length > 0) {
+			$("#certificateOwnerBlock").show();
+			$("#certificateOwner").text(ctfnProData.params.data.ownerAddress);
+		}
+
+		$("#certificateNotFound").fadeOut();
+		$("#certificateInfo").fadeIn();
+
+	}
+
+	function renderReset() {
+		$("#certificateImgBlock").hide();
+		// $("#certificateImg").prop("src", "/images/item-detail-1.jpg");
+		$("#certificateImg").prop("src", "");
+		$("#ctfnBlock").hide();
+		$("#certificateName").text("");
+		$("#certificateCourse").text("");
+		$("#certificateSchool").text("");
+		$("#certificateTokenIdBlock").hide();
+		$("#certificateTokenId").text("");
+		$("#certificateContractBlock").hide();
+		$("#certificateContract").text("");
+		$("#certificateDescriptionBlock").hide();
+		$("#certificateDescription").text("");
+		$("#certificateOwnerBlock").hide();
+		$("#certificateOwner").text("");
+		$(".network_type").text("");
+
+
+		$("#certificateName").parent().show();
+		$("#certificateCourse").parent().show();
+		$("#certificateSchool").parent().show();
+	}
+
+	async function getOwnerOf(contractAddress, tokenId, is_mainnet) {
 		
 		const provider = new ethers.providers.Web3Provider(window.ethereum); //id
 		const listAccounts = await provider.send("eth_requestAccounts", []);
@@ -86,70 +314,60 @@ $this->registerJs('
 		let chainLabels = [];
 		chainLabels[97] = "BNB Testnet";
 		chainLabels[56] = "BNB Mainnet";
-
-		const adminObj = ' . $jsAdminObj . ';
-		const contractAddress = "'. $contractAddress .'";
-		const BNBChainId = '. $chainId .';
 		
+		let BNBChainId = 97;
+		if (is_mainnet) {
+			BNBChainId = 56;
+		}
+
 		if (chainId != BNBChainId) {
+			stateObj.knownError = true;
 			throw "'.Yii::t('Frontend', 'Error! Change network to ').'" + chainLabels[BNBChainId] + ". (ChainID = " + BNBChainId + ")";
 		}
 
-		if (!ethers.utils.isAddress(studentAddress)) {
-			throw "'.Yii::t('Frontend', 'Error! User address is invalid ').'";
+		const contract = await new ethers.Contract(contractAddress, schoolToken.CONTRACT_ABI, signer);
+		return await contract.ownerOf(tokenId);
+	}
+
+	async function searchToken(contractAddress, tokenId, is_mainnet) {
+		
+		const provider = new ethers.providers.Web3Provider(window.ethereum); //id
+		const listAccounts = await provider.send("eth_requestAccounts", []);
+		const signer = await provider.getSigner(listAccounts[0]);
+		const signer_address = await signer.getAddress();
+		
+		const {chainId} = await provider.getNetwork();
+
+		let chainLabels = [];
+		chainLabels[97] = "BNB Testnet";
+		chainLabels[56] = "BNB Mainnet";
+		
+		let BNBChainId = 97;
+		if (is_mainnet) {
+			BNBChainId = 56;
+		}
+
+		if (chainId != BNBChainId) {
+			stateObj.knownError = true;
+			throw "'.Yii::t('Frontend', 'Error! Change network to ').'" + chainLabels[BNBChainId] + ". (ChainID = " + BNBChainId + ")";
 		}
 
 		const contract = await new ethers.Contract(contractAddress, schoolToken.CONTRACT_ABI, signer);
-		
-		const price = await getMintPrice();
-		const tx = await contract.safeMint(studentAddress, newTokenUri, {value: price, gasLimit: schoolToken.BASE_GAS_LIMIT});
-
-		let result = await tx.wait();
-		console.log("transaction", result);
-		
-		const [Transfer] = result.events;
-		console.log("Transfer", Transfer);
-
-		await SaveMintData(result.from, Transfer.args);	
-
-		if (stateObj.reloadTokenBlock) {
-			stateObj.reloadTokenBlock = false;
-			await reloadTokenBlock();
-			createTokenButton();
-		}
+		return await contract.tokenURI(tokenId);
 	}
 
-	async function SaveMintData(mintedby, Transfer) {
-		stateObj.reloadTokenBlock = false;
-
-		let tokenId = parseInt(Transfer[2]._hex);
-		console.log("tokenId", tokenId);
-
-		await $.ajax({
-			type: "post",
-			data: {
-				YII_CSRF_TOKEN: "' . Yii::$app->getRequest()->getCsrfToken() . '",
-				mintedby: mintedby,
-				tokenId: tokenId,
+	async function getMetaData(metaURI) {
+		let response = await fetch(metaURI, {
+			method: "GET",
+			headers: {
+				"Accept": "application/json",
 			},
-			success: function(response) {
-				try {
-					let result = JSON.parse(response);
-					if (result.error) {
-						console.log(result.message);
-					} else {
-						stateObj.reloadTokenBlock = true;
-					}
-				} catch (error) {
-					console.log(error);
-				}
-			}
 		});
+		return await response.json();
 	}
 
 
 	async function getMintPrice() {
-		const adminObj = '. $jsAdminObj .';
 		const provider = new ethers.providers.Web3Provider(window.ethereum); //id
 		const listAccounts = await provider.send("eth_requestAccounts", []);
 		const signer = await provider.getSigner(listAccounts[0]);
@@ -159,23 +377,17 @@ $this->registerJs('
 		return await contract.safeMintPrice();
 	}
 
-	async function reloadTokenBlock() {
-		
-		$("#reloadTokenContent").fadeOut();
-		$("#reloadTokenSpinner").fadeIn();
+	async function getCtfnProData(metaURI, paramsObj) {
 
-		await $.ajax({
+		return await $.ajax({
+			url: "' . Url::toRoute('/public/getmetadata') . '",
 			type: "post",
 			data: {
-				YII_CSRF_TOKEN: "' . Yii::$app->getRequest()->getCsrfToken() . '"
+				YII_CSRF_TOKEN: "' . Yii::$app->getRequest()->getCsrfToken() . '",
+				metaURI: metaURI,
+				params: JSON.stringify(paramsObj),
 			},
-			success: function(response) {
-				$("#reloadTokenContent").html(response);
-			}
 		});
-
-		$("#reloadTokenSpinner").fadeOut();
-		$("#reloadTokenContent").fadeIn();
 	}
 
 
@@ -219,6 +431,12 @@ $this->registerCss('
 		top:119px;
 		color:#7b7b7b;
 	}
+	.display-table {
+		display: table;
+	}
+	.big-text-overflow {
+		overflow-wrap: break-word;
+	}
 ');
 ?>
 
@@ -229,8 +447,8 @@ $this->registerCss('
 		<div class="row mt-5 justify-content-center">
 			<div class="col-12">
 				<div class="title-heading text-center">
-					<h5 class="heading fw-semibold sub-heading text-white title-dark"><?=Yii::t('Menu', 'Token address')?></h5>
-					<p class="text-white-50 para-desc mx-auto mb-0"><?=Yii::t('Frontend', 'Education organization token addresss')?></p>
+					<h5 class="heading fw-semibold sub-heading text-white title-dark"><?=Yii::t('Menu', 'Contract address')?></h5>
+					<p class="text-white-50 para-desc mx-auto mb-0"><?=Yii::t('Frontend', 'Education organization contract address')?></p>
 				</div>
 			</div><!--end col-->
 		</div><!--end row-->
@@ -246,78 +464,7 @@ $this->registerCss('
 </div>
 <!-- End Home -->
 
-<!-- Start -->
-<section class="section d-none">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-3 col-md-4 order-2 order-md-1 mt-4 pt-2 mt-sm-0 pt-sm-0">
-				<div class="card creators creator-primary rounded-md shadow overflow-hidden sticky-bar">
-					
-					<?php if (empty($client->school_logo)) { ?>
-
-						<div class="py-5" style="background: url('/upload/school_logo_default.jpg');"></div>
-					
-					<?php } else { ?>
-					
-						<div class="py-5" style="background: url('/upload/client/<?=md5($client->id)?>/<?=$client->school_logo?>');"></div>
-					
-					<?php } ?>
-					
-					
-					<div class="position-relative mt-n5">
-						
-						<?php if (empty($client->image)) { ?>
-					
-							<img src="/upload/default.jpg" class="avatar avatar-md-md rounded-pill shadow-sm bg-light img-thumbnail mx-auto d-block" id="client-image" alt="">
-							
-						<?php } else { ?>
-							
-							<img src="/upload/client/<?=md5($client->id)?>/<?=$client->image?>" class="avatar avatar-md-md rounded-pill shadow-sm bg-light img-thumbnail mx-auto d-block" id="client-image" alt="">
-							
-						<?php } ?>
-				
-						<div class="content text-center pt-2 p-4">
-							<h6 class="mb-0"><?=$client->name?> <?=$client->surname?></h6>
-							<small class="text-muted"><?=$client->identify_name?></small>
-
-							<ul class="list-unstyled mb-0 mt-3" id="navmenu-nav">
-								<li class="px-0">
-									<a href="/profile/view" class="d-flex align-items-center text-dark">
-										<span class="fs-6 mb-0"><i class="uil uil-user"></i></span>
-										<small class="d-block fw-semibold mb-0 ms-2"><?=Yii::t('Menu', 'Profile View')?></small>
-									</a>
-								</li>
-								<li class="px-0 mt-2">
-									<a href="/logout" class="d-flex align-items-center text-dark">
-										<span class="fs-6 mb-0"><i class="uil uil-sign-in-alt"></i></span>
-										<small class="d-block fw-semibold mb-0 ms-2"><?=Yii::t('Menu', 'Logout')?></small>
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div><!--end col-->
-
-			<div class="col-lg-9 col-md-8 order-1 order-md-2">
-			
-				<?=Alert::widget()?>
-				<div class="result-img-load"></div>
-			
-				<div class="card rounded-md shadow p-4">		
-					<div class="ms-lg-4">
-					
-						
-						
-					</div>	
-				</div>
-			</div><!--end col-->
-		</div><!--end row-->
-	</div><!--end container-->
-</section><!--end section-->
-<!-- End -->
-
-<section class="section">
+<section class="section pb-5">
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-lg-7 col-12">
@@ -328,8 +475,8 @@ $this->registerCss('
 						</div>
 						<div class="col-12">
 						<?php $form = ActiveForm::begin([
-								'id' => 'address-search',
-								'class' => 'address-search',
+								'id' => 'contract-search',
+								'class' => 'contract-search',
 							]); ?>
 
 								<div class="row">
@@ -337,25 +484,34 @@ $this->registerCss('
 									<div class="col-12 mb-4">
 											
 										<?=$form->field($model, 'search_contract', [
-											'template' => '<label for="publicpage-search_contract" class="form-label fw-bold">'.Yii::t('Frontend', 'Token address').' <i class="fa fa-asterisk text-danger"></i></label>{input}{error}'
-										])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Frontend', 'Education organization token address on bnb chain'), 'autocomplete' => 'off']) ?>
+											'template' => '<label for="viewcontract-search_contract" class="form-label fw-bold">'.Yii::t('Frontend', 'Education organization token address on bnb chain').' <i class="fa fa-asterisk text-danger"></i></label>{input}{error}'
+										])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Frontend', 'Token address'), 'autocomplete' => 'off']) ?>
 										
 									</div><!--end col-->
 
 									<div class="col-12 mb-4">
 											
 										<?=$form->field($model, 'search_token_id', [
-											'template' => '<label for="publicpage-search_token_id" class="form-label fw-bold">'.Yii::t('Frontend', 'Token Id').' <i class="fa fa-asterisk text-danger"></i></label>{input}{error}'
+											'template' => '<label for="viewcontract-search_token_id" class="form-label fw-bold">'.Yii::t('Frontend', 'Token Id').' <i class="fa fa-asterisk text-danger"></i></label>{input}{error}'
 										])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Frontend', 'Token id'), 'autocomplete' => 'off']) ?>
+										
+									</div><!--end col-->
+
+									<div class="col-12 mb-4">
+											
+										<?=$form->field($model, 'is_mainnet', [
+											'template' => '<label for="viewcontract-is_mainnet" class="form-label fw-bold">'.Yii::t('Frontend', 'Is Mainnet').' <i class="fa fa-asterisk text-danger"></i></label>{input}{error}'
+										])->checkBox() ?>
 										
 									</div><!--end col-->	
 									
 								</div>
 
 								<div class="col-lg-12">
-											
-									<?= Html::Button(Yii::t('Form', 'Search'), ['id'=>'submit-form', 'class' => 'btn btn-primary', 'name' => 'send']) ?>
-
+									<button type="button" id="searchToken" class="btn btn-primary">
+										<span id="searchTokenSpinner" class="spinner-grow spinner-grow-sm me-2" style="display:none;" role="status" aria-hidden="true"></span>
+											<?php echo(Yii::t('Frontend', 'Search')) ?>
+									</button>
 								</div><!--end col-->
 										
 					
@@ -366,69 +522,80 @@ $this->registerCss('
 			</div><!--end col-->
 		</div><!--end row-->
 	</div><!--end container-->
+</section>
 
-	<div class="container mt-100 mt-6" >
-		<div class="row justify-content-center">
-			<div class="col-12 col-lg-10">
-				<ul class="nav nav-tabs border-bottom" id="vwTab" role="tablist">
-					<li class="nav-item" role="presentation">
-						<button class="nav-link active" id="cert-tab" data-bs-toggle="tab" data-bs-target="#cert-item" type="button" role="tab" aria-controls="cert-item" aria-selected="true">Certificates</button>
-					</li>
-				</ul>
-				<div id="reloadContent" class="row justify-content-center">
-					<div class="col">
-						<div class="card nft-items nft-primary rounded-md shadow overflow-hidden mb-1 p-3">
-							<div class="d-flex justify-content-between">
-								<div class="img-group">
-									<a href="/certificate?id=11&amp;hash=a9c4d290cf2dab5c7725f6e411136e61" class="user-avatar" data-bs-toggle="tooltip" data-bs-placement="top" target="_blank" aria-label="Certificate PNG" data-bs-original-title="Certificate PNG">
-										<i class="fa fa-file-image-o avatar avatar-sm-sm cert-icon" aria-hidden="true"></i>
-									</a>
-								</div>					
-								<span>
-									<a href="javascript:void(0)" class="icon cert-icon cert-icon-disable" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Mainnet" data-bs-original-title="Mainnet"><i class="fa fa-wifi" aria-hidden="true"></i></a>
-									<a href="https://testnet.bscscan.com/token/0xb37a1F249786eeE8422D3A061C0E3a605cbd9d65?a=31" class="icon cert-icon cert-icon-disable" data-bs-toggle="tooltip" data-bs-placement="top" target="_blank" aria-label="Testnet" data-bs-original-title="Testnet"><i class="fa fa-wifi" aria-hidden="true"></i></a>
-								</span>
-							</div> 
-							<div class="nft-image rounded-md position-relative overflow-hidden cert-block-text">
-								<a class="img-link" href="/certificate?id=11&amp;hash=a9c4d290cf2dab5c7725f6e411136e61" target="_blank"><img src="/upload/certificate/pr_certificate.png" class="img-fluid" alt="">
-									<div class="position-absolute cert-pos pos-1">
-										<div class="text-center">№ 11</div>
+
+
+<section id="certificateInfo" class="pb-5 pt-3 display-table w-100 mb-5" style="display:none">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div id="certificateImgBlock" class="sticky-bar">
+					<img id="certificateImg" src="" class="img-fluid rounded-md shadow" alt="">
+				</div>
+			</div>
+
+			<div class="col-md-6 mt-4 pt-2 mt-sm-0 pt-sm-0">
+				<div class="ms-lg-5">
+					<div id="ctfnBlock" class="title-heading">
+						<h4 class="h3 fw-bold "><?php echo(Yii::t('Frontend', 'Course') . ': ')?><span id="certificateCourse"></span></h4>
+						<h4 class="h3 fw-bold "><span id="certificateName"></span></h4>
+						<h6 class="fw-bold mb-0"><?php echo(Yii::t('Frontend', 'Education organization') . ': ') ?><span id="certificateSchool"></span></h6>
+					</div>
+
+					<div class="row mt-2 pt-2">
+						<div class="col-12">
+							<ul class="nav nav-tabs border-bottom" id="myTab" role="tablist">
+								<li class="nav-item" role="presentation">
+									<button class="nav-link active" id="detail-tab" data-bs-toggle="tab" data-bs-target="#detailItem" type="button" role="tab" aria-controls="detailItemMainnet" aria-selected="true"><span class="network_type"></span><?php echo(' ' . Yii::t('Frontend', 'details'))?></button>
+								</li>
+							</ul>
+
+							<div class="tab-content mt-4 pt-2" id="myTabContent">
+								<div class="tab-pane fade show active" id="detailItem" role="tabpanel" aria-labelledby="detail-tab">
+									<div class="row">
+										<div id="certificateTokenIdBlock" class="col-12">
+											<h6><span class="network_type"></span><?php echo(' ' . Yii::t('Frontend', 'token Id'))?></h6>
+											<h4 id="certificateTokenId" class="mb-0"></h4>
+										</div>
+										<div id="certificateContractBlock" class="col-12 mt-4 pt-2" style="word-break:break-all;overflow-wrap:break-word;">
+											<h6><span class="network_type"></span><?php echo(' ' . Yii::t('Frontend', 'contract address'))?></h6>
+											<h5 id="certificateContract" class="mb-0"></h5>
+										</div>
+										<div id="certificateDescriptionBlock" class="col-12 mt-4 pt-2">
+											<p id="certificateDescription" class="text-muted mb-0"></p>
+										</div>
+										<div id="certificateOwnerBlock" class="col-12 mt-4 pt-2" style="word-break:break-all;overflow-wrap:break-word;">
+											<h6><?php echo(Yii::t('Frontend', 'Owner'))?></h6>
+											<div class="creators creator-primary d-flex align-items-center">
+												<div class="ms-3">
+													<h6 class="mb-0"><span class="text-dark name" id="certificateOwner" style="cursor:pointer"></span></h6>
+												</div>
+											</div>
+										</div>
 									</div>
-									<div class="position-absolute cert-pos pos-2">
-										<div class="text-center">Nikita Pivikov</div>
-									</div>
-									<div class="position-absolute cert-pos pos-3">
-										<div class="text-center">Successfully passed (-la)</div>
-									</div>
-									<div class="position-absolute cert-pos pos-4">
-										<div class="text-center">cool</div>
-									</div>
-									<div class="position-absolute pos-5">
-										10.05.2023
-									</div>
-								</a>
-							</div>
-							<div class="card-body content position-relative p-0">
-								<div class="justify-content-between mt-2">
-									<div class="text-dark small">Nikita Pivikov</div>
-									<div class="text-dark small">cool</div>
 								</div>
-							</div>
 						</div>
 					</div>
 				</div>
-				
-				<div class="row justify-content-center">
+			</div><!--end col-->
+		</div><!--end row-->
+	</div><!--end container-->
+
+	<!--end container-->
+</section>
+<section>
+	<div id="certificateNotFound" class="container mb-5" style="display:none">
+		<div class="row justify-content-center">
+			<div class="col-12 mx-auto">
+				<div  class="row justify-content-center">
 					<div class="col-12">
-						<div class="container mt-100 mt-60">
+						<div class="container my-5">
 							<div class="row justify-content-center">
 								<div class="col-12">
 									<div class="section-title text-center">
-										<h6 class="text-muted fw-normal mb-3">Contact us and we'll get back to you as soon as we can.</h6>
-										<h4 class="title mb-4">Can't find your answer?</h4>
-										<div class="mt-4 pt-2">
-											<a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#contactform" class="btn btn-primary rounded-md">Help Center</a>
-										</div>
+										<h6 class="text-muted fw-normal mb-3"><?php echo(Yii::t('Frontend', 'Certificate not found'))?></h6>
+										<h4 class="title mb-4"><?php echo(Yii::t('Frontend', 'Try different token Id or token address'))?></h4>
 									</div>
 								</div><!--end col-->
 							</div><!--end row-->

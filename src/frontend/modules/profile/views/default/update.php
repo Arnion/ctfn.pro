@@ -52,6 +52,7 @@ $this->registerJs('
 		});
 		
 		$("#cf-modal-load").on("click", "[data-dismiss=\"modal\"]", function() {
+			resetModal();
 			$("#cf-modal-load").toggle();
 		});
 		
@@ -65,6 +66,73 @@ $this->registerJs('
 		createTokenButton();
 	});
 
+	function showModal(className, title, body) {
+
+		let modalElement = $("#cf-modal-load");
+		let modalTitleElement = $(modalElement).find(".modal-title");
+		let modalContentElement = $(modalElement).find(".modal-content");
+		let modalBodyElement = $(modalElement).find(".modal-body"); 
+
+		$(modalTitleElement).text("");
+		$(modalTitleElement).removeClass();
+		$(modalTitleElement).addClass("modal-title big-text-overflow");
+
+		$(modalBodyElement).text("");
+		$(modalBodyElement).removeClass();
+		$(modalBodyElement).addClass("modal-body big-text-overflow");
+		
+		$(modalContentElement).removeClass();
+		$(modalContentElement).addClass("modal-content");
+		
+		let alertClassName = "alert alert-light";
+		
+		if (className == "primary") {
+			alertClassName = "alert alert-primary";
+			$(modalTitleElement).addClass("text-white");
+			$(modalBodyElement).addClass("text-white");
+		} else if (className == "secondary") {
+			alertClassName = "alert alert-secondary";
+		} else if (className == "success") {
+			alertClassName = "alert alert-success";
+		} else if (className == "danger") {
+			alertClassName = "alert alert-danger";
+		} else if (className == "warning") {
+			alertClassName = "alert alert-warning";
+		} else if (className == "info") {
+			alertClassName = "alert alert-info";
+		} else if (className == "light") {
+			alertClassName = "alert alert-light";
+		} else if (className == "dark") {
+			alertClassName = "alert alert-dark";
+		}
+		
+		$(modalContentElement).addClass(alertClassName);
+
+		$(modalTitleElement).text(title);
+		$(modalBodyElement).text(body);
+
+		$("#cf-modal-load").toggle();
+	}
+
+	function resetModal() {
+
+		let modalElement = $("#cf-modal-load");
+		let modalTitleElement = $(modalElement).find(".modal-title");
+		let modalContentElement = $(modalElement).find(".modal-content");
+		let modalBodyElement = $(modalElement).find(".modal-body"); 
+
+		$(modalTitleElement).text("");
+		$(modalTitleElement).removeClass();
+		$(modalTitleElement).addClass("modal-title");
+
+		$(modalBodyElement).text("");
+		$(modalBodyElement).removeClass();
+		$(modalBodyElement).addClass("modal-body");
+		
+		$(modalContentElement).removeClass();
+		$(modalContentElement).addClass("modal-content");
+
+	}
 
 	let stateObj = {
 		loading: false,
@@ -99,7 +167,12 @@ $this->registerJs('
 			return await createSchoolToken(schoolName, schoolName.substring(0, 3));
 		} catch(error) {
 			console.log("Error ", error);
-			alert(error);
+
+			if (typeof error === "object") {
+				error = JSON.stringify(error);
+			}
+
+			showModal("danger", "' . Yii::t('Frontend', 'Error') . '", error);
 		}
 		return false;
 	}
@@ -142,10 +215,12 @@ $this->registerJs('
 		// console.log("transaction return", resultTX);
 
 		if (stateObj.reloadTokenBlock) {
+			showModal("success", "' . Yii::t('Frontend', 'Success') . '", "' . Yii::t('Frontend', 'Token is created') . '");
 			stateObj.reloadTokenBlock = false;
 			await reloadTokenBlock();
 			createTokenButton();
 		}
+
 	}
 
 	async function SaveCreateSchoolData(SchoolCreated) {
@@ -163,11 +238,13 @@ $this->registerJs('
 					let result = JSON.parse(response);
 					if (result.error) {
 						console.log(result.message);
+						showModal("danger", "' . Yii::t('Frontend', 'Error') . '", result.message);
 					} else {
 						stateObj.reloadTokenBlock = true;
 					}
 				} catch (error) {
 					console.log(error);
+					showModal("danger", "' . Yii::t('Frontend', 'Error') . '", error);
 				}
 			}
 		});
@@ -223,6 +300,10 @@ $this->registerCss('
 		height:18px;
 		width:19px;
 		margin:0;
+	}
+
+	.big-text-overflow {
+		overflow-wrap: break-word;
 	}
 ');
 ?>

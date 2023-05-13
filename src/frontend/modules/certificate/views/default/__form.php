@@ -31,7 +31,7 @@ if (!empty($client->is_mainnet)) {
 $this->registerJs('
 	jQuery(document).ready(function($) {
 		$("#cf-modal-load").on("click", "[data-dismiss=\"modal\"]", function() {
-			$("#cf-modal-load").toggle();
+			resetModal();
 		});
 
 		createTokenButton();
@@ -41,6 +41,74 @@ $this->registerJs('
 		loading: false,
 		reloadTokenBlock: false
 	};
+
+	function showModal(className, title, body) {
+
+		let modalElement = $("#cf-modal-load");
+		let modalTitleElement = $(modalElement).find(".modal-title");
+		let modalContentElement = $(modalElement).find(".modal-content");
+		let modalBodyElement = $(modalElement).find(".modal-body"); 
+
+		$(modalTitleElement).text("");
+		$(modalTitleElement).removeClass();
+		$(modalTitleElement).addClass("modal-title big-text-overflow");
+
+		$(modalBodyElement).text("");
+		$(modalBodyElement).removeClass();
+		$(modalBodyElement).addClass("modal-body big-text-overflow");
+		
+		$(modalContentElement).removeClass();
+		$(modalContentElement).addClass("modal-content");
+		
+		let alertClassName = "alert alert-light";
+		
+		if (className == "primary") {
+			alertClassName = "alert alert-primary";
+			$(modalTitleElement).addClass("text-white");
+			$(modalBodyElement).addClass("text-white");
+		} else if (className == "secondary") {
+			alertClassName = "alert alert-secondary";
+		} else if (className == "success") {
+			alertClassName = "alert alert-success";
+		} else if (className == "danger") {
+			alertClassName = "alert alert-danger";
+		} else if (className == "warning") {
+			alertClassName = "alert alert-warning";
+		} else if (className == "info") {
+			alertClassName = "alert alert-info";
+		} else if (className == "light") {
+			alertClassName = "alert alert-light";
+		} else if (className == "dark") {
+			alertClassName = "alert alert-dark";
+		}
+		
+		$(modalContentElement).addClass(alertClassName);
+
+		$(modalTitleElement).text(title);
+		$(modalBodyElement).text(body);
+
+		$("#cf-modal-load").toggle();
+	}
+
+	function resetModal() {
+
+		let modalElement = $("#cf-modal-load");
+		let modalTitleElement = $(modalElement).find(".modal-title");
+		let modalContentElement = $(modalElement).find(".modal-content");
+		let modalBodyElement = $(modalElement).find(".modal-body"); 
+
+		$(modalTitleElement).text("");
+		$(modalTitleElement).removeClass();
+		$(modalTitleElement).addClass("modal-title");
+
+		$(modalBodyElement).text("");
+		$(modalBodyElement).removeClass();
+		$(modalBodyElement).addClass("modal-body");
+		
+		$(modalContentElement).removeClass();
+		$(modalContentElement).addClass("modal-content");
+
+	}
 
 	function createTokenButton() {
 		$("#mintToken").off("click");
@@ -71,7 +139,12 @@ $this->registerJs('
 			return await mintToken(studentAddress, newTokenUri);
 		} catch(error) {
 			console.log(error);
-			alert(error);
+
+			if (typeof error === "object") {
+				error = JSON.stringify(error);
+			}
+
+			showModal("danger", "' . Yii::t('Frontend', 'Error') . '", error);
 		}
 		return false;
 	}
@@ -104,7 +177,7 @@ $this->registerJs('
 		const contract = await new ethers.Contract(contractAddress, schoolToken.CONTRACT_ABI, signer);
 		
 		const price = await getMintPrice();
-		const tx = await contract.safeMint(studentAddress, newTokenUri, {value: price, gasLimit: schoolToken.BASE_GAS_LIMIT});
+		const tx = await contract.safeMint(studentAddress, newTokenUri, {value: price, gasLimit: adminObj.BASE_GAS_LIMIT});
 
 		let result = await tx.wait();
 		console.log("transaction", result);
@@ -115,10 +188,12 @@ $this->registerJs('
 		await SaveMintData(result.from, Transfer.args);	
 
 		if (stateObj.reloadTokenBlock) {
+			showModal("success", "' . Yii::t('Frontend', 'Success') . '", "' . Yii::t('Frontend', 'Token is minted') . '");
 			stateObj.reloadTokenBlock = false;
 			await reloadTokenBlock();
 			createTokenButton();
 		}
+
 	}
 
 	async function SaveMintData(mintedby, Transfer) {
@@ -140,11 +215,13 @@ $this->registerJs('
 					let result = JSON.parse(response);
 					if (result.error) {
 						console.log(result.message);
+						showModal("danger", "' . Yii::t('Frontend', 'Error') . '", result.message);
 					} else {
 						stateObj.reloadTokenBlock = true;
 					}
 				} catch (error) {
 					console.log(error);
+					showModal("danger", "' . Yii::t('Frontend', 'Error') . '", error);
 				}
 			}
 		});
@@ -185,6 +262,12 @@ $this->registerJs('
 
 ', yii\web\View::POS_END);
 
+
+$this->registerCss('
+	.big-text-overflow {
+		overflow-wrap: break-word;
+	}
+');
 
 ?>
 

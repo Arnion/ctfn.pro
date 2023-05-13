@@ -64,10 +64,7 @@ class CertificateWork extends Model
 			[['minted_by_contract_mainnet', 'minted_by_contract_testnet', 'minted_by_address_mainnet', 'minted_by_address_testnet'], 'string', 'min' => 0, 'max' => 255, 'skipOnEmpty'=>true],
 			
 			[['date_minted_on_mainnet', 'date_minted_on_testnet', 'date_burned_on_mainnet', 'date_burned_on_testnet'], 'default', 'value' => '0000-00-00 00:00:00'], 
-			[['date_minted_on_mainnet', 'date_minted_on_testnet', 'date_burned_on_mainnet', 'date_burned_on_testnet'], 'safe'], 
-			
-			// FIX LATER
-			// [['date_minted_on_mainnet', 'date_minted_on_testnet', 'date_burned_on_mainnet', 'date_burned_on_testnet'], 'date', 'format' => 'php:Y-m-d H:i:s', 'skipOnEmpty'=>true], 
+			[['date_minted_on_mainnet', 'date_minted_on_testnet', 'date_burned_on_mainnet', 'date_burned_on_testnet'], 'safe'],
         ];
     }
 	
@@ -353,7 +350,7 @@ class CertificateWork extends Model
 			$type = self::TESTNET;
 		}
 
-		return Url::to(['/certificate/meta', 'id' => $this->id_certificate, 'hash' => Certificate::getHashCertificate($modelProfile->id, $this->id_certificate), 'type' => $type], 'https');
+		return Url::to(['/public/meta', 'id' => $this->id_certificate, 'hash' => Certificate::getHashCertificate($modelProfile->id, $this->id_certificate), 'type' => $type], 'https');
 	}
 	
 	public function getCertificateImageUrl() {

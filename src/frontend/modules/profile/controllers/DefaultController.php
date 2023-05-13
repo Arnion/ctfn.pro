@@ -14,6 +14,7 @@ use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use app\modules\profile\models\Profile;
 use app\modules\profile\components\ProfileController;
+use frontend\components\SchoolToken;
 
 /**
  * Default controller for the `service` module
@@ -131,8 +132,8 @@ class DefaultController extends ProfileController
 		$client = $this->loadModel();
 		$model->setAttributes($client->attributes, false);
 		
-		$owner_nft_address = $model::clearText($_POST['createdBy'] ?? '');
-		$school_nft_address = $model::clearText($_POST['schoolAddress'] ?? '');
+		$owner_nft_address = SchoolToken::clearText($_POST['createdBy'] ?? '');
+		$school_nft_address = SchoolToken::clearText($_POST['schoolAddress'] ?? '');
 
 		if (empty($owner_nft_address) || empty($school_nft_address)) {
 			exit(json_encode(['error' => 1, 'message' => 'Wrong address']));

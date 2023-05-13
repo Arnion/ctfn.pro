@@ -153,24 +153,7 @@ class DefaultController extends CertificateController
             'model' => $model,
         ]);
     }
-
-
-    public function actionMeta($id, $hash, $type)
-    {
-		
-		if (!Certificate::validateHashCertificate($id, $hash)) {
-			throw new HttpException(404 , Yii::t('Error', '404'));
-		}
-		
-		$model = new CertificateWork;
-		$certificate = $this->loadModel($id);
-		$model->setAttributes($certificate->attributes, false);
-		
-		$meta = $model->getMetaData($type);
-
-		exit(json_encode($meta));
-    }
-
+	
 	/**
      * loadModel
      */
