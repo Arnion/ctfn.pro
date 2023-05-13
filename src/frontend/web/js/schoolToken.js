@@ -3,7 +3,7 @@
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.schoolToken = {}));
 }(this, (function (exports) { 'use strict';
-    exports.BASE_GAS_LIMIT = 200000;
+    exports.BASE_GAS_LIMIT = 300000;
     exports.HISTORY_BLOCK_BUFFER = 4980;
     exports.CONTRACT_ABI = [
       {

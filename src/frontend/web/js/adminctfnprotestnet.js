@@ -8,7 +8,7 @@
     exports.CONTRACT_ADMIN = "";
     exports.DEPLOY_SCHOOL_PRICE = "0.01";
     exports.MINT_PRICE = "0.0003";
-    exports.BASE_GAS_LIMIT = 200000;
+    exports.BASE_GAS_LIMIT = 300000;
     exports.TOKEN_VALUE = "1.0";
     exports.HISTORY_BLOCK_BUFFER = 4980;
     exports.CHAIN_ID = 97;
