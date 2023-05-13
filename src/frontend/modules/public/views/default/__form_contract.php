@@ -218,6 +218,8 @@ $this->registerJs('
 		if ("image" in ctfnProData.meta.data && ctfnProData.meta.data.image.length > 0) {
 			$("#certificateImg").prop("src", ctfnProData.meta.data.image);
 			$("#certificateImgBlock").show();
+		} else {
+			$("#certificateImgBlock404").show();
 		}
 
 		if ("is_mainnet" in ctfnProData.params.data) {
@@ -280,6 +282,7 @@ $this->registerJs('
 
 	function renderReset() {
 		$("#certificateImgBlock").hide();
+		$("#certificateImgBlock404").hide();
 		// $("#certificateImg").prop("src", "/images/item-detail-1.jpg");
 		$("#certificateImg").prop("src", "");
 		$("#ctfnBlock").hide();
@@ -532,6 +535,16 @@ $this->registerCss('
 			<div class="col-md-6">
 				<div id="certificateImgBlock" class="sticky-bar">
 					<img id="certificateImg" src="" class="img-fluid rounded-md shadow" alt="">
+				</div>
+				<div id="certificateImgBlock404" class="sticky-bar">
+					<div class="card text-center border">
+						
+						<div class="card-body">
+							<h5 class="card-title"><?php echo(Yii::t('Frontend', 'Image not found'))?></h5>
+							<p class="card-text"><?php echo(Yii::t('Frontend', 'Metadata key: "image" not found or incorrect'))?>.</p>
+						</div>
+						
+					</div>
 				</div>
 			</div>
 
