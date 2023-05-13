@@ -84,10 +84,10 @@ if (!Yii::$app->user->isGuest) {
 			<!--Login button Start-->
 			<ul class="buy-button list-inline mb-0">
 				<li class="list-inline-item mb-0 me-1">
-					<a id="connectWallet">
+					<!-- <a id="connectWallet">
 						<span class="btn-icon-dark"><span class="btn btn-icon btn-pills btn-primary"><i class="uil uil-wallet fs-6"></i></span></span>
 						<span class="btn-icon-light"><span class="btn btn-icon btn-pills btn-light"><i class="uil uil-wallet fs-6"></i></span></span>
-					</a>
+					</a> -->
 				</li>
 				
 				<li class="list-inline-item mb-0"> 
@@ -123,17 +123,17 @@ if (!Yii::$app->user->isGuest) {
 				
 										<h6 class="text-dark fw-bold mb-0 ms-1"><?=$client->name?> <?=$client->surname?></h6>
 									</div>
-									<div class="mt-2">
+									<!-- <div class="mt-2">
 										<small class="text-start text-dark d-block fw-bold"><?=Yii::t('Frontend', 'Wallet')?>:</small>
 										<div class="d-flex justify-content-between align-items-center">
 											<small id="myPublicAddress" class="text-muted">0</small>
 											<a href="javascript:void(0);" class="text-primary"><span class="uil uil-copy"></span></a>
 										</div>
-									</div>
+									</div> -->
 									
-									<div class="mt-2">
+									<!-- <div class="mt-2">
 										<small class="text-dark"><?=Yii::t('Frontend', 'Balance')?>: <span class="text-primary fw-bold">0ETH</span></small>
-									</div>
+									</div> -->
 								</div>
 							</div>
 							<div class="mt-2">
@@ -162,7 +162,6 @@ if (!Yii::$app->user->isGuest) {
 						<ul class="submenu">
 							<li><a href="/public/address" class="sub-menu-item"> <?=Yii::t('Menu', 'Public Address')?></a></li>
 							<li><a href="/public/contract" class="sub-menu-item"> <?=Yii::t('Menu', 'Public Contract')?></a></li>
-							<li><a href="/public/view" class="sub-menu-item"> <?=Yii::t('Menu', 'Public View')?></a></li>
 						</ul>
 					</li>
 					<li><a href="/logout" class="sub-menu-item"><?=Yii::t('Menu', 'Logout')?></a></li>
@@ -179,7 +178,6 @@ if (!Yii::$app->user->isGuest) {
 						<ul class="submenu">
 							<li><a href="/public/address" class="sub-menu-item"> <?=Yii::t('Menu', 'Public Address')?></a></li>
 							<li><a href="/public/contract" class="sub-menu-item"> <?=Yii::t('Menu', 'Public Contract')?></a></li>
-							<li><a href="/public/view" class="sub-menu-item"> <?=Yii::t('Menu', 'Public View')?></a></li>
 						</ul>
 					</li>
 					<li><a href="/login" class="sub-menu-item"><?=Yii::t('Menu', 'Login')?></a></li>
