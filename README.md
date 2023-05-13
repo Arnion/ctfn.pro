@@ -8,7 +8,8 @@ CTFN.pro builds decentralized **on-chain reputation system**. It can be SocialFi
 
 CTFN is short for **C**ER**T**I**F**ICATIO**N**. If you read it from right to left, you get **NFT**C - NFT-certificate.
 
-##Features
+## Features
+
 Advantages of the platform that have already been implemented:
 
 + Creation of an NFT token for an educational organization
