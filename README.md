@@ -39,14 +39,14 @@ We plan to add the following features to the service:
   + Students will be able to customize their profile and gain premium status on the platform. Mark their profile as Open to Work so employers can find them
   + Employers (hr managers) will be able to contact students with Open to Work status if their skills (verified by certificates) are suitable for them
 
-Potential partners:
-Cryptoprojects:
-Cryptoprojects can issue certificates on learning their functionality. It is possible to create a smart contract that will issue cryptoproject tokens after issuing a certificate.
-Crypto-exchanges. For example, the crypto-exchange Binance may issue certificates after a user passes tests or achieves any results. 
-Educational organizations selling online courses
-CTFN.pro will become for them a convenient depository of certificates
-NFT certificate will increase your company's reputation by increasing their sales.
-LMS-platforms - a great opportunity to connect to many educational institutions
-Job search sites 
-Students can connect NFT certificates to their resume, making it more sheltered
-HR can look for employees whose knowledge is verified
+### Potential partners:
++ Cryptoprojects:
+  + Cryptoprojects can issue certificates on learning their functionality. It is possible to create a smart contract that will issue cryptoproject tokens after issuing a certificate.
+  + Crypto-exchanges. For example, the crypto-exchange Binance may issue certificates after a user passes tests or achieves any results. 
++ Educational organizations selling online courses
+  + CTFN.pro will become for them a convenient depository of certificates
+  + NFT certificate will increase your company's reputation by increasing their sales.
++ LMS-platforms - a great opportunity to connect to many educational institutions
++ Job search sites 
+  + Students can connect NFT certificates to their resume, making it more sheltered
+  + HR can look for employees whose knowledge is verified
