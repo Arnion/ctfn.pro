@@ -31,11 +31,11 @@ Tested certificate mapping in Metamask crypto wallets (after importing NFT) and 
 
 ## Roadmap
 We plan to add the following features to the service:
-+ A personal account of the student with the ability to hide the name from the certificates themselves, the management of the public portfolio. All certificates confirming a student's skills are collected in one place.
-+ 🎓 Certificate design customization: ability to upload and edit your own templates. Appearance animation.
-+ Integration with Google Spreadsheet, which will allow uploading lists to generate NFT certificates and speed up the graduation process. This feature can be used in conjunction with Google Forms, in which students can
-+ An API to communicate with popular LMS platforms that will allow certificates to be generated automatically after a student completes a course
-+ Running utility token on BNB Chain
++ 🎓A personal account of the student with the ability to hide the name from the certificates themselves, the management of the public portfolio. All certificates confirming a student's skills are collected in one place.
++ 🎨Certificate design customization: ability to upload and edit your own templates. Appearance animation.
++ 📊Integration with Google Spreadsheet, which will allow uploading lists to generate NFT certificates and speed up the graduation process. This feature can be used in conjunction with Google Forms, in which students can
++ 🤖An API to communicate with popular LMS platforms that will allow certificates to be generated automatically after a student completes a course
++ 💰Running utility token on BNB Chain
   + Organizations will be able to pay for certificates with a token and verify their site.
   + Students will be able to customize their profile and gain premium status on the platform. Mark their profile as Open to Work so employers can find them
   + Employers (hr managers) will be able to contact students with Open to Work status if their skills (verified by certificates) are suitable for them
