@@ -158,10 +158,10 @@ if (!Yii::$app->user->isGuest) {
 						</ul>
 					</li>
 					<li class="has-submenu parent-parent-menu-item">
-						<a href="javascript:void(0)"><?=Yii::t('Menu', 'Public')?></a><span class="menu-arrow"></span>
+						<a href="javascript:void(0)"><?=Yii::t('Menu', 'Search')?></a><span class="menu-arrow"></span>
 						<ul class="submenu">
-							<li><a href="/public/address" class="sub-menu-item"> <?=Yii::t('Menu', 'Public Address')?></a></li>
-							<li><a href="/public/contract" class="sub-menu-item"> <?=Yii::t('Menu', 'Public Contract')?></a></li>
+							<li><a href="/public/address" class="sub-menu-item"> <?=Yii::t('Menu', 'Search by student address')?></a></li>
+							<li><a href="/public/contract" class="sub-menu-item"> <?=Yii::t('Menu', 'Verify NFT-certificate')?></a></li>
 						</ul>
 					</li>
 					<li><a href="/logout" class="sub-menu-item"><?=Yii::t('Menu', 'Logout')?></a></li>
@@ -174,10 +174,10 @@ if (!Yii::$app->user->isGuest) {
 				<!-- Navigation Menu-->   
 				<ul class="navigation-menu nav-left nav-light">
 					<li class="has-submenu parent-parent-menu-item">
-						<a href="javascript:void(0)"><?=Yii::t('Menu', 'Public')?></a><span class="menu-arrow"></span>
+						<a href="javascript:void(0)"><?=Yii::t('Menu', 'Search')?></a><span class="menu-arrow"></span>
 						<ul class="submenu">
-							<li><a href="/public/address" class="sub-menu-item"> <?=Yii::t('Menu', 'Public Address')?></a></li>
-							<li><a href="/public/contract" class="sub-menu-item"> <?=Yii::t('Menu', 'Public Contract')?></a></li>
+							<li><a href="/public/address" class="sub-menu-item"> <?=Yii::t('Menu', 'Search by student address')?></a></li>
+							<li><a href="/public/contract" class="sub-menu-item"> <?=Yii::t('Menu', 'Verify NFT-certificate')?></a></li>
 						</ul>
 					</li>
 					<li><a href="/login" class="sub-menu-item"><?=Yii::t('Menu', 'Login')?></a></li>
