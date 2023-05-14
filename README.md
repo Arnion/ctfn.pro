@@ -21,7 +21,7 @@ The certificate is generated as a soul bound token to prevent it from being pass
 
 Features that are in development are listed in the Roadmap section
 
-## Technologies
+## 🛠️Technologies
 + BNB Chain as a blockchain to store organization tokens and certificates
 + Solidity as a language for writing smart contracts
 + Yii2 + MySQL for front-end development
