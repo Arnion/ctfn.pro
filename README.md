@@ -12,10 +12,10 @@ CTFN is short for **C**ER**T**I**F**ICATIO**N**. If you read it from right to le
 
 🎉 Advantages of the platform that have already been implemented:
 
-+ Creation of an NFT token for an educational organization
-+ Generation of name certificates on the service or via API (using JS)
-+ Viewing of all certificates issued by the organization on one page
-+ Search and verification of NFT certificates
++ 🎓 Creation of an NFT token for an educational organization
++ 🔍 Generation of name certificates on the service or via API (using JS)
++ 💻 Viewing of all certificates issued by the organization on one page
++ 👀 Search and verification of NFT certificates
 
 🔒 The certificate is generated as a soul bound token to prevent it from being passed on to third parties. The educational organization can post the address of the Metamask wallet to which the organization's token is generated on its official website, so that anyone can verify that the certificates are signed by it.
 
@@ -40,7 +40,7 @@ We plan to add the following features to the service:
   + Students will be able to customize their profile and gain premium status on the platform. Mark their profile as Open to Work so employers can find them
   + Employers (hr managers) will be able to contact students with Open to Work status if their skills (verified by certificates) are suitable for them
 
-### Potential partners:
+### 🤝 Potential partners:
 + 🔑 Cryptoprojects:
   + Cryptoprojects can issue certificates on learning their functionality. It is possible to create a smart contract that will issue cryptoproject tokens after issuing a certificate.
   + 💱 Crypto-exchanges. For example, the crypto-exchange Binance may issue certificates after a user passes tests or achieves any results. 
