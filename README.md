@@ -1,8 +1,8 @@
 # ctfn.pro
 
-**CTFN.PRO** is a service for generating **soul-bound NFT-certificates** that are stored on the BNB Chain blockchain. The certificate is signed by an educational organization and is transferred to the student’s crypto wallet.
+🔒 **CTFN.PRO** is a service for generating **soul-bound NFT-certificates** that are stored on the BNB Chain blockchain. The certificate is signed by an educational organization and is transferred to the student’s crypto wallet.
 
-Once the certificate is issued, it can be viewed on the CTFN.PRO service, in the student's digital wallet, and in transaction explorers on the BNB Chain blockchain.
+🌟 Once the certificate is issued, it can be viewed on the CTFN.PRO service, in the student's digital wallet, and in transaction explorers on the BNB Chain blockchain.
 
 CTFN.pro builds decentralized **on-chain reputation system**. It can be SocialFi platform which connect students, educational institutions and employers (hr managers). Students can share link to their NFT-certificates on social networks. 
 
@@ -10,26 +10,26 @@ CTFN is short for **C**ER**T**I**F**ICATIO**N**. If you read it from right to le
 
 ## Features
 
-Advantages of the platform that have already been implemented:
+🎉 Advantages of the platform that have already been implemented:
 
 + Creation of an NFT token for an educational organization
 + Generation of name certificates on the service or via API (using JS)
 + Viewing of all certificates issued by the organization on one page
 + Search and verification of NFT certificates
 
-The certificate is generated as a soul bound token to prevent it from being passed on to third parties. The educational organization can post the address of the Metamask wallet to which the organization's token is generated on its official website, so that anyone can verify that the certificates are signed by it.
+🔒 The certificate is generated as a soul bound token to prevent it from being passed on to third parties. The educational organization can post the address of the Metamask wallet to which the organization's token is generated on its official website, so that anyone can verify that the certificates are signed by it.
 
 Features that are in development are listed in the Roadmap section
 
 ## 🛠️Technologies
-+ BNB Chain as a blockchain to store organization tokens and certificates
-+ Solidity as a language for writing smart contracts
-+ Yii2 + MySQL for front-end development
-+ JavaSctipt for integrating the service on third-party platforms
++ 🔗 BNB Chain as a blockchain to store organization tokens and certificates
++ 💻 Solidity as a language for writing smart contracts
++ 🎨 Yii2 + MySQL for front-end development
++ 🌐 JavaSctipt for integrating the service on third-party platforms
 
 Tested certificate mapping in Metamask crypto wallets (after importing NFT) and TrustWallet (NFT is loaded automatically).
 
-## Roadmap
+## 🛣️ Roadmap
 We plan to add the following features to the service:
 + 🎓A personal account of the student with the ability to hide the name from the certificates themselves, the management of the public portfolio. All certificates confirming a student's skills are collected in one place.
 + 🎨Certificate design customization: ability to upload and edit your own templates. Appearance animation.
