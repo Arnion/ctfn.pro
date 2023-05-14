@@ -43,7 +43,7 @@ We plan to add the following features to the service:
 ### 🤝 Potential partners:
 + 🔑 Cryptoprojects:
   + Cryptoprojects can issue certificates on learning their functionality. It is possible to create a smart contract that will issue cryptoproject tokens after issuing a certificate.
-  + 💱 Crypto-exchanges. For example, the crypto-exchange Binance may issue certificates after a user passes tests or achieves any results. 
+  + Crypto-exchanges. For example, the crypto-exchange Binance may issue certificates after a user passes tests or achieves any results. 
 + 🎓 Educational organizations selling online courses
   + CTFN.pro will become for them a convenient depository of certificates
   + NFT certificate will increase your company's reputation by increasing their sales.
