@@ -91,17 +91,19 @@ $this->registerCss('
 				<input id="pro-banner" name="profile-banner" type="file" class="d-none" />
 				<div class="position-relative d-inline-block">
 
-					<?php if (empty($model->school_logo)) { ?>
+					<img src="/upload/school_logo_default.jpg" class="rounded-md shadow-sm img-fluid" id="profile-banner" alt="">
 					
-						<img src="/upload/school_logo_default.jpg" class="rounded-md shadow-sm img-fluid" id="profile-banner" alt="">
+					<?php //if (empty($model->school_logo)) { ?>
 					
-					<?php } else { ?>
+						<!-- <img src="/upload/school_logo_default.jpg" class="rounded-md shadow-sm img-fluid" id="profile-banner" alt=""> -->
 					
-						<img src="/upload/client/<?=md5($model->id)?>/<?=$model->school_logo?>" class="rounded-md shadow-sm img-fluid" id="profile-banner" alt="">
+					<?php //} else { ?>
 					
-					<?php } ?>
+						<!-- <img src="/upload/client/<?php //echo(md5($model->id))?>/<?php //echo($model->school_logo)?>" class="rounded-md shadow-sm img-fluid" id="profile-banner" alt=""> -->
+					
+					<?php //} ?>
 
-					<label class="icons position-absolute bottom-0 end-0" for="pro-banner"><span class="btn btn-icon btn-sm btn-pills btn-primary"><i data-feather="camera" class="icons"></i></span></label>
+					<!-- <label class="icons position-absolute bottom-0 end-0" for="pro-banner"><span class="btn btn-icon btn-sm btn-pills btn-primary"><i data-feather="camera" class="icons"></i></span></label> -->
 				</div>
 			</div>
 
@@ -148,7 +150,7 @@ $this->registerCss('
 			<div class="result-img-load"></div>			
 		</div>
 		
-		 <div class="container mt-100 mt-60">
+		 <div class="container mt-60">
 			<div class="row">
 				<div class="col-12">
 					<ul class="nav nav-tabs border-bottom" id="vwTab" role="tablist">

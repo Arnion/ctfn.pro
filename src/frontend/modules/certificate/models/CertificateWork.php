@@ -204,7 +204,7 @@ class CertificateWork extends Model
 		$leadText = Yii::t('Frontend', 'Mint certificate');
 
 		$html = '
-			<div class="rounded-md shadow mt-4">
+			<div class="rounded-md shadow">
 				<div class="p-4 border-bottom">
 					<h5 class="mb-2">' . $title . '</h5>
 					<p class="mb-0">' . $owner_address . '</p>
@@ -266,7 +266,7 @@ class CertificateWork extends Model
 		}
 
 		$html = '
-			<div class="rounded-md shadow mt-4">
+			<div class="rounded-md shadow">
 				<div class="p-4 border-bottom">
 					<h5 class="mb-2">' . $title . '</h5>
 					<p class="mb-0">' . $owner_address . '</p>
@@ -316,7 +316,7 @@ class CertificateWork extends Model
 		}
 
 		$html = '
-			<div class="rounded-md shadow mt-4">
+			<div class="rounded-md shadow">
 				<div class="p-4 border-bottom">
 					<h5 class="mb-2">' . $title . '</h5>
 					<p class="mb-0">' . $owner_address . '</p>

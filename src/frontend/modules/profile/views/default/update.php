@@ -364,7 +364,7 @@ $this->registerCss('
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-9">
-					<h5><?=Yii::t('Frontend', 'You can set preferred display name, create your branded profile URL and manage other personal settings.')?></h5>
+					<h5><?=Yii::t('Frontend', 'You can create organization token, set preferred display name and manage other profile settings.')?></h5>
 				</div> 
 			</div>
 
@@ -376,7 +376,7 @@ $this->registerCss('
 
 					<div class="rounded-md shadow">
 						<div class="p-4 border-bottom">
-							<h5 class="mb-0"><?=Yii::t('Frontend', 'Edit Form Profile')?> :</h5>
+							<h5 class="mb-0"><?=Yii::t('Frontend', 'Edit Form Profile')?>:</h5>
 						</div>
 			
 						<div class="p-4">
@@ -390,13 +390,13 @@ $this->registerCss('
 									<div class="col-12 mb-4">
 										
 										<?=$form->field($model, 'name', [
-											'template' => '<label for="profile-name" class="form-label h6">'.Yii::t('Frontend', 'Display Name').'</label>{input}{error}'
+											'template' => '<label for="profile-name" class="form-label h6">'.Yii::t('Frontend', 'Display Name (for profile page)').'</label>{input}{error}'
 										])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Frontend', 'Will be displayed in the organization profile on CTFN.pro'), 'autocomplete' => 'off']) ?>
 										
 									</div><!--end col-->
 									
 									<div class="col-12 mb-4">
-										<label for="profile-identify_name" class="form-label h6"><?=Yii::t('Frontend', 'Education organization')?></label> <i class="fa fa-asterisk text-danger"></i>
+										<label for="profile-identify_name" class="form-label h6"><?=Yii::t('Frontend', 'Education organization (Token name)')?></label> <i class="fa fa-asterisk text-danger"></i>
 							
 										<?=$form->field($model, 'identify_name', [
 											'template' => '{input}{error}'
@@ -446,7 +446,7 @@ $this->registerCss('
 									<div class="col-lg-12 mb-4">
 										
 										<?= $form->field($model, 'is_mainnet', [
-											'template' => '<label for="profile-is_mainnet" class="form-label h6">'.Yii::t('Form', 'Is mainnet').'</label>{input}{error}'
+											'template' => '<label for="profile-is_mainnet" class="form-label h6">'.Yii::t('Form', 'Mainnet').'</label>{input}{error}'
 										])->checkBox() ?>
 										
 									</div><!--end col-->

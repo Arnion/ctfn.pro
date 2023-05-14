@@ -109,7 +109,7 @@ class Profile extends Model
 			'confirm_password' => Yii::t('Form', 'Password Confirm Form'),
 			'image' => Yii::t('Form', 'Image'),
 			'school_logo' => Yii::t('Form', 'Logo'),
-			'is_mainnet' => Yii::t('Frontend', 'Is Mainnet'),
+			'is_mainnet' => Yii::t('Frontend', 'Mainnet'),
 			'school_nft_address_testnet' => Yii::t('Frontend', 'Token address'),
 			'owner_nft_address_testnet' => Yii::t('Frontend', 'Owner address'),
 			'deployed_to_mainnet' => Yii::t('Frontend', 'Deployed to Mainnet'),

@@ -55,6 +55,11 @@ $this->registerCss('
 		top:119px;
 		color:#333333;
 	}
+
+	:target {
+		padding-top: 56px;
+    	margin-top: -56px;
+	}
 ');
 ?>
 
@@ -65,8 +70,8 @@ $this->registerCss('
 		<div class="row mt-5 justify-content-center">
 			<div class="col-12">
 				<div class="title-heading text-center">
-					<h5 class="heading fw-semibold sub-heading text-white title-dark"><?=Yii::t('Menu', 'Student address')?></h5>
-					<p class="text-white-50 para-desc mx-auto mb-0"><?=Yii::t('Frontend', 'Student wallet address')?></p>
+					<h5 class="heading fw-semibold sub-heading text-white title-dark"><?=Yii::t('Menu', 'Search by student address')?></h5>
+					<p class="text-white-50 para-desc mx-auto mb-0"><?=Yii::t('Frontend', "Enter the address of the student's cryptocurrency wallet to see their certificates")?></p>
 				</div>
 			</div><!--end col-->
 		</div><!--end row-->
@@ -82,7 +87,7 @@ $this->registerCss('
 </div>
 <!-- End Home --> 
 
-<section class="section">
+<section class="section py-5">
 	
 	<?=Alert::widget()?>
 
@@ -98,6 +103,7 @@ $this->registerCss('
 						<?php $form = ActiveForm::begin([
 								'id' => 'address-search',
 								'class' => 'address-search',
+								'action'=> ['/public/address','#'=>'searchblock']
 							]); ?>
 
 								<div class="row">
@@ -127,31 +133,49 @@ $this->registerCss('
 		</div><!--end row-->
 	</div><!--end container-->
 	
-	<div class="container mt-100 mt-60">
+	<?php $count = 0?>
+	<?php $certificates = $model->searchUserNftAddress(); ?>
+	<?php $count = !is_bool($certificates) ? count($certificates) : $count; ?>
+	<?php //$tabTitle = Yii::t('Frontend', 'Certificates'); ?>
+	<?php $tabTitle = $count . ' ' . Yii::t('Frontend', 'certificates found!'); ?>
+
+	<?php //die(print_r($certificates, true))?>
+
+	<div class="container mt-5">
 		<div class="row">
+
+			<div id="searchblock" class="col-12">
+				<?php if (empty($certificates) || !is_array($certificates)) : ?>
+					<?php if (!empty($model->user_nft_address) && ($count == 0)) : ?>
+						<div class="alert alert-danger d-none" role="alert">
+							<?=Yii::t('Frontend', 'Certificates not found')?>
+						</div>
+					<?php endif; ?>
+				<?php endif; ?>
+			</div>
+
 			<div class="col-12">
 				<ul class="nav nav-tabs border-bottom" id="vwTab" role="tablist">
 					<li class="nav-item" role="presentation">
-						<button class="nav-link active" id="cert-tab" data-bs-toggle="tab" data-bs-target="#cert-item" type="button" role="tab" aria-controls="cert-item" aria-selected="true"><?=Yii::t('Frontend', 'Certificates')?></button>
+						<button class="nav-link active" id="cert-tab" data-bs-toggle="tab" data-bs-target="#cert-item" type="button" role="tab" aria-controls="cert-item" aria-selected="true"><?php echo($tabTitle)?></button>
 					</li>
 				</ul>
-				
+
 				 <div class="tab-content mt-4 pt-2" id="vwTabContent">
 					<div class="tab-pane fade show active" id="cert-item" role="tabpanel" aria-labelledby="cert-tab">
 						
-
-						<?php $certificates = $model->searchUserNftAddress(); ?>
-							
+						
+						
 							<?php if (empty($certificates) || !is_array($certificates)) { ?>
 		
 		
 								<?php if (!empty($model->user_nft_address)) { ?>
 								
-									<div class="container mt-100 mt-60">
+									<div class="container py-5">
 										<div class="row justify-content-center">
 											<div class="col-12">
 												<div class="section-title text-center">
-													<h4 class="title mb-4"><?=Yii::t('Frontend', 'Certificates not found. Try another address')?></h4>
+													<h4 class="title mb-4"><?php echo(Yii::t('Frontend', 'Certificates not found'))?>.<br><?php echo(Yii::t('Frontend', 'Try another address'))?></h4>
 												</div>
 											</div><!--end col-->
 										</div><!--end row-->
@@ -162,7 +186,7 @@ $this->registerCss('
 							<?php } else { ?>
 							
 							<div class="row row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 g-4">
-		
+								
 								<?php foreach ($certificates as $certificate) { ?>
 								
 									<?php
@@ -184,6 +208,11 @@ $this->registerCss('
 									$course = trim($certificate['course']);
 									$date = date('d.m.Y', strtotime($certificate['creation_date']));
 									$school = trim($certificate['school_name']);
+									$web_site = trim($certificate['web_site']);
+
+									if (!empty($school) && !empty($web_site)) {
+										$school = "<a target='_blank' href='" . $web_site . "'>" .Yii::t('Frontend', 'Verified by') . ': ' . $school . "</a>";
+									}
 
 									?>
 									<div class="col">
@@ -211,7 +240,7 @@ $this->registerCss('
 													<?=$href_to_token_testnet?>
 												</span>
 											</div> 
-											<div class="nft-image rounded-md position-relative overflow-hidden cert-block-text">
+											<div class="mx-auto nft-image rounded-md position-relative overflow-hidden cert-block-text">
 												<a class="img-link" href="/public/viewaddress?id=<?=$certificate['id_certificate']?>&hash=<?=$hash?>" target="_blank"><img src="/upload/certificate/nf_certificate.png" class="img-fluid" alt="">
 													<div class="position-absolute cert-pos pos-1">
 														<div class="text-center">№ <?=$certificate['id_certificate']?></div>
@@ -229,8 +258,8 @@ $this->registerCss('
 											</div>
 											<div class="card-body content position-relative p-0">
 												<div class="justify-content-between mt-2">
-													<div class="text-dark small"><?=$school?></div>
 													<div class="text-dark small"><?=$name?></div>
+													<div class="text-dark small"><?=$school?></div>
 													<div class="text-dark small"><?=$course?></div>
 												</div>
 											</div>

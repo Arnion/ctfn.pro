@@ -301,16 +301,17 @@ $this->registerCss('
 		<div class="row">
 			<div class="col-lg-3 col-md-4 order-2 order-md-1 mt-4 pt-2 mt-sm-0 pt-sm-0">
 				<div class="card creators creator-primary rounded-md shadow overflow-hidden sticky-bar">
+					<div class="py-5" style="background: url('/upload/school_logo_default.jpg');"></div>
 					
-					<?php if (empty($client->school_logo)) { ?>
+					<?php //if (empty($client->school_logo)) { ?>
 
-						<div class="py-5" style="background: url('/upload/school_logo_default.jpg');"></div>
+						<!-- <div class="py-5" style="background: url('/upload/school_logo_default.jpg');"></div> -->
 					
-					<?php } else { ?>
+					<?php //} else { ?>
 					
-						<div class="py-5" style="background: url('/upload/client/<?=md5($client->id)?>/<?=$client->school_logo?>');"></div>
+						<!-- <div class="py-5" style="background: url('/upload/client/<?php //echo(md5($client->id))?>/<?php //echo($client->school_logo)?>');"></div> -->
 					
-					<?php } ?>
+					<?php //} ?>
 					
 					
 					<div class="position-relative mt-n5">
@@ -351,10 +352,27 @@ $this->registerCss('
 			<div class="col-lg-9 col-md-8 order-1 order-md-2">
 			
 				<?=Alert::widget()?>
+				<?php if (empty($model->isNewRecord) && !empty($model->user_nft_address)) : ?>
+					<div class="pb-4">
+						<div id="reloadTokenData">
+							<div id="reloadTokenDataSpinner" class="spinner-grow text-primary" style="display:none;" role="status">
+								<span class="visually-hidden">Loading...</span>
+							</div>
+							<div id="reloadTokenContent">
+								<?php echo($model->getRenderData()); ?>
+							</div>
+						</div>
+					</div>
+				<?php else: ?>
+					<div class="alert alert-info" role="alert">
+						<?php echo(Yii::t('Frontend', 'Enter the student certificate data and click "Save students data" to go to the NFT-certificate minting')) ?>
+					</div>
+				<?php endif; ?>
+
 				<div class="result-img-load"></div>
 			
 				<div class="card rounded-md shadow p-4">		
-					<div class="ms-lg-4">
+					<div class="">
 					
 						<?php $form = ActiveForm::begin([
 							'id' => 'certificate-form',
@@ -413,17 +431,6 @@ $this->registerCss('
 						
 					</div>	
 				</div>
-				
-				<?php if (empty($model->isNewRecord) && !empty($model->user_nft_address)) : ?>
-					<div id="reloadTokenData">
-						<div id="reloadTokenDataSpinner" class="spinner-grow text-primary" style="display:none;" role="status">
-							<span class="visually-hidden">Loading...</span>
-						</div>
-						<div id="reloadTokenContent">
-							<?php echo($model->getRenderData()); ?>
-						</div>
-					</div>
-				<?php endif; ?>
 			</div><!--end col-->
 		</div><!--end row-->
 	</div><!--end container-->

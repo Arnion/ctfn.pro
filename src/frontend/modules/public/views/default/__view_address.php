@@ -83,7 +83,30 @@ $this->registerCss('
 </div>
 <!-- End Home -->
 <!-- End -->
+<?php
+$href_to_token_id_mainnet = '';
+$href_to_token_id_testnet = '';
+$href_to_token_mainnet = '';
+$href_to_token_testnet = '';
+$href_to_owner_mainnet = '';
+$href_to_owner_testnet = '';
 
+if (!empty($model->minted_on_mainnet)) {
+	$href_to_token_id_mainnet = '<a target="_blank" href="'.SchoolToken::MAINNET_BSCSCAN_ADDRESS . $model->minted_by_contract_mainnet . '?a=' . $model->id_nft_token_mainnet . '">' . $model->id_nft_token_mainnet . '</a>';
+	$href_to_token_mainnet = '<a target="_blank" href="'.SchoolToken::MAINNET_BSCSCAN_ADDRESS . $model->minted_by_contract_mainnet . '">' . $model->minted_by_contract_mainnet . '</a>';
+}
+
+if (!empty($model->minted_on_testnet)) {
+	$href_to_token_id_testnet = '<a target="_blank" href="'.SchoolToken::TESTNET_BSCSCAN_ADDRESS . $model->minted_by_contract_testnet . '?a=' . $model->id_nft_token_testnet . '">' . $model->id_nft_token_testnet . '</a>';
+	$href_to_token_testnet = '<a target="_blank" href="'.SchoolToken::TESTNET_BSCSCAN_ADDRESS . $model->minted_by_contract_testnet . '">' . $model->minted_by_contract_testnet . '</a>';
+}
+
+if (!empty($model->user_nft_address)) {
+	$href_to_owner_mainnet = '<a target="_blank" href="'.SchoolToken::MAINNET_BSCSCAN_OWNER_ADDRESS . $model->user_nft_address . '">' . $model->user_nft_address . '</a>';
+	$href_to_owner_testnet = '<a target="_blank" href="'.SchoolToken::TESTNET_BSCSCAN_OWNER_ADDRESS . $model->user_nft_address . '">' . $model->user_nft_address . '</a>';
+}
+
+?>
 <?php $metaMainnet = $model->getMetaData(CertificateWork::MAINNET); ?>
 <?php $metaTestnet = $model->getMetaData(CertificateWork::TESTNET); ?>
 
@@ -124,11 +147,12 @@ $this->registerCss('
 										<div class="row">
 											<div class="col-12">
 												<h6><?php echo(Yii::t('Frontend', 'Mainnet Token Id'))?></h6>
-												<h4 class="mb-0"><?php echo($metaMainnet['tokenId'])?></h4>
+												<h4 class="mb-0"><?php echo($href_to_token_id_mainnet)?></h4>
+												<!-- <h4 class="mb-0"><?php // echo($metaMainnet['tokenId'])?></h4> -->
 											</div>
 											<div class="col-12 mt-4 pt-2" style="word-break:break-all;overflow-wrap:break-word;">
 												<h6><?php echo(Yii::t('Frontend', 'Mainnet contract address'))?></h6>
-												<h5 class="mb-0"><?php echo($model->minted_by_contract_mainnet)?></h5>
+												<h5 class="mb-0"><?php echo($href_to_token_mainnet)?></h5>
 											</div>
 											<div class="col-12 mt-4 pt-2">
 												<p class="text-muted mb-0"><?php echo $metaMainnet['description'] ?></p>
@@ -137,7 +161,7 @@ $this->registerCss('
 												<h6><?php echo(Yii::t('Frontend', 'Owner'))?></h6>
 												<div class="creators creator-primary d-flex align-items-center">
 													<div class="ms-3">
-														<h6 class="mb-0"><span class="text-dark name" style="cursor:pointer"><?php echo($model->user_nft_address) ?></span></h6>
+														<h6 class="mb-0"><?php echo($href_to_owner_mainnet) ?></h6>
 													</div>
 												</div>
 											</div>
@@ -150,11 +174,12 @@ $this->registerCss('
 										<div class="row">
 											<div class="col-12">
 												<h6><?php echo(Yii::t('Frontend', 'Testnet Token Id'))?></h6>
-												<h4 class="mb-0"><?php echo($metaTestnet['tokenId'])?></h4>
+												<h4 class="mb-0"><?php echo($href_to_token_id_testnet)?></h4>
+												<!-- <h4 class="mb-0"><?php //echo($metaTestnet['tokenId'])?></h4> -->
 											</div>
 											<div class="col-12 mt-4 pt-2" style="word-break:break-all;overflow-wrap:break-word;">
 												<h6><?php echo(Yii::t('Frontend', 'Testnet contract address'))?></h6>
-												<h5 class="mb-0"><?php echo($model->minted_by_contract_testnet)?></h5>
+												<h5 class="mb-0"><?php echo($href_to_token_testnet)?></h5>
 											</div>
 											<div class="col-12 mt-4 pt-2">
 												<p class="text-muted mb-0"><?php echo $metaTestnet['description'] ?></p>
@@ -163,7 +188,7 @@ $this->registerCss('
 												<h6><?php echo(Yii::t('Frontend', 'Owner'))?></h6>
 												<div class="creators creator-primary d-flex align-items-center">
 													<div class="ms-3">
-														<h6 class="mb-0"><span class="text-dark name" style="cursor:pointer"><?php echo($model->user_nft_address) ?></span></h6>
+														<h6 class="mb-0"><?php echo($href_to_owner_testnet) ?></h6>
 													</div>
 												</div>
 											</div>

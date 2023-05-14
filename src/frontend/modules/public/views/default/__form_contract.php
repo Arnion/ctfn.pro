@@ -158,6 +158,10 @@ $this->registerJs('
 
 				$("#certificateInfo").fadeOut();
 				$("#certificateNotFound").fadeIn();
+
+				let element = document.getElementById("certificateNotFound");
+				element.scrollIntoView({ behavior: "smooth"});
+
 			}
 			
 			$("#searchTokenSpinner").hide();
@@ -215,6 +219,9 @@ $this->registerJs('
 		
 		}
 
+		let doLinks = false;
+		let doLinksToTokenId = false;
+
 		if ("image" in ctfnProData.meta.data && ctfnProData.meta.data.image.length > 0) {
 			$("#certificateImg").prop("src", ctfnProData.meta.data.image);
 			$("#certificateImgBlock").show();
@@ -228,12 +235,7 @@ $this->registerJs('
 			} else {
 				$(".network_type").text("Testnet");
 			}
-		}
-
-		if ("ctfn" in ctfnProData.params.data) {
-			$("#ctfnBlock").show();
-			$("#certificateCourse").text(ctfnProData.params.data.ctfn.course);
-			$("#certificateSchool").text(ctfnProData.params.data.ctfn.schoolName);
+			doLinks = true;
 		}
 
 		if ("ctfn" in ctfnProData.params.data) {
@@ -250,34 +252,93 @@ $this->registerJs('
 			}
 		}
 
-		if ("tokenId" in ctfnProData.params.data) {
+
+		if ("contractAddress" in ctfnProData.params.data) { /// LINK
+			$("#certificateContractBlock").show();
+						
+			if (doLinks) {
+				let html = getHtmlLinkBscscan(ctfnProData.params.data.is_mainnet, false, ctfnProData.params.data.contractAddress);
+				$("#certificateContract").html(html);
+			} else {
+				$("#certificateContract").text(ctfnProData.params.data.contractAddress);
+			}
+			
+			doLinksToTokenId = true;
+		}
+
+		if ("tokenId" in ctfnProData.params.data) { /// LINK
 			$("#certificateTokenIdBlock").show();
-			$("#certificateTokenId").text(ctfnProData.params.data.tokenId);
+
+			if (doLinks && doLinksToTokenId) {
+				
+				let html = getHtmlLinkBscscan(ctfnProData.params.data.is_mainnet, false, ctfnProData.params.data.contractAddress, ctfnProData.params.data.tokenId);
+				$("#certificateTokenId").html(html);
+
+			} else {
+				$("#certificateTokenId").text(ctfnProData.params.data.tokenId);
+			}
 		}
 
-		if ("contractAddress" in ctfnProData.params.data) {
-			$("#certificateContractBlock").show();
-			$("#certificateContract").text(ctfnProData.params.data.contractAddress);
-		}
-
-		if ("contractAddress" in ctfnProData.params.data) {
-			$("#certificateContractBlock").show();
-			$("#certificateContract").text(ctfnProData.params.data.contractAddress);
-		}
+		
 
 		if ("description" in ctfnProData.meta.data && ctfnProData.meta.data.description.length > 0) {
 			$("#certificateDescriptionBlock").show();
 			$("#certificateDescription").text(ctfnProData.meta.data.description);
 		}
 
-		if ("ownerAddress" in ctfnProData.params.data && ctfnProData.params.data.ownerAddress.length > 0) {
+		if ("ownerAddress" in ctfnProData.params.data && ctfnProData.params.data.ownerAddress.length > 0) { /// LINK
 			$("#certificateOwnerBlock").show();
-			$("#certificateOwner").text(ctfnProData.params.data.ownerAddress);
+			if (doLinks) {
+				let html = getHtmlLinkBscscan(ctfnProData.params.data.is_mainnet, true, ctfnProData.params.data.ownerAddress);
+				$("#certificateOwner").html(html);
+			} else {
+				$("#certificateOwner").text(ctfnProData.params.data.ownerAddress);
+			}
 		}
 
 		$("#certificateNotFound").fadeOut();
 		$("#certificateInfo").fadeIn();
+		
+		let element = document.getElementById("certificateInfo");
+		element.scrollIntoView({ behavior: "smooth"});
 
+	}
+
+
+	function getHtmlLinkBscscan(is_mainnet, to_owner = false, address, token_id = null) {
+		let baseMainnetContract = "'.SchoolToken::MAINNET_BSCSCAN_ADDRESS.'";
+		let baseTestnetContract = "'.SchoolToken::TESTNET_BSCSCAN_ADDRESS.'";
+		let baseMainnetOwner = "'.SchoolToken::MAINNET_BSCSCAN_OWNER_ADDRESS.'";
+		let baseTestnetOwner = "'.SchoolToken::TESTNET_BSCSCAN_OWNER_ADDRESS.'";
+
+		if (is_mainnet) {
+			if (to_owner) {
+				// ссылка на owner в mainnet
+				return "<a target =\'_blank\' href =\'" + baseMainnetOwner + address + "\'>" + address + "</a>";
+			} else {
+				if (token_id !== null) {
+					// ссылка на токен id в mainnet
+					return "<a target =\'_blank\' href =\'" + baseMainnetContract + address + "?a=" + token_id + "\'>" + token_id + "</a>";
+				} else {
+					// ссылка на контракт токена в mainnet
+					return "<a target =\'_blank\' href =\'" + baseMainnetContract + address + "\'>" + address + "</a>";
+				}
+			}
+		} else {
+			if (to_owner) {
+				// ссылка на owner в testnet
+				return "<a target =\'_blank\' href =\'" + baseTestnetOwner + address + "\'>" + address + "</a>";
+			} else {
+				if (token_id !== null) {
+					// ссылка на токен id в testnet
+					return "<a target =\'_blank\' href =\'" + baseTestnetContract + address + "?a=" + token_id + "\'>" + token_id + "</a>";
+				} else {
+					// ссылка на контракт токена в testnet
+					return "<a target =\'_blank\' href =\'" + baseTestnetContract + address + "\'>" + address + "</a>";
+				}
+			}
+		}
+	
 	}
 
 	function renderReset() {
@@ -291,12 +352,15 @@ $this->registerJs('
 		$("#certificateSchool").text("");
 		$("#certificateTokenIdBlock").hide();
 		$("#certificateTokenId").text("");
+		$("#certificateTokenId").html("");
 		$("#certificateContractBlock").hide();
 		$("#certificateContract").text("");
+		$("#certificateContract").html("");
 		$("#certificateDescriptionBlock").hide();
 		$("#certificateDescription").text("");
 		$("#certificateOwnerBlock").hide();
 		$("#certificateOwner").text("");
+		$("#certificateOwner").html("");
 		$(".network_type").text("");
 
 
@@ -450,8 +514,8 @@ $this->registerCss('
 		<div class="row mt-5 justify-content-center">
 			<div class="col-12">
 				<div class="title-heading text-center">
-					<h5 class="heading fw-semibold sub-heading text-white title-dark"><?=Yii::t('Menu', 'Contract address')?></h5>
-					<p class="text-white-50 para-desc mx-auto mb-0"><?=Yii::t('Frontend', 'Education organization contract address')?></p>
+					<h5 class="heading fw-semibold sub-heading text-white title-dark"><?=Yii::t('Menu', 'Verify NFT-certificate')?></h5>
+					<p class="text-white-50 para-desc mx-auto mb-0"><?=Yii::t('Frontend', 'Here you can verify NFT-certificate by token address and token id')?></p>
 				</div>
 			</div><!--end col-->
 		</div><!--end row-->
@@ -467,7 +531,7 @@ $this->registerCss('
 </div>
 <!-- End Home -->
 
-<section class="section pb-5">
+<section class="section py-5">
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-lg-7 col-12">
@@ -487,7 +551,7 @@ $this->registerCss('
 									<div class="col-12 mb-4">
 											
 										<?=$form->field($model, 'search_contract', [
-											'template' => '<label for="viewcontract-search_contract" class="form-label fw-bold">'.Yii::t('Frontend', 'Education organization token address on bnb chain').' <i class="fa fa-asterisk text-danger"></i></label>{input}{error}'
+											'template' => '<label for="viewcontract-search_contract" class="form-label fw-bold">'.Yii::t('Frontend', 'Education organization token address in BNB chain').' <i class="fa fa-asterisk text-danger"></i></label>{input}{error}'
 										])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Frontend', 'Token address'), 'autocomplete' => 'off']) ?>
 										
 									</div><!--end col-->
@@ -503,7 +567,7 @@ $this->registerCss('
 									<div class="col-12 mb-4">
 											
 										<?=$form->field($model, 'is_mainnet', [
-											'template' => '<label for="viewcontract-is_mainnet" class="form-label fw-bold">'.Yii::t('Frontend', 'Is Mainnet').' <i class="fa fa-asterisk text-danger"></i></label>{input}{error}'
+											'template' => '<label for="viewcontract-is_mainnet" class="form-label fw-bold">'.Yii::t('Frontend', 'Mainnet').' <i class="fa fa-asterisk text-danger"></i></label>{input}{error}'
 										])->checkBox() ?>
 										
 									</div><!--end col-->	
@@ -608,7 +672,7 @@ $this->registerCss('
 								<div class="col-12">
 									<div class="section-title text-center">
 										<h6 class="text-muted fw-normal mb-3"><?php echo(Yii::t('Frontend', 'Certificate not found'))?></h6>
-										<h4 class="title mb-4"><?php echo(Yii::t('Frontend', 'Try different token Id or token address'))?></h4>
+										<h4 class="title mb-4"><?php echo(Yii::t('Frontend', 'Try different token id or token address'))?></h4>
 									</div>
 								</div><!--end col-->
 							</div><!--end row-->

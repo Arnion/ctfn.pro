@@ -18,10 +18,11 @@ use yii\helpers\Url;
  */
 class ViewContract extends Model
 {
-	public $is_mainnet;
+	public $is_mainnet = 1;
 	public $search_contract;
 	public $search_token_id;
 	public $verifyCode;
+
 
     /**
      * {@inheritdoc}
@@ -44,7 +45,7 @@ class ViewContract extends Model
     {
         return [
 			'search_token_id' => Yii::t('Frontend', 'Token Id'),
-			'is_mainnet' => Yii::t('Frontend', 'Is Mainnet'),
+			'is_mainnet' => Yii::t('Frontend', 'Mainnet'),
 			'search_contract' => Yii::t('Frontend', 'Address of education organization contract'),
         ];
     }
