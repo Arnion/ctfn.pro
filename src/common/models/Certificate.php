@@ -38,6 +38,7 @@ class Certificate extends ActiveRecord
 	const STATUS_DELETED = 1;
 	
 	public $school_name;
+	public $web_site;
 
 	/**
      * @inheritdoc
@@ -125,14 +126,15 @@ class Certificate extends ActiveRecord
 			SELECT
 				t1.id_certificate,
 				t1.id_client,
-				t1.name as school_name,
+				t1.name,
 				t1.surname,
 				t1.number,
 				t1.course,
 				t1.creation_date,
 				t1.minted_on_mainnet,
 				t1.minted_on_testnet,
-				t2.name
+				t2.name as school_name,
+				t2.web_site
 			FROM {{001_certificate}} t1
 			INNER JOIN {{001_clients}} t2
 				ON t1.id_client = t2.id
