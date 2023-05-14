@@ -16,6 +16,9 @@ class SchoolToken
     const TESTNET_BSCSCAN_ADDRESS = "https://testnet.bscscan.com/token/";
     const MAINNET_BSCSCAN_ADDRESS = "https://bscscan.com/token/";
 
+    const TESTNET_BSCSCAN_OWNER_ADDRESS = "https://testnet.bscscan.com/address/";
+    const MAINNET_BSCSCAN_OWNER_ADDRESS = "https://bscscan.com/address/";
+
 	const BNB_TESTNET_CHAIN_ID = 97;
 	const BNB_MAINNET_CHAIN_ID = 56;
 
