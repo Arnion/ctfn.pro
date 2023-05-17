@@ -34,7 +34,7 @@ How does it work?
 5. Verify authenticity on CTFN.pro or blockchain.
     Employers can verify the authenticity of the certificate by simply checking the token ID and address on CTFN.pro or the Binance(BNB) Blockchain Explorer.
 
-[Visualization](https://github.com/Arnion/ctfn.pro/assets/6169475/9f354e17-980c-4bb4-afeb-ec4a18acf871)
+[Visualization (scheme)](https://github.com/Arnion/ctfn.pro/assets/6169475/9f354e17-980c-4bb4-afeb-ec4a18acf871) (recommended to open in a new window)
 
 ### Videodemo
 Short video demonstration:
