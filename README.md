@@ -34,8 +34,7 @@ How does it work?
 5. Verify authenticity on CTFN.pro or blockchain.
     Employers can verify the authenticity of the certificate by simply checking the token ID and address on CTFN.pro or the Binance(BNB) Blockchain Explorer.
 
-Visualization:
-![image](https://github.com/Arnion/ctfn.pro/assets/6169475/9f354e17-980c-4bb4-afeb-ec4a18acf871)
+[Visualization](https://github.com/Arnion/ctfn.pro/assets/6169475/9f354e17-980c-4bb4-afeb-ec4a18acf871)
 
 ### Videodemo
 Short video demonstration:
@@ -52,6 +51,11 @@ On YouTube (high qulity): https://youtu.be/OfDCVzMajMY
 [Installation Instructions](src/README.md)
 
 Tested certificate mapping in Metamask crypto wallets (after importing NFT) and TrustWallet (NFT is loaded automatically).
+
+## ✅ Real deal!
+To test the functionality of the service, we developed an integration with the LMS platform AutoOffice and held a training webinar for students of one of the educational organizations.
+More than 60 certificates was mint in BNB Chain mainnet!
+[Read more about results and view code](autooffice_integration)
 
 ## 🛣️ Roadmap
 We plan to add the following features to the service:
