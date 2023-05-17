@@ -25,7 +25,6 @@ Features that are in development are listed in the Roadmap section
 How does it work?
 1. Educational organization generates their own token.
     Educational organization creates an account and generates a smart contract token for minting NFT-certificates.
-![image](https://github.com/Arnion/ctfn.pro/assets/6169475/6bcf1675-c7e7-46da-b9a4-a10a062fcbbe)
 2. Student provides cryptowallet address.
     Upon completion of the course, the student requests an NFT-certificate by providing their cryptocurrency wallet address to the educational organization, which can be submitted manually, through API, or a Google Form.
 3. Educational organization issues the certificate to wallet.
@@ -35,7 +34,7 @@ How does it work?
 5. Verify authenticity on CTFN.pro or blockchain.
     Employers can verify the authenticity of the certificate by simply checking the token ID and address on CTFN.pro or the Binance(BNB) Blockchain Explorer.
 
-Visualization
+Visualization:
 ![image](https://github.com/Arnion/ctfn.pro/assets/6169475/9f354e17-980c-4bb4-afeb-ec4a18acf871)
 
 ### Videodemo
@@ -51,7 +50,6 @@ On YouTube (high qulity): https://youtu.be/OfDCVzMajMY
 + 🌐 JavaSctipt for integrating the service on third-party platforms
 
 [Installation Instructions](src/README.md)
-
 
 Tested certificate mapping in Metamask crypto wallets (after importing NFT) and TrustWallet (NFT is loaded automatically).
 
