@@ -21,6 +21,27 @@ CTFN is short for **C**ER**T**I**F**ICATIO**N**. If you read it from right to le
 
 Features that are in development are listed in the Roadmap section
 
+## How it Works
+How does it work?
+1. Educational organization generates their own token.
+    Educational organization creates an account and generates a smart contract token for minting NFT-certificates.
+2. Student provides cryptowallet address.
+    Upon completion of the course, the student requests an NFT-certificate by providing their cryptocurrency wallet address to the educational organization, which can be submitted manually, through API, or a Google Form.
+3. Educational organization issues the certificate to wallet.
+    After confirming the completion of the course, educational organization mints the NFT-certificate and sends it to the student's crypto wallet address. The NFT-certificate is a soulbound token that cannot be  transferred to third parties.
+4. Visualize and share NFT-certificate.
+    The student can import the NFT-certificate into their cryptowallet (MetaMask, Trustwallet) to visualize it and share it on social media or include it in their resume for potential employers.
+5. Verify authenticity on CTFN.pro or blockchain.
+    Employers can verify the authenticity of the certificate by simply checking the token ID and address on CTFN.pro or the Binance(BNB) Blockchain Explorer.
+
+![image](https://github.com/Arnion/ctfn.pro/assets/6169475/6bcf1675-c7e7-46da-b9a4-a10a062fcbbe)
+![image](https://github.com/Arnion/ctfn.pro/assets/6169475/9f354e17-980c-4bb4-afeb-ec4a18acf871)
+
+### Videodemo
+[CTFN demo integration 10 частота вместое 30 качество 50 аудио качество 50.webm](https://github.com/Arnion/ctfn.pro/assets/6169475/c374f2aa-68e5-4e5b-868b-dd0909d662a7)
+
+
+
 ## 🛠️Technologies
 + 🔗 BNB Chain as a blockchain to store organization tokens and certificates
 + 💻 Solidity as a language for writing smart contracts
