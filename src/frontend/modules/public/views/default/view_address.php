@@ -1,18 +1,5 @@
 <?php
-$this->title = Yii::t('Menu', 'View Certificate'); 
-
-$this->registerJs('
-	jQuery(document).ready(function($) {
-		$("#cf-modal-load").on("click", "[data-dismiss=\"modal\"]", function() {
-			$("#cf-modal-load").toggle();
-		});
-		
-	});
-', yii\web\View::POS_END);
-
-$this->registerCss('
-	
-');
+$this->title = $title; 
 ?>
 
 <?= $this->render(	
@@ -44,6 +31,8 @@ $this->registerCss('
 
 	<?= $this->render('__view_address', [
 		'model' => $model,
+		'bigTitle' => $bigTitle,
+		'smallTitle' => $smallTitle,
 	]) ?>
 			
 </div>

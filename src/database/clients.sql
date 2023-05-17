@@ -1,26 +1,14 @@
-/*
-Navicat MySQL Data Transfer
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
-Source Server         : MySQL Server
-Source Server Version : 50505
-Source Host           : 148.251.81.84:3306
-Source Database       : 001_ctfnpro_db
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
-Target Server Type    : MYSQL
-Target Server Version : 50505
-File Encoding         : 65001
 
-Date: 2023-05-12 16:36:29
-*/
-
-SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for `clients`
--- ----------------------------
-DROP TABLE IF EXISTS `clients`;
 CREATE TABLE `clients` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `login` varchar(255) DEFAULT NULL COMMENT 'Логин',
   `hash` text NOT NULL COMMENT 'Хеш',
   `auth_key` varchar(255) NOT NULL COMMENT 'Идентификатор безопасности для coocies',
@@ -62,17 +50,23 @@ CREATE TABLE `clients` (
   `employee` text CHARACTER SET utf8mb4 COMMENT 'Должность',
   `is_mainnet` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Флаг работы с токеном в mainnet/testnet',
   `deployed_to_mainnet` tinyint(4) NOT NULL COMMENT 'Флаг деплоя токена в mainnet',
-  `deployed_to_testnet` tinyint(4) NOT NULL COMMENT 'Флаг деплоя токена в testnet',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `login` (`login`,`deleted`,`deleted_date`) USING BTREE,
-  UNIQUE KEY `email` (`deleted`,`deleted_date`,`email`) USING BTREE,
-  UNIQUE KEY `phone` (`phone`,`deleted`,`deleted_date`) USING BTREE,
-  KEY `ip` (`ip`) USING BTREE,
-  KEY `ban` (`ban`) USING BTREE,
-  KEY `deleted` (`deleted`) USING BTREE,
-  KEY `creation_date` (`creation_date`) USING BTREE
+  `deployed_to_testnet` tinyint(4) NOT NULL COMMENT 'Флаг деплоя токена в testnet'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
--- ----------------------------
--- Records of clients
--- ----------------------------
+
+ALTER TABLE `clients`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `login` (`login`,`deleted`,`deleted_date`) USING BTREE,
+  ADD UNIQUE KEY `email` (`deleted`,`deleted_date`,`email`) USING BTREE,
+  ADD UNIQUE KEY `phone` (`phone`,`deleted`,`deleted_date`) USING BTREE,
+  ADD KEY `ip` (`ip`) USING BTREE,
+  ADD KEY `ban` (`ban`) USING BTREE,
+  ADD KEY `deleted` (`deleted`) USING BTREE,
+  ADD KEY `creation_date` (`creation_date`) USING BTREE;
+
+
+ALTER TABLE `clients`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

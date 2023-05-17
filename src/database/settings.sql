@@ -1,34 +1,28 @@
-/*
-Navicat MySQL Data Transfer
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
-Source Server         : MySQL Server
-Source Server Version : 50505
-Source Host           : 148.251.81.84:3306
-Source Database       : 001_ctfnpro_db
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
-Target Server Type    : MYSQL
-Target Server Version : 50505
-File Encoding         : 65001
 
-Date: 2023-05-12 16:37:40
-*/
-
-SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for `settings`
--- ----------------------------
-DROP TABLE IF EXISTS `settings`;
 CREATE TABLE `settings` (
-  `id_settings` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID Настройки',
+  `id_settings` int(11) NOT NULL COMMENT 'ID Настройки',
   `source` varchar(255) DEFAULT NULL COMMENT 'Ключ настройки',
   `code` text COMMENT 'Код настройки',
   `deleted` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Удалено',
   `deleted_date` datetime DEFAULT NULL COMMENT 'Дата удаления',
-  `creation_date` datetime DEFAULT NULL COMMENT 'Дата создания',
-  PRIMARY KEY (`id_settings`)
+  `creation_date` datetime DEFAULT NULL COMMENT 'Дата создания'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ----------------------------
--- Records of settings
--- ----------------------------
+
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id_settings`);
+
+
+ALTER TABLE `settings`
+  MODIFY `id_settings` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID Настройки';
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -9,14 +9,6 @@ use mihaildev\ckeditor\CKEditor;
 use frontend\components\SchoolToken;
 use app\modules\certificate\CertificateModule;
 
-$this->registerJs('
-	jQuery(document).ready(function($) {
-		$("#cf-modal-load").on("click", "[data-dismiss=\"modal\"]", function() {
-			$("#cf-modal-load").toggle();
-		});
-	});
-', yii\web\View::POS_END);
-
 
 $this->registerCss('
 	.cert-icon {
@@ -70,8 +62,8 @@ $this->registerCss('
 		<div class="row mt-5 justify-content-center">
 			<div class="col-12">
 				<div class="title-heading text-center">
-					<h5 class="heading fw-semibold sub-heading text-white title-dark"><?=Yii::t('Menu', 'Search by student address')?></h5>
-					<p class="text-white-50 para-desc mx-auto mb-0"><?=Yii::t('Frontend', "Enter the address of the student's cryptocurrency wallet to see their certificates")?></p>
+					<h5 class="heading fw-semibold sub-heading text-white title-dark"><?=$bigTitle?></h5>
+					<p class="text-white-50 para-desc mx-auto mb-0"><?=$smallTitle?></p>
 				</div>
 			</div><!--end col-->
 		</div><!--end row-->
@@ -133,32 +125,43 @@ $this->registerCss('
 		</div><!--end row-->
 	</div><!--end container-->
 	
-	<?php $count = 0?>
-	<?php $certificates = $model->searchUserNftAddress(); ?>
-	<?php $count = !is_bool($certificates) ? count($certificates) : $count; ?>
-	<?php //$tabTitle = Yii::t('Frontend', 'Certificates'); ?>
-	<?php $tabTitle = $count . ' ' . Yii::t('Frontend', 'certificates found!'); ?>
+	<?php 
+		
+		$count = 0;
+		$certificates = $model->searchUserNftAddress();
+		$count = !is_bool($certificates) ? count($certificates) : $count;
+		$tabTitle = $count . ' ' . Yii::t('Frontend', 'certificates found!');
+		
+		$schools = $model->searchUserSchools();
+		$countSchools = 0;
+		$countSchools = !is_bool($schools) ? count($schools) : $countSchools;
+		$tabSchoolTitle = $countSchools . ' ' . Yii::t('Frontend', 'education organizations found!');
+		
+		print_r("<pre>");
+		// print_r($schools);
+		print_r("</pre>");
+
+	?>
 
 	<?php //die(print_r($certificates, true))?>
 
 	<div class="container mt-5">
 		<div class="row">
 
-			<div id="searchblock" class="col-12">
-				<?php if (empty($certificates) || !is_array($certificates)) : ?>
-					<?php if (!empty($model->user_nft_address) && ($count == 0)) : ?>
-						<div class="alert alert-danger d-none" role="alert">
-							<?=Yii::t('Frontend', 'Certificates not found')?>
-						</div>
-					<?php endif; ?>
-				<?php endif; ?>
-			</div>
+			<div id="searchblock" class="col-12 pt-3"></div>
 
 			<div class="col-12">
 				<ul class="nav nav-tabs border-bottom" id="vwTab" role="tablist">
-					<li class="nav-item" role="presentation">
-						<button class="nav-link active" id="cert-tab" data-bs-toggle="tab" data-bs-target="#cert-item" type="button" role="tab" aria-controls="cert-item" aria-selected="true"><?php echo($tabTitle)?></button>
-					</li>
+					<?php if (!empty($certificates) && is_array($certificates)) : ?>
+						<li class="nav-item" role="presentation">
+							<button class="nav-link active" id="cert-tab" data-bs-toggle="tab" data-bs-target="#cert-item" type="button" role="tab" aria-controls="cert-item" aria-selected="true"><?php echo($tabTitle)?></button>
+						</li>
+					<?php endif ?>
+					<?php if (!empty($schools) && is_array($schools)) : ?>
+						<li class="nav-item" role="presentation">
+							<button class="nav-link <?php if (empty($certificates) || !is_array($certificates)) { echo("active"); } ?>" id="schools-tab" data-bs-toggle="tab" data-bs-target="#schools-item" type="button" role="tab" aria-controls="schools-item" aria-selected="true"><?php echo($tabSchoolTitle)?></button>
+						</li>
+					<?php endif ?>
 				</ul>
 
 				 <div class="tab-content mt-4 pt-2" id="vwTabContent">
@@ -190,18 +193,18 @@ $this->registerCss('
 								<?php foreach ($certificates as $certificate) { ?>
 								
 									<?php
-									$href_to_token_mainnet = '<a href="javascript:void(0)" class="icon cert-icon cert-icon-disable" title="'.Yii::t('Frontend', 'Mainnet').'" data-bs-toggle="tooltip" data-bs-placement="top"><i class="fa fa-wifi"></i></a>';
+									$href_to_token_mainnet = '<a href="javascript:void(0)" class="icon cert-icon cert-icon-disable" title="'.Yii::t('Frontend', 'Mainnet').'" data-bs-toggle="tooltip" data-bs-placement="top">M<i class="fa fa-wifi"></i></a>';
 									
-									$href_to_token_testnet = '<a href="javascript:void(0)" class="icon cert-icon cert-icon-disable" title="'.Yii::t('Frontend', 'Testnet').'" data-bs-toggle="tooltip" data-bs-placement="top"><i class="fa fa-wifi"></i></a>';
+									$href_to_token_testnet = '<a href="javascript:void(0)" class="icon cert-icon cert-icon-disable" title="'.Yii::t('Frontend', 'Testnet').'" data-bs-toggle="tooltip" data-bs-placement="top">T<i class="fa fa-wifi"></i></a>';
 									
 									$hash = Certificate::getHashCertificate($certificate['id_client'], $certificate['id_certificate']);
 
 									if (!empty($certificate['minted_on_mainnet'])) {
-										$href_to_token_mainnet = '<a href="'.SchoolToken::MAINNET_BSCSCAN_ADDRESS . $certificate['minted_by_contract_mainnet'] . '?a=' . $certificate['id_nft_token_mainnet'].'" class="icon cert-icon cert-icon-disable" title="'.Yii::t('Frontend', 'Mainnet').'" data-bs-toggle="tooltip" data-bs-placement="top" target="_blank"><i class="fa fa-wifi"></i></a>';
+										$href_to_token_mainnet = '<a href="'.SchoolToken::MAINNET_BSCSCAN_ADDRESS . $certificate['minted_by_contract_mainnet'] . '?a=' . $certificate['id_nft_token_mainnet'].'" class="icon cert-icon cert-icon" title="'.Yii::t('Frontend', 'Mainnet').'" data-bs-toggle="tooltip" data-bs-placement="top" target="_blank">M<i class="fa fa-wifi"></i></a>';
 									}
 								
 									if (!empty($certificate['minted_on_testnet'])) {
-										$href_to_token_testnet = '<a href="'.SchoolToken::TESTNET_BSCSCAN_ADDRESS . $certificate['minted_by_contract_testnet'] . '?a=' . $certificate['id_nft_token_testnet'].'" class="icon cert-icon cert-icon-disable" title="'.Yii::t('Frontend', 'Testnet').'" data-bs-toggle="tooltip" data-bs-placement="top" target="_blank"><i class="fa fa-wifi"></i></a>';
+										$href_to_token_testnet = '<a href="'.SchoolToken::TESTNET_BSCSCAN_ADDRESS . $certificate['minted_by_contract_testnet'] . '?a=' . $certificate['id_nft_token_testnet'].'" class="icon cert-icon cert-icon" title="'.Yii::t('Frontend', 'Testnet').'" data-bs-toggle="tooltip" data-bs-placement="top" target="_blank">T<i class="fa fa-wifi"></i></a>';
 									}
 									
 									$name = trim($certificate['name'].' '.$certificate['surname']);
@@ -269,6 +272,75 @@ $this->registerCss('
 								<?php } ?>
 								
 							</div>
+								
+							<?php } ?>
+						
+					</div>
+					<div class="tab-pane fade show" id="schools-item" role="tabpanel" aria-labelledby="schools-item">
+						
+						
+					
+							<?php if (!empty($schools) && is_array($schools)) { ?>
+							
+								<div class="row row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 g-4">
+									
+									<?php foreach ($schools as $school) { ?>
+									
+										<?php
+
+										$href_to_school_token_mainnet = '<a href="javascript:void(0)" class="icon cert-icon cert-icon-disable" title="'.Yii::t('Frontend', 'Mainnet').'" data-bs-toggle="tooltip" data-bs-placement="top">M<i class="fa fa-wifi"></i></a>';
+										
+										$href_to_school_token_testnet = '<a href="javascript:void(0)" class="icon cert-icon cert-icon-disable" title="'.Yii::t('Frontend', 'Testnet').'" data-bs-toggle="tooltip" data-bs-placement="top">T<i class="fa fa-wifi"></i></a>';
+
+										if (!empty($school->school_nft_address_mainnet)) {
+											$href_to_school_token_mainnet = '<a href="'.SchoolToken::MAINNET_BSCSCAN_ADDRESS . $school->school_nft_address_mainnet . '" class="icon cert-icon cert-icon" title="'.Yii::t('Frontend', 'Mainnet').'" data-bs-toggle="tooltip" data-bs-placement="top" target="_blank">M<i class="fa fa-wifi"></i></a>';
+										}
+									
+										if (!empty($school->school_nft_address_testnet)) {
+											$href_to_school_token_testnet = '<a href="'.SchoolToken::TESTNET_BSCSCAN_ADDRESS . $school->school_nft_address_testnet . '" class="icon cert-icon cert-icon" title="'.Yii::t('Frontend', 'Testnet').'" data-bs-toggle="tooltip" data-bs-placement="top" target="_blank">T<i class="fa fa-wifi"></i></a>';
+										}
+										
+										$school_name = trim($school->school_name);
+										$school_web_site = trim($school->web_site);
+
+										if (empty($school_name)) {
+											$school_name = $school->identify_name;
+										}
+
+										if (!empty($school_web_site)) {
+											$school_name = "<a target='_blank' href='" . $school_web_site . "'>" .Yii::t('Frontend', 'Verified by') . ': ' . $school_name . "</a>";
+										}
+
+										$image_src = "/upload/default.jpg";
+										
+										if (!empty($school->image)) {
+											$image_src = "/upload/client/" . md5($school->id) . '/' . $school->image;
+										}
+
+										?>
+										<div class="col">
+											<div class="card nft-items nft-primary rounded-md shadow overflow-hidden mb-1 p-3">
+												<div class="d-flex justify-content-end">					
+													<span>
+														<?=$href_to_school_token_mainnet?>
+														<?=$href_to_school_token_testnet?>
+													</span>
+												</div> 
+												<div class="mx-auto nft-image rounded-md position-relative overflow-hidden cert-block-text" style="max-height: 170px;">
+													<img src="<?=$image_src?>" class="img-fluid" alt="">
+												</div>
+												<div class="card-body content position-relative p-0">
+													<div class="justify-content-between mt-2">
+														<div class="text-dark small"><?=$school_name?></div>
+														<div class="text-dark small"><?=$school_web_site?></div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+									<?php } ?>
+									
+								</div>
 								
 							<?php } ?>
 						

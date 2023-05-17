@@ -1,26 +1,14 @@
-/*
-Navicat MySQL Data Transfer
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
-Source Server         : MySQL Server
-Source Server Version : 50505
-Source Host           : 148.251.81.84:3306
-Source Database       : 001_ctfnpro_db
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
-Target Server Type    : MYSQL
-Target Server Version : 50505
-File Encoding         : 65001
 
-Date: 2023-05-12 16:36:23
-*/
-
-SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for `certificate`
--- ----------------------------
-DROP TABLE IF EXISTS `certificate`;
 CREATE TABLE `certificate` (
-  `id_certificate` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID Certificate',
+  `id_certificate` int(11) NOT NULL COMMENT 'ID Certificate',
   `id_client` int(11) NOT NULL DEFAULT '0' COMMENT 'ID Клиента',
   `name` varchar(255) DEFAULT '' COMMENT 'Name',
   `surname` varchar(255) DEFAULT '' COMMENT 'Фамилия',
@@ -47,10 +35,16 @@ CREATE TABLE `certificate` (
   `burned_on_mainnet` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Флаг удаления сертификата на mainnet',
   `burned_on_testnet` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Флаг удаления сертификата на testnet',
   `date_burned_on_mainnet` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата удаления сертификата на mainnet',
-  `date_burned_on_testnet` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата удаления сертификата на testnet',
-  PRIMARY KEY (`id_certificate`)
+  `date_burned_on_testnet` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата удаления сертификата на testnet'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ----------------------------
--- Records of certificate
--- ----------------------------
+
+ALTER TABLE `certificate`
+  ADD PRIMARY KEY (`id_certificate`);
+
+
+ALTER TABLE `certificate`
+  MODIFY `id_certificate` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID Certificate';
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

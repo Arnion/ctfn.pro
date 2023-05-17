@@ -11,8 +11,8 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
 	'language'=>'ru-RU',
-	'name' => '',
-	'homeUrl' => '',
+	'name' => 'Панель управления',
+	'homeUrl' => '', //https://admin.example.com
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [ 
@@ -42,10 +42,10 @@ return [
             ],
         ],   
 		'request' => [
-            'csrfParam' => '',
+            'csrfParam' => '_csrf-backend',
 			'enableCookieValidation' => true,
             'enableCsrfValidation' => true,
-            'cookieValidationKey' => '',
+            'cookieValidationKey' => 'some_random_key',
         ],
 		'user' => [
 			'identityClass' => 'backend\models\Admins',
@@ -61,7 +61,7 @@ return [
             'name' => '',
 			'cookieParams' => [
                 'httpOnly' => true,
-				'sameSite' => '',
+				'sameSite' => 'None',
 				'secure' => true,
             ],
         ],
@@ -91,10 +91,10 @@ return [
         ],
 		'db' => [
 			'class' => 'yii\db\Connection',
-			'dsn' => '',
+			'dsn' => 'mysql:host=localhost;dbname=',
 			'username' => '',
 			'password' => '',
-			'charset' => '',
+			'charset' => 'utf8',
 			'tablePrefix' => '',
 		],
 		'i18n' => [

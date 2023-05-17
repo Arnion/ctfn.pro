@@ -79,9 +79,16 @@ class DefaultController extends PublicController
 
 		$model = new CertificateWork;
 		$model->setAttributes($modelCertificate->attributes, false);
+		
+		$title = Yii::t('Menu', 'View certificate | CTFN — NFT-certificates for educational organizations');
+		$bigTitle =  Yii::t('Frontend', 'View certificate');
+		$smallTitle = Yii::t('Frontend', "View certificate data on ctfn.pro");
 
 		return $this->render('view_address', [
 			'model' => $model,
+			'title' => $title,
+			'bigTitle' => $bigTitle,
+			'smallTitle' => $smallTitle,
 		]);
 	}
 
@@ -92,9 +99,16 @@ class DefaultController extends PublicController
 		if (Yii::$app->request->post()) {
 			$model->load(Yii::$app->request->post());
 		}
+		
+		$title = Yii::t('Menu', 'Verify NFT-certificate | CTFN — NFT-certificates for educational organizations');
+		$bigTitle =  Yii::t('Frontend', 'Verify NFT-certificate');
+		$smallTitle = Yii::t('Frontend', "Here you can verify NFT-certificate by token address and token id");
 
 		return $this->render('contract', [
 			'model' => $model,
+			'title' => $title,
+			'bigTitle' => $bigTitle,
+			'smallTitle' => $smallTitle,
 		]);
 	}
 
@@ -119,8 +133,15 @@ class DefaultController extends PublicController
 			$model->load(Yii::$app->request->post());
 		}
 
+		$title = Yii::t('Menu', 'Search by student address | CTFN — NFT-certificates for educational organizations');
+		$bigTitle =  Yii::t('Frontend', 'Search by student address');
+		$smallTitle = Yii::t('Frontend', "Enter the address of the student's cryptocurrency wallet to see their certificates");
+
 		return $this->render('address', [
 			'model' => $model,
+			'title' => $title,
+			'bigTitle' => $bigTitle,
+			'smallTitle' => $smallTitle,
 		]);
     }
 	

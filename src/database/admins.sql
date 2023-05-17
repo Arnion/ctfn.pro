@@ -1,13 +1,14 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 
-SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for `admins`
--- ----------------------------
-DROP TABLE IF EXISTS `admins`;
 CREATE TABLE `admins` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Первичный ключ',
+  `id` int(11) NOT NULL COMMENT 'Первичный ключ',
   `role` int(11) NOT NULL DEFAULT '2' COMMENT 'Роль',
   `login` varchar(255) NOT NULL COMMENT 'Логин',
   `password_hash` varchar(255) NOT NULL COMMENT 'Пароль',
@@ -31,20 +32,26 @@ CREATE TABLE `admins` (
   `ban` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Признак бана',
   `date_ban` datetime NOT NULL COMMENT 'Дата бана',
   `active` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Признак активации',
-  `comment` longtext NOT NULL COMMENT 'Дополнительные комментарии',
-  PRIMARY KEY (`id`),
-  KEY `role` (`role`) USING BTREE,
-  KEY `login` (`login`) USING BTREE,
-  KEY `date_create` (`creation_date`) USING BTREE,
-  KEY `id_country` (`id_country`) USING BTREE,
-  KEY `zip_code` (`zip_code`) USING BTREE,
-  KEY `ip_client` (`ip_client`) USING BTREE,
-  KEY `deleted` (`deleted`) USING BTREE,
-  KEY `ban` (`ban`) USING BTREE,
-  KEY `date_ban` (`date_ban`) USING BTREE,
-  KEY `active` (`active`) USING BTREE
+  `comment` longtext NOT NULL COMMENT 'Дополнительные комментарии'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of admins
--- ----------------------------
+
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `role` (`role`) USING BTREE,
+  ADD KEY `login` (`login`) USING BTREE,
+  ADD KEY `date_create` (`creation_date`) USING BTREE,
+  ADD KEY `id_country` (`id_country`) USING BTREE,
+  ADD KEY `zip_code` (`zip_code`) USING BTREE,
+  ADD KEY `ip_client` (`ip_client`) USING BTREE,
+  ADD KEY `deleted` (`deleted`) USING BTREE,
+  ADD KEY `ban` (`ban`) USING BTREE,
+  ADD KEY `date_ban` (`date_ban`) USING BTREE,
+  ADD KEY `active` (`active`) USING BTREE;
+
+
+ALTER TABLE `admins`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Первичный ключ';
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

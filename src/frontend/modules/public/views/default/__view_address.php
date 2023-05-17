@@ -10,14 +10,6 @@ use app\modules\certificate\CertificateModule;
 use app\modules\certificate\models\CertificateWork;
 use frontend\components\SchoolToken;
 
-$this->registerJs('
-	jQuery(document).ready(function($) {
-		$("#cf-modal-load").on("click", "[data-dismiss=\"modal\"]", function() {
-			$("#cf-modal-load").toggle();
-		});
-	});
-', yii\web\View::POS_END);
-
 
 $this->registerCss('
 	.cert-icon {
@@ -66,8 +58,8 @@ $this->registerCss('
 		<div class="row mt-5 justify-content-center">
 			<div class="col-12">
 				<div class="title-heading text-center">
-					<h5 class="heading fw-semibold sub-heading text-white title-dark"><?=Yii::t('Menu', 'View Certificate')?></h5>
-					<p class="text-white-50 para-desc mx-auto mb-0"><?=Yii::t('Frontend', 'Certificate data on ctfn.pro')?></p>
+					<h5 class="heading fw-semibold sub-heading text-white title-dark"><?=$bigTitle?></h5>
+					<p class="text-white-50 para-desc mx-auto mb-0"><?=$smallTitle?></p>
 				</div>
 			</div><!--end col-->
 		</div><!--end row-->

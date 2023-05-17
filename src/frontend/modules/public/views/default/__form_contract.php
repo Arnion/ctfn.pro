@@ -9,16 +9,10 @@ use mihaildev\ckeditor\CKEditor;
 use app\modules\certificate\CertificateModule;
 use frontend\components\SchoolToken;
 
-
-$this->registerJsFile('/js/ethers.umd.min.js', ['position' => yii\web\View::POS_END]);
 $this->registerJsFile('/js/schoolToken.js', ['position' => yii\web\View::POS_END]);
 
 $this->registerJs('
 	jQuery(document).ready(function($) {
-		$("#cf-modal-load").on("click", "[data-dismiss=\"modal\"]", function() {
-			resetModal();
-		});
-
 		SearchButton();
 	});
 
@@ -29,72 +23,13 @@ $this->registerJs('
 		knownError: false,
 	};
 
-	function showModal(className, title, body) {
-
-		let modalElement = $("#cf-modal-load");
-		let modalTitleElement = $(modalElement).find(".modal-title");
-		let modalContentElement = $(modalElement).find(".modal-content");
-		let modalBodyElement = $(modalElement).find(".modal-body"); 
-
-		$(modalTitleElement).text("");
-		$(modalTitleElement).removeClass();
-		$(modalTitleElement).addClass("modal-title big-text-overflow");
-
-		$(modalBodyElement).text("");
-		$(modalBodyElement).removeClass();
-		$(modalBodyElement).addClass("modal-body big-text-overflow");
-		
-		$(modalContentElement).removeClass();
-		$(modalContentElement).addClass("modal-content");
-		
-		let alertClassName = "alert alert-light";
-		
-		if (className == "primary") {
-			alertClassName = "alert alert-primary";
-			$(modalTitleElement).addClass("text-white");
-			$(modalBodyElement).addClass("text-white");
-		} else if (className == "secondary") {
-			alertClassName = "alert alert-secondary";
-		} else if (className == "success") {
-			alertClassName = "alert alert-success";
-		} else if (className == "danger") {
-			alertClassName = "alert alert-danger";
-		} else if (className == "warning") {
-			alertClassName = "alert alert-warning";
-		} else if (className == "info") {
-			alertClassName = "alert alert-info";
-		} else if (className == "light") {
-			alertClassName = "alert alert-light";
-		} else if (className == "dark") {
-			alertClassName = "alert alert-dark";
+	async function beforeProccess(is_mainnet) {
+		let networkIsSet = await setNetwork(is_mainnet);
+		if (networkIsSet) {
+			await printWalletData();
+			return true;
 		}
-		
-		$(modalContentElement).addClass(alertClassName);
-
-		$(modalTitleElement).text(title);
-		$(modalBodyElement).text(body);
-
-		$("#cf-modal-load").toggle();
-	}
-
-	function resetModal() {
-
-		let modalElement = $("#cf-modal-load");
-		let modalTitleElement = $(modalElement).find(".modal-title");
-		let modalContentElement = $(modalElement).find(".modal-content");
-		let modalBodyElement = $(modalElement).find(".modal-body"); 
-
-		$(modalTitleElement).text("");
-		$(modalTitleElement).removeClass();
-		$(modalTitleElement).addClass("modal-title");
-
-		$(modalBodyElement).text("");
-		$(modalBodyElement).removeClass();
-		$(modalBodyElement).addClass("modal-body");
-		
-		$(modalContentElement).removeClass();
-		$(modalContentElement).addClass("modal-content");
-
+		return false;
 	}
 
 	function SearchButton() {
@@ -148,6 +83,8 @@ $this->registerJs('
 			
 			$("#searchTokenSpinner").show();
 
+
+
 			let result = await processSearchToken(contractAddress, tokenId, is_mainnet);
 
 			if (result) {
@@ -177,6 +114,10 @@ $this->registerJs('
 
 		
 		try {
+
+			if (await beforeProccess(is_mainnet) === false) {
+				return false;
+			}
 
 			let metaURI = await searchToken(contractAddress, tokenId, is_mainnet);
 			console.log("metaURI", metaURI);
@@ -514,8 +455,8 @@ $this->registerCss('
 		<div class="row mt-5 justify-content-center">
 			<div class="col-12">
 				<div class="title-heading text-center">
-					<h5 class="heading fw-semibold sub-heading text-white title-dark"><?=Yii::t('Menu', 'Verify NFT-certificate')?></h5>
-					<p class="text-white-50 para-desc mx-auto mb-0"><?=Yii::t('Frontend', 'Here you can verify NFT-certificate by token address and token id')?></p>
+					<h5 class="heading fw-semibold sub-heading text-white title-dark"><?=$bigTitle?></h5>
+					<p class="text-white-50 para-desc mx-auto mb-0"><?=$smallTitle?></p>
 				</div>
 			</div><!--end col-->
 		</div><!--end row-->

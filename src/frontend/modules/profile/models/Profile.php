@@ -304,18 +304,18 @@ class Profile extends Model
 		$html = '';
 		foreach($modelCertificates as $model) {
 
-			$href_to_token_mainnet = '<a href="javascript:void(0)" class="icon cert-icon cert-icon-disable" title="'.Yii::t('Frontend', 'Mainnet').'" data-bs-toggle="tooltip" data-bs-placement="top"><i class="fa fa-wifi"></i></a>';
+			$href_to_token_mainnet = '<a href="javascript:void(0)" class="icon cert-icon cert-icon-disable" title="'.Yii::t('Frontend', 'Mainnet').'" data-bs-toggle="tooltip" data-bs-placement="top">M<i class="fa fa-wifi"></i></a>';
 			
-			$href_to_token_testnet = '<a href="javascript:void(0)" class="icon cert-icon cert-icon-disable" title="'.Yii::t('Frontend', 'Testnet').'" data-bs-toggle="tooltip" data-bs-placement="top"><i class="fa fa-wifi"></i></a>';
+			$href_to_token_testnet = '<a href="javascript:void(0)" class="icon cert-icon cert-icon-disable" title="'.Yii::t('Frontend', 'Testnet').'" data-bs-toggle="tooltip" data-bs-placement="top">T<i class="fa fa-wifi"></i></a>';
 			
 			$hash = Certificate::getHashCertificate($model->id_client, $model->id_certificate);
 
 			if (!empty($model->minted_on_mainnet)) {
-				$href_to_token_mainnet = '<a href="'.SchoolToken::MAINNET_BSCSCAN_ADDRESS . $model->minted_by_contract_mainnet . '?a=' . $model->id_nft_token_mainnet.'" class="icon cert-icon cert-icon-disable" title="'.Yii::t('Frontend', 'Mainnet').'" data-bs-toggle="tooltip" data-bs-placement="top" target="_blank"><i class="fa fa-wifi"></i></a>';
+				$href_to_token_mainnet = '<a href="'.SchoolToken::MAINNET_BSCSCAN_ADDRESS . $model->minted_by_contract_mainnet . '?a=' . $model->id_nft_token_mainnet.'" class="icon cert-icon cert-icon" title="'.Yii::t('Frontend', 'Mainnet').'" data-bs-toggle="tooltip" data-bs-placement="top" target="_blank">M<i class="fa fa-wifi"></i></a>';
 			}
 		
 			if (!empty($model->minted_on_testnet)) {
-				$href_to_token_testnet = '<a href="'.SchoolToken::TESTNET_BSCSCAN_ADDRESS . $model->minted_by_contract_testnet . '?a=' . $model->id_nft_token_testnet.'" class="icon cert-icon cert-icon-disable" title="'.Yii::t('Frontend', 'Testnet').'" data-bs-toggle="tooltip" data-bs-placement="top" target="_blank"><i class="fa fa-wifi"></i></a>';
+				$href_to_token_testnet = '<a href="'.SchoolToken::TESTNET_BSCSCAN_ADDRESS . $model->minted_by_contract_testnet . '?a=' . $model->id_nft_token_testnet.'" class="icon cert-icon cert-icon" title="'.Yii::t('Frontend', 'Testnet').'" data-bs-toggle="tooltip" data-bs-placement="top" target="_blank">T<i class="fa fa-wifi"></i></a>';
 			}
 			
 			$name = trim($model->name.' '.$model->surname);

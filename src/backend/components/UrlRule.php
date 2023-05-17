@@ -50,7 +50,7 @@ class UrlRule extends BaseObject implements UrlRuleInterface
 	 */
 	private function checkParams($url) 
 	{
-		$pattern = '/(\?v=|\?search=|\?id=|\?_pjax=|\?sort=|\?refresh=|\?token=|\?authkey=|\?page=)/i';
+		$pattern = '/(\?v=|\?search=|\?id=|\?_pjax=|\?sort=|\?refresh=|\?token=|\?authkey=|\?page=|\?lang=)/i';
 		if (preg_match($pattern, $url)) {
 			return false;
 		} 

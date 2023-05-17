@@ -1,17 +1,6 @@
 <?php
-$this->title = Yii::t('Menu', 'Certificate Edit'); 
+$this->title = $title; 
 
-$this->registerJs('
-	jQuery(document).ready(function($) {
-		$("#cf-modal-load").on("click", "[data-dismiss=\"modal\"]", function() {
-			$("#cf-modal-load").toggle();
-		});
-	});
-', yii\web\View::POS_END);
-
-$this->registerCss('
-	
-');
 ?>
 
 <?= $this->render(
@@ -43,6 +32,8 @@ $this->registerCss('
 
 	<?= $this->render('__form', [
 		'model' => $model,
+		'bigTitle' => $bigTitle,
+		'smallTitle' => $smallTitle,
 	]) ?>
 			
 </div>

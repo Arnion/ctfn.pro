@@ -30,10 +30,6 @@ if (!empty($client->is_mainnet)) {
 
 $this->registerJs('
 	jQuery(document).ready(function($) {
-		$("#cf-modal-load").on("click", "[data-dismiss=\"modal\"]", function() {
-			resetModal();
-		});
-
 		createTokenButton();
 	});
 
@@ -41,74 +37,6 @@ $this->registerJs('
 		loading: false,
 		reloadTokenBlock: false
 	};
-
-	function showModal(className, title, body) {
-
-		let modalElement = $("#cf-modal-load");
-		let modalTitleElement = $(modalElement).find(".modal-title");
-		let modalContentElement = $(modalElement).find(".modal-content");
-		let modalBodyElement = $(modalElement).find(".modal-body"); 
-
-		$(modalTitleElement).text("");
-		$(modalTitleElement).removeClass();
-		$(modalTitleElement).addClass("modal-title big-text-overflow");
-
-		$(modalBodyElement).text("");
-		$(modalBodyElement).removeClass();
-		$(modalBodyElement).addClass("modal-body big-text-overflow");
-		
-		$(modalContentElement).removeClass();
-		$(modalContentElement).addClass("modal-content");
-		
-		let alertClassName = "alert alert-light";
-		
-		if (className == "primary") {
-			alertClassName = "alert alert-primary";
-			$(modalTitleElement).addClass("text-white");
-			$(modalBodyElement).addClass("text-white");
-		} else if (className == "secondary") {
-			alertClassName = "alert alert-secondary";
-		} else if (className == "success") {
-			alertClassName = "alert alert-success";
-		} else if (className == "danger") {
-			alertClassName = "alert alert-danger";
-		} else if (className == "warning") {
-			alertClassName = "alert alert-warning";
-		} else if (className == "info") {
-			alertClassName = "alert alert-info";
-		} else if (className == "light") {
-			alertClassName = "alert alert-light";
-		} else if (className == "dark") {
-			alertClassName = "alert alert-dark";
-		}
-		
-		$(modalContentElement).addClass(alertClassName);
-
-		$(modalTitleElement).text(title);
-		$(modalBodyElement).text(body);
-
-		$("#cf-modal-load").toggle();
-	}
-
-	function resetModal() {
-
-		let modalElement = $("#cf-modal-load");
-		let modalTitleElement = $(modalElement).find(".modal-title");
-		let modalContentElement = $(modalElement).find(".modal-content");
-		let modalBodyElement = $(modalElement).find(".modal-body"); 
-
-		$(modalTitleElement).text("");
-		$(modalTitleElement).removeClass();
-		$(modalTitleElement).addClass("modal-title");
-
-		$(modalBodyElement).text("");
-		$(modalBodyElement).removeClass();
-		$(modalBodyElement).addClass("modal-body");
-		
-		$(modalContentElement).removeClass();
-		$(modalContentElement).addClass("modal-content");
-
-	}
 
 	function createTokenButton() {
 		$("#mintToken").off("click");
@@ -135,8 +63,13 @@ $this->registerJs('
 	async function processMintToken() {
 		let studentAddress = "'.$model->user_nft_address.'";
 		let newTokenUri = "'.$model->getCertificateMetaUrl().'";
+		let is_mainnet = "'.$client->is_mainnet.'";
 		try {
-			return await mintToken(studentAddress, newTokenUri);
+
+			if (await beforeProccess(is_mainnet) === true) {
+				return await mintToken(studentAddress, newTokenUri);
+			}
+			
 		} catch(error) {
 			console.log(error);
 
@@ -145,6 +78,16 @@ $this->registerJs('
 			}
 
 			showModal("danger", "' . Yii::t('Frontend', 'Error') . '", error);
+		}
+		return false;
+	}
+
+	async function beforeProccess(is_mainnet) {
+		console.log(is_mainnet);
+		let networkIsSet = await setNetwork(is_mainnet);
+		if (networkIsSet) {
+			await printWalletData();
+			return true;
 		}
 		return false;
 	}
@@ -158,18 +101,17 @@ $this->registerJs('
 		
 		const {chainId} = await provider.getNetwork();
 
+		const adminObj = ' . $jsAdminObj . ';
+		const contractAddress = "'. $contractAddress .'";
+
 		let chainLabels = [];
 		chainLabels[97] = "BNB Testnet";
 		chainLabels[56] = "BNB Mainnet";
-
-		const adminObj = ' . $jsAdminObj . ';
-		const contractAddress = "'. $contractAddress .'";
-		const BNBChainId = '. $chainId .';
 		
-		if (chainId != BNBChainId) {
-			throw "'.Yii::t('Frontend', 'Error! Change network to ').'" + chainLabels[BNBChainId] + ". (ChainID = " + BNBChainId + ")";
+		if (chainId != adminObj.CHAIN_ID) {
+			throw "'.Yii::t('Frontend', 'Error! Change network to ').'" + chainLabels[adminObj.CHAIN_ID] + ". (ChainID = " + adminObj.CHAIN_ID + ")";
 		}
-
+		
 		if (!ethers.utils.isAddress(studentAddress)) {
 			throw "'.Yii::t('Frontend', 'Error! User address is invalid ').'";
 		}
@@ -278,8 +220,8 @@ $this->registerCss('
 		<div class="row mt-5 justify-content-center">
 			<div class="col-12">
 				<div class="title-heading text-center">
-					<h5 class="heading fw-semibold sub-heading text-white title-dark"><?=Yii::t('Menu', 'Manage Certificates')?></h5>
-					<p class="text-white-50 para-desc mx-auto mb-0"><?=Yii::t('Frontend', 'Manage your certificates')?></p>
+					<h5 class="heading fw-semibold sub-heading text-white title-dark"><?=$bigTitle?></h5>
+					<p class="text-white-50 para-desc mx-auto mb-0"><?=$smallTitle?></p>
 				</div>
 			</div><!--end col-->
 		</div><!--end row-->

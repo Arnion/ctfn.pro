@@ -16,6 +16,15 @@ class SearchCertificate extends Model
 {
 	public $user_nft_address;
 	public $verifyCode;
+
+	public $school_name;
+	public $web_site;
+	
+	public $id;
+	public $image;
+	public $school_nft_address_testnet;
+	public $school_nft_address_mainnet;
+	public $identify_name;
 	
     /**
      * {@inheritdoc}
@@ -53,6 +62,23 @@ class SearchCertificate extends Model
 		}
 		
 		return $certificates;
+	}
+
+	/**
+	 * searchUserSchools()
+	 */
+	public function searchUserSchools()
+	{
+		if (empty($this->user_nft_address)) {
+			return false;
+		}
+		
+		$schools = Certificate::searchUserSchools($this->user_nft_address);
+		if (empty($schools)) {
+			return false;
+		}
+		
+		return $schools;
 	}
 	
 	

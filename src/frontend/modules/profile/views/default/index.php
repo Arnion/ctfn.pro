@@ -10,4 +10,4 @@ $err = '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
 <address>Apache/2.2.22 (Debian) Server at Port 80</address>
 </body></html>';
 
-exit('$err');
+exit($err);

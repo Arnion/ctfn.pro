@@ -142,8 +142,11 @@ class SiteController extends Controller
 			throw new NotFoundHttpException();
 		}
 
-		 return $this->render('index', [
+		$indexPage = true;
+
+		return $this->render('index', [
             'model' => $model,
+            'indexPage' => $indexPage,
         ]);
     }
 

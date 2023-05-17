@@ -4,16 +4,7 @@ use yii\bootstrap\Modal;
 use common\widgets\Alert;
 use app\modules\certificate\CertificateModule;
 
-$this->title = Yii::t('Menu', 'Certificate View'); 
-
-$this->registerJs('
-	jQuery(document).ready(function($) {
-		$("#cf-modal-load").on("click", "[data-dismiss=\"modal\"]", function() {
-			$("#cf-modal-load").toggle();
-		});
-		
-	});
-', yii\web\View::POS_END);
+$this->title = $title; 
 ?>
 
 <?= $this->render(	

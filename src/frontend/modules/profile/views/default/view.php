@@ -8,14 +8,10 @@ use yii\bootstrap5\ActiveForm;
 use mihaildev\ckeditor\CKEditor;
 use app\modules\profile\ProfileModule;
 
-$this->title = Yii::t('Menu', 'Profile View'); 
+$this->title = $title; 
 
 $this->registerJs('
 	jQuery(document).ready(function($) {
-		
-		$("#cf-modal-load").on("click", "[data-dismiss=\"modal\"]", function() {
-			$("#cf-modal-load").toggle();
-		});
 		
 		$("#pro-img").on("change", function(event) {
 			var image = document.getElementById("profile-image");

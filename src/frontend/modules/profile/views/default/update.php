@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\Modal;
@@ -7,7 +8,7 @@ use yii\bootstrap5\ActiveForm;
 use mihaildev\ckeditor\CKEditor;
 use app\modules\profile\ProfileModule;
 
-$this->title = Yii::t('Menu', 'Profile Edit'); 
+$this->title = $title; 
 
 $jsAdminFile = !empty($model->is_mainnet) ? "adminCtfnMainnet" : "adminCtfnTestnet";
 
@@ -18,6 +19,8 @@ if (!empty($model->is_mainnet)) {
 } else {
 	$this->registerJsFile('/js/adminctfnprotestnet.js', ['position' => yii\web\View::POS_END]);
 }
+
+// die("testView2"); //
 
 $this->registerJs('
 
@@ -51,11 +54,6 @@ $this->registerJs('
 			}
 		});
 		
-		$("#cf-modal-load").on("click", "[data-dismiss=\"modal\"]", function() {
-			resetModal();
-			$("#cf-modal-load").toggle();
-		});
-		
 		$("#pro-img").on("change", function(event) {
 			var image = document.getElementById("profile-image");
 			image.src = URL.createObjectURL(event.target.files[0]);
@@ -66,73 +64,7 @@ $this->registerJs('
 		createTokenButton();
 	});
 
-	function showModal(className, title, body) {
-
-		let modalElement = $("#cf-modal-load");
-		let modalTitleElement = $(modalElement).find(".modal-title");
-		let modalContentElement = $(modalElement).find(".modal-content");
-		let modalBodyElement = $(modalElement).find(".modal-body"); 
-
-		$(modalTitleElement).text("");
-		$(modalTitleElement).removeClass();
-		$(modalTitleElement).addClass("modal-title big-text-overflow");
-
-		$(modalBodyElement).text("");
-		$(modalBodyElement).removeClass();
-		$(modalBodyElement).addClass("modal-body big-text-overflow");
-		
-		$(modalContentElement).removeClass();
-		$(modalContentElement).addClass("modal-content");
-		
-		let alertClassName = "alert alert-light";
-		
-		if (className == "primary") {
-			alertClassName = "alert alert-primary";
-			$(modalTitleElement).addClass("text-white");
-			$(modalBodyElement).addClass("text-white");
-		} else if (className == "secondary") {
-			alertClassName = "alert alert-secondary";
-		} else if (className == "success") {
-			alertClassName = "alert alert-success";
-		} else if (className == "danger") {
-			alertClassName = "alert alert-danger";
-		} else if (className == "warning") {
-			alertClassName = "alert alert-warning";
-		} else if (className == "info") {
-			alertClassName = "alert alert-info";
-		} else if (className == "light") {
-			alertClassName = "alert alert-light";
-		} else if (className == "dark") {
-			alertClassName = "alert alert-dark";
-		}
-		
-		$(modalContentElement).addClass(alertClassName);
-
-		$(modalTitleElement).text(title);
-		$(modalBodyElement).text(body);
-
-		$("#cf-modal-load").toggle();
-	}
-
-	function resetModal() {
-
-		let modalElement = $("#cf-modal-load");
-		let modalTitleElement = $(modalElement).find(".modal-title");
-		let modalContentElement = $(modalElement).find(".modal-content");
-		let modalBodyElement = $(modalElement).find(".modal-body"); 
-
-		$(modalTitleElement).text("");
-		$(modalTitleElement).removeClass();
-		$(modalTitleElement).addClass("modal-title");
-
-		$(modalBodyElement).text("");
-		$(modalBodyElement).removeClass();
-		$(modalBodyElement).addClass("modal-body");
-		
-		$(modalContentElement).removeClass();
-		$(modalContentElement).addClass("modal-content");
-
-	}
+	
 
 	let stateObj = {
 		loading: false,
@@ -163,8 +95,13 @@ $this->registerJs('
 	
 	async function processCreateToken() {
 		let schoolName = "'.$model->identify_name.'";
+		let is_mainnet = '.$model->is_mainnet.';
 		try {
-			return await createSchoolToken(schoolName, schoolName.substring(0, 3));
+
+			if (await beforeProccess(is_mainnet) === true) {
+				return await createSchoolToken(schoolName, schoolName.substring(0, 3));
+			}
+
 		} catch(error) {
 			console.log("Error ", error);
 
@@ -179,18 +116,18 @@ $this->registerJs('
 
 	async function createSchoolToken(_schoolName, _schoolAbbr) {
 		
+		let adminObj = ' . $jsAdminFile . ';
+		
 		const provider = new ethers.providers.Web3Provider(window.ethereum); //id
 		const listAccounts = await provider.send("eth_requestAccounts", []);
 		const signer = await provider.getSigner(listAccounts[0]);
 		const signer_address = await signer.getAddress();
 		
 		const {chainId} = await provider.getNetwork();
-
+		
 		let chainLabels = [];
 		chainLabels[97] = "BNB Testnet";
 		chainLabels[56] = "BNB Mainnet";
-
-		let adminObj = ' . $jsAdminFile . ';
 		
 		if (chainId != adminObj.CHAIN_ID) {
 			throw "'.Yii::t('Frontend', 'Error! Change network to ').'" + chainLabels[adminObj.CHAIN_ID] + ". (ChainID = " + adminObj.CHAIN_ID + ")";
@@ -220,8 +157,18 @@ $this->registerJs('
 			await reloadTokenBlock();
 			createTokenButton();
 		}
-
 	}
+
+	async function beforeProccess(is_mainnet) {
+		let networkIsSet = await setNetwork(is_mainnet);
+		if (networkIsSet) {
+			await printWalletData();
+			return true;
+		}
+		return false;
+	}
+
+	////// ERROR HERE Url::toRoute(\'/profile/save\')
 
 	async function SaveCreateSchoolData(SchoolCreated) {
 		stateObj.reloadTokenBlock = false;
@@ -272,7 +219,6 @@ $this->registerJs('
 
 ', yii\web\View::POS_END);
 
-
 $this->registerCss('
 	.passwd-input {
 		width: calc(100% - 46px);
@@ -306,7 +252,10 @@ $this->registerCss('
 		overflow-wrap: break-word;
 	}
 ');
+
 ?>
+
+
 
 <?= $this->render(	
 	'@app/themes/th1/views/site/elements/__header_3.php',
@@ -342,8 +291,8 @@ $this->registerCss('
 			<div class="row mt-5 justify-content-center">
 				<div class="col-12">
 					<div class="title-heading text-center">
-						<h5 class="heading fw-semibold sub-heading text-white title-dark"><?=Yii::t('Menu', 'Profile Edit')?></h5>
-						<p class="text-white-50 para-desc mx-auto mb-0"><?=Yii::t('Frontend', 'Edit your profile')?></p>
+						<h5 class="heading fw-semibold sub-heading text-white title-dark"><?=$bigTitle?></h5>
+						<p class="text-white-50 para-desc mx-auto mb-0"><?=$smallTitle?></p>
 					</div>
 				</div><!--end col-->
 			</div><!--end row-->

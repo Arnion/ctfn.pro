@@ -14,7 +14,9 @@ use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use app\modules\profile\models\Profile;
 use app\modules\profile\components\ProfileController;
+use yii\web\Cookie;
 use frontend\components\SchoolToken;
+
 
 /**
  * Default controller for the `service` module
@@ -41,7 +43,7 @@ class DefaultController extends ProfileController
 		if (isset($_GET['lang']) && !empty($_GET['lang'])) {
 			
 			Yii::$app->language = strtolower($_GET['lang']).'-'.strtoupper($_GET['lang']);
-			Yii::$app->response->cookies->add(new \yii\web\Cookie([
+			Yii::$app->response->cookies->add(new Cookie([
 				'name' => 'lang',
 				'value' => $_GET['lang'],
 				'expire' => time() + (365 * 24 * 60),
@@ -56,7 +58,7 @@ class DefaultController extends ProfileController
 				Yii::$app->language = strtolower($lang).'-'.strtoupper($lang);
 			}
 		}
-		
+
 		parent::init();
     }
 	
@@ -82,8 +84,15 @@ class DefaultController extends ProfileController
 		$client = $this->loadModel();
 		$model->setAttributes($client->attributes, false);
 
+		$title = Yii::t('Menu', 'View profile | CTFN — NFT-certificates for educational organizations');
+		$bigTitle =  Yii::t('Frontend', 'View profile');
+		$smallTitle = Yii::t('Frontend', 'View your profile');
+
 		return $this->render('view', [
 			'model' => $model,
+			'title' => $title,
+			'bigTitle' => $bigTitle,
+			'smallTitle' => $smallTitle,
 		]);
     }
 	
@@ -115,10 +124,17 @@ class DefaultController extends ProfileController
 			}
 			
 		}
+
+		$title = Yii::t('Menu', 'Edit profile | CTFN — NFT-certificates for educational organizations');
+		$bigTitle =  Yii::t('Frontend', 'Edit profile');
+		$smallTitle = Yii::t('Frontend', 'Edit your profile');
 		
 		return $this->render('update', [
-            'model' => $model,
-        ]);
+			'model' => $model,
+			'title' => $title,
+			'bigTitle' => $bigTitle,
+			'smallTitle' => $smallTitle,
+		]);
     }
 
 

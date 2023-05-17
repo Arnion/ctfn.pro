@@ -193,25 +193,19 @@ class CertificateWork extends Model
 		$html = '';
 		$title = Yii::t("Frontend", "Mint certificate on BNB Testnet");
 		$text = Yii::t('Frontend', 'You need to deploy token first from profile page!');
-		$owner_address = Yii::t('Frontend', 'Owner address is %s'); 
-		$owner_address = sprintf($owner_address, $modelProfile->owner_nft_address_testnet);
 		
 		if (!empty($modelProfile->is_mainnet)) {
-			$title = Yii::t("Frontend", "Create token on BNB Mainnet");
-			$owner_address = sprintf($owner_address, $modelProfile->owner_nft_address_mainnet);
+			$title = Yii::t("Frontend", "Mint certificate on BNB Mainnet");
 		}
 		
-		$leadText = Yii::t('Frontend', 'Mint certificate');
 
 		$html = '
 			<div class="rounded-md shadow">
 				<div class="p-4 border-bottom">
 					<h5 class="mb-2">' . $title . '</h5>
-					<p class="mb-0">' . $owner_address . '</p>
 				</div>
 
 				<div class="p-4">
-					<h6 class="mb-0">' . $leadText . '</h6>
 					<div class="mt-4">
 						<div class="alert alert-warning">
 							' . $text . '

@@ -1,11 +1,11 @@
 <?php
 return [
 	'adminEmail' => '',
-	'platform' => '',
+	'platform' => 'ctnfpro',
 	'adminName' => '',
 	'senderEmail' => '',
-	'senderName' => 'NFT Certificates in Education',
-	'site' => '',
+	'senderName' => '',
+	'site' => '/',
 	'alert' => true,
 	'disabledsite' => true,
 	'pagination' => 30,
@@ -15,8 +15,8 @@ return [
 	'postman_domain' => '',
     'user.passwordResetTokenExpire' => 3600,
 	'user.passwordMinLength' => 8,
-	'homeUrl' => '',
-	'apiUrl' => '',
-	'adminUrl' => '',
+	'homeUrl' => '/',
+	'apiUrl' => '/',
+	'adminUrl' => '/',
 	'cert_salt' => '',
 ];

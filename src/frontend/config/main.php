@@ -12,8 +12,8 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
 	'language'=>'en-EN',
-	'name' => '',
-	'homeUrl' => '',
+	'name' => 'CTFN PRO git',
+	'homeUrl' => '/',
     'components' => [
 		 'formatter' => [
 			'class' => 'yii\i18n\Formatter',
@@ -48,18 +48,18 @@ return [
             ],
         ],
 	   'request' => [
-            'csrfParam' => '',
+            'csrfParam' => '_csrf-client',
 			'enableCookieValidation' => true,
             'enableCsrfValidation' => true,
-            'cookieValidationKey' => '',
+            'cookieValidationKey' => 'some_random_key',
         ],
         'user' => [
-            'identityClass' => '',
+            'identityClass' => 'common\models\Clients',
             'enableAutoLogin' => true,
             'identityCookie' => [
 				'name' => '', 
 				'httpOnly' => true,
-				'domain' => '',
+				'domain' => './',
 				'secure' => true,
 			],
         ],
@@ -69,7 +69,7 @@ return [
 			'cookieParams' => [
                 'httpOnly' => true,
 				'domain' => '',
-				'sameSite' => '',
+				'sameSite' => 'None',
 				'secure' => true,
             ],
         ],
@@ -101,10 +101,10 @@ return [
 		
 		'db' => [
 			'class' => 'yii\db\Connection',
-			'dsn' => '',
+			'dsn' => 'mysql:host=localhost;dbname=',
 			'username' => '',
 			'password' => '',
-			'charset' => '',
+			'charset' => 'utf8mb4',
 			'tablePrefix' => '',
 		],
 		
@@ -120,9 +120,9 @@ return [
         ],
 		
 		'hahsids' => [
-			'class' => '',
+			'class' => 'light\hashids\Hashids',
 			'salt' => '',
-			'minHashLength' => 0,
+			'minHashLength' => 6,
 			'alphabet' => ''
 		],
 		
@@ -137,7 +137,7 @@ return [
 	'modules' => [
 		'gii' => [
 			'class' => 'yii\gii\Module',
-			'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '217.28.227.34', '188.32.38.22'],
+			'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*'],
 		],
 
 		'profile' => [

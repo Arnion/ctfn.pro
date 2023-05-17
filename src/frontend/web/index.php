@@ -1,6 +1,6 @@
 <?php
 
-$np_ip_address = '5.34.127.217';
+$np_ip_address = '5.34.127.23';
 
 if(
 	$_SERVER['REMOTE_ADDR'] == '46.242.15.144' || 

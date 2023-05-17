@@ -39,6 +39,12 @@ class Certificate extends ActiveRecord
 	
 	public $school_name;
 	public $web_site;
+	
+	public $id;
+	public $image;
+	public $school_nft_address_testnet;
+	public $school_nft_address_mainnet;
+	public $identify_name;
 
 	/**
      * @inheritdoc
@@ -133,6 +139,10 @@ class Certificate extends ActiveRecord
 				t1.creation_date,
 				t1.minted_on_mainnet,
 				t1.minted_on_testnet,
+				t1.minted_by_contract_mainnet,
+				t1.minted_by_contract_testnet,
+				t1.id_nft_token_mainnet,
+				t1.id_nft_token_testnet,
 				t2.name as school_name,
 				t2.web_site
 			FROM {{001_certificate}} t1
@@ -152,6 +162,46 @@ class Certificate extends ActiveRecord
 
 		if (!empty($certificates)) {
 			return $certificates;
+		}
+		
+		return false;
+	}
+
+	/**
+	 * searchUserSchools
+	 */
+	public static function searchUserSchools($user_nft_address)
+	{
+		$sql = '
+			SELECT
+				t2.id,
+				t2.name as school_name,
+				t2.image,
+				t2.web_site,
+				t2.school_nft_address_testnet,
+				t2.school_nft_address_mainnet,
+				t2.identify_name
+			FROM {{001_certificate}} t1
+			INNER JOIN {{001_clients}} t2
+				ON t1.id_client = t2.id
+			WHERE
+				t1.user_nft_address = :user_nft_address
+				AND ( t1.minted_on_mainnet = 1 OR t1.minted_on_testnet = 1)
+				AND ( t2.deployed_to_mainnet = 1 OR t2.deployed_to_testnet = 1)
+				AND t2.deleted = :deleted
+				AND t2.active = :active
+			GROUP BY t2.id
+			ORDER BY t1.creation_date DESC
+		';
+
+		$schools = self::findBySql($sql, [
+			':deleted' => self::STATUS_NOT_DELETED,
+			':active' => 1,
+			':user_nft_address' => $user_nft_address,
+		])->all();
+
+		if (!empty($schools)) {
+			return $schools;
 		}
 		
 		return false;

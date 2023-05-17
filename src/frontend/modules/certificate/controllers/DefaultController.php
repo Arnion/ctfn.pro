@@ -81,8 +81,15 @@ class DefaultController extends CertificateController
 		
 		$model = new CertificateWork;
 
+		$title = Yii::t('Menu', 'View certificate | CTFN — NFT-certificates for educational organizations');
+		$bigTitle =  Yii::t('Frontend', 'View certificate');
+		$smallTitle = Yii::t('Frontend', 'View your certificate');
+
 		return $this->render('view', [
 			'model' => $model,
+			'title' => $title,
+			'bigTitle' => $bigTitle,
+			'smallTitle' => $smallTitle,
 		]);
     }
 	
@@ -111,8 +118,15 @@ class DefaultController extends CertificateController
 			}
 		}
 		
+		$title = Yii::t('Menu', 'Create certificate | CTFN — NFT-certificates for educational organizations');
+		$bigTitle =  Yii::t('Frontend', 'Create certificate');
+		$smallTitle = Yii::t('Frontend', 'Create your certificate');
+
 		return $this->render('create', [
             'model' => $model,
+			'title' => $title,
+			'bigTitle' => $bigTitle,
+			'smallTitle' => $smallTitle,
         ]);
     }
 	
@@ -148,9 +162,16 @@ class DefaultController extends CertificateController
 				
 			}
 		}
+
+		$title = Yii::t('Menu', 'Update certificate | CTFN — NFT-certificates for educational organizations');
+		$bigTitle =  Yii::t('Frontend', 'Update certificate');
+		$smallTitle = Yii::t('Frontend', 'Update your certificate');
 		
 		return $this->render('update', [
             'model' => $model,
+			'title' => $title,
+			'bigTitle' => $bigTitle,
+			'smallTitle' => $smallTitle,
         ]);
     }
 	
