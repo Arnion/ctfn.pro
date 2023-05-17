@@ -27,6 +27,9 @@ Features that are in development are listed in the Roadmap section
 + 🎨 Yii2 + MySQL for front-end development
 + 🌐 JavaSctipt for integrating the service on third-party platforms
 
+[Installation Instructions](src/README.md)
+
+
 Tested certificate mapping in Metamask crypto wallets (after importing NFT) and TrustWallet (NFT is loaded automatically).
 
 ## 🛣️ Roadmap
