@@ -38,7 +38,9 @@ How does it work?
 
 ### Videodemo
 Short video demonstration:
+
 [CTFN demo integration 10 частота вместое 30 качество 50 аудио качество 50.webm](https://github.com/Arnion/ctfn.pro/assets/6169475/c374f2aa-68e5-4e5b-868b-dd0909d662a7)
+
 On YouTube (high qulity): https://youtu.be/OfDCVzMajMY
 
 
@@ -54,7 +56,9 @@ Tested certificate mapping in Metamask crypto wallets (after importing NFT) and 
 
 ## ✅ Real deal!
 To test the functionality of the service, we developed an integration with the LMS platform AutoOffice and held a training webinar for students of one of the educational organizations.
+
 More than 60 certificates was mint in BNB Chain mainnet!
+
 [Read more about results and view code](autooffice_integration)
 
 ## 🛣️ Roadmap
