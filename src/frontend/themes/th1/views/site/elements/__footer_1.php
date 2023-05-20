@@ -1,7 +1,7 @@
 <?php
 
 use Yii;
-use yii\helpers\Url;
+use yii\helpers\Url; // alt str_replace('/default', '', Yii::$app->controller->route)
 use yii\bootstrap5\Html;
 ?>
 
@@ -14,8 +14,8 @@ use yii\bootstrap5\Html;
 				<div class="col-sm-6"></div><!--end col-->
 				<div class="col-sm-6 mt-4 mt-sm-0 pt-2 pt-sm-0">	  
 					 <ul class="list-unstyled social-icon foot-social-icon mb-0 mt-4" style="text-align:right">
-						<li class="list-inline-item lh-1"><a href="<?=Yii::$app->request->url?>?lang=en" class="rounded"><img src="/images/flags/en-EN.png"></a></li>
-						<li class="list-inline-item lh-1"><a href="<?=Yii::$app->request->url?>?lang=ru" class="rounded"><img src="/images/flags/ru-RU.png"></a></li>
+						<li class="list-inline-item lh-1"><a href="<?=Url::current(['lang'=>'en'])?>" class="rounded"><img src="/images/flags/en-EN.png"></a></li>
+						<li class="list-inline-item lh-1"><a href="<?=Url::current(['lang'=>'ru'])?>" class="rounded"><img src="/images/flags/ru-RU.png"></a></li>
 					</ul>
 				</div><!--end col-->
 			</div><!--end row-->

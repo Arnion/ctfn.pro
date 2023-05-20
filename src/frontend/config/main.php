@@ -12,8 +12,8 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
 	'language'=>'en-EN',
-	'name' => 'CTFN PRO git',
-	'homeUrl' => '/',
+	'name' => 'CTFN PRO',
+	'homeUrl' => 'https://ctfn.pro',
     'components' => [
 		 'formatter' => [
 			'class' => 'yii\i18n\Formatter',
@@ -57,18 +57,18 @@ return [
             'identityClass' => 'common\models\Clients',
             'enableAutoLogin' => true,
             'identityCookie' => [
-				'name' => '', 
+				'name' => '', // '_identity-ctfn_' + <some random string>
 				'httpOnly' => true,
-				'domain' => './',
+				'domain' => '.ctfn.pro', // domain
 				'secure' => true,
 			],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
-            'name' => '',
+            'name' => 'identity-ctfn_', // 'identity-ctfn_' + <some random string>
 			'cookieParams' => [
                 'httpOnly' => true,
-				'domain' => '',
+				'domain' => '.ctfn.pro',
 				'sameSite' => 'None',
 				'secure' => true,
             ],
@@ -121,23 +121,23 @@ return [
 		
 		'hahsids' => [
 			'class' => 'light\hashids\Hashids',
-			'salt' => '',
+			'salt' => '', // add random string
 			'minHashLength' => 6,
-			'alphabet' => ''
+			'alphabet' => 'abcdefghigk'
 		],
 		
 		'reCaptcha' => [
 			'class' => 'himiklab\yii2\recaptcha\ReCaptchaConfig',
 			//'siteKeyV2' => '',
 			//'secretV2' => '',
-			'siteKeyV3' => '',
-			'secretV3' => '',
+			'siteKeyV3' => '', // add v3 api data
+			'secretV3' => '', // add v3 api data
 		],
     ],
 	'modules' => [
 		'gii' => [
 			'class' => 'yii\gii\Module',
-			'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*'],
+			'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '217.28.227.34', '188.32.38.22'],
 		],
 
 		'profile' => [

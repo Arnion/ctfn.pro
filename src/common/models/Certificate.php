@@ -145,8 +145,8 @@ class Certificate extends ActiveRecord
 				t1.id_nft_token_testnet,
 				t2.name as school_name,
 				t2.web_site
-			FROM {{001_certificate}} t1
-			INNER JOIN {{001_clients}} t2
+			FROM {{%certificate}} t1
+			INNER JOIN {{%clients}} t2
 				ON t1.id_client = t2.id
 			WHERE t1.deleted=:deleted
 			AND t2.deleted=:deleted
@@ -181,8 +181,8 @@ class Certificate extends ActiveRecord
 				t2.school_nft_address_testnet,
 				t2.school_nft_address_mainnet,
 				t2.identify_name
-			FROM {{001_certificate}} t1
-			INNER JOIN {{001_clients}} t2
+			FROM {{%certificate}} t1
+			INNER JOIN {{%clients}} t2
 				ON t1.id_client = t2.id
 			WHERE
 				t1.user_nft_address = :user_nft_address

@@ -426,7 +426,7 @@ $this->registerJs('
 								</div>
 							</div>
 							<div class="mt-2">
-								<a class="dropdown-item small fw-semibold text-dark d-flex align-items-center" href="/profile/view"><span class="mb-0 d-inline-block me-1"><i class="uil uil-user align-middle h6 mb-0 me-1"></i></span> <?=Yii::t('Menu', 'Profile view')?></a>
+								<a class="dropdown-item small fw-semibold text-dark d-flex align-items-center" href="/profile/view"><span class="mb-0 d-inline-block me-1"><i class="uil uil-user align-middle h6 mb-0 me-1"></i></span> <?=Yii::t('Profile', 'View profile')?></a>
 								<div class="dropdown-divider border-top"></div>
 								<a class="dropdown-item small fw-semibold text-dark d-flex align-items-center" href="/logout"><span class="mb-0 d-inline-block me-1"><i class="uil uil-sign-out-alt align-middle h6 mb-0 me-1"></i></span> <?=Yii::t('Menu', 'Logout')?></a>
 							</div>
@@ -442,7 +442,7 @@ $this->registerJs('
 					<li class="has-submenu parent-parent-menu-item">
 						<a href="javascript:void(0)"><?=Yii::t('Menu', 'Profile')?></a><span class="menu-arrow"></span>
 						<ul class="submenu">
-							<li><a href="/profile/view" class="sub-menu-item"><?=Yii::t('Menu', 'View profile')?></a></li>
+							<li><a href="/profile/view" class="sub-menu-item"><?=Yii::t('Profile', 'View profile')?></a></li>
 							<li><a href="/profile/update" class="sub-menu-item"><?=Yii::t('Menu', 'Edit profile')?></a></li>
 						</ul>
 					</li>

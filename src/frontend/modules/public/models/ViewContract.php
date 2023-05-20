@@ -46,7 +46,7 @@ class ViewContract extends Model
         return [
 			'search_token_id' => Yii::t('Frontend', 'Token Id'),
 			'is_mainnet' => Yii::t('Frontend', 'Mainnet'),
-			'search_contract' => Yii::t('Frontend', 'Address of education organization contract'),
+			'search_contract' => Yii::t('Contract', 'Address of education organization contract'),
         ];
     }
 

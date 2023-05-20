@@ -1,11 +1,11 @@
 <?php
 return [
-	'adminEmail' => '',
+	'adminEmail' => 'admin@example.com',
 	'platform' => 'ctnfpro',
-	'adminName' => '',
-	'senderEmail' => '',
-	'senderName' => '',
-	'site' => '/',
+	'adminName' => 'Admin',
+	'senderEmail' => 'admin@example.com',
+	'senderName' => 'NFT Certificates in Education',
+	'site' => 'ctfn.pro',
 	'alert' => true,
 	'disabledsite' => true,
 	'pagination' => 30,
@@ -15,8 +15,8 @@ return [
 	'postman_domain' => '',
     'user.passwordResetTokenExpire' => 3600,
 	'user.passwordMinLength' => 8,
-	'homeUrl' => '/',
-	'apiUrl' => '/',
-	'adminUrl' => '/',
-	'cert_salt' => '',
+	'homeUrl' => 'https://ctfn.pro',
+	// 'apiUrl' => 'https://api.ctfn.pro',
+	'adminUrl' => 'https://admin.ctfn.pro',
+	'cert_salt' => '', // add random string
 ];

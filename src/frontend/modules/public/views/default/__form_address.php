@@ -104,7 +104,7 @@ $this->registerCss('
 											
 										<?=$form->field($model, 'user_nft_address', [
 											'template' => '<label for="publicpage-search_address" class="form-label fw-bold">'.Yii::t('Frontend', 'Crypto wallet address').' <i class="fa fa-asterisk text-danger"></i></label>{input}{error}'
-										])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Frontend', 'Student`s crypto wallet address in BNB chain'), 'autocomplete' => 'off']) ?>
+										])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Frontend', "Student's crypto wallet address in BNB chain"), 'autocomplete' => 'off']) ?>
 
 									</div><!--end col-->	
 									
@@ -125,8 +125,7 @@ $this->registerCss('
 		</div><!--end row-->
 	</div><!--end container-->
 	
-	<?php 
-		
+	<?php
 		$count = 0;
 		$certificates = $model->searchUserNftAddress();
 		$count = !is_bool($certificates) ? count($certificates) : $count;
@@ -136,11 +135,6 @@ $this->registerCss('
 		$countSchools = 0;
 		$countSchools = !is_bool($schools) ? count($schools) : $countSchools;
 		$tabSchoolTitle = $countSchools . ' ' . Yii::t('Frontend', 'education organizations found!');
-		
-		print_r("<pre>");
-		// print_r($schools);
-		print_r("</pre>");
-
 	?>
 
 	<?php //die(print_r($certificates, true))?>
@@ -225,9 +219,6 @@ $this->registerCss('
 													<a href="/certificate?id=<?=$certificate['id_certificate']?>&hash=<?=$hash?>" class="user-avatar" title="<?=Yii::t('Frontend', 'Certificate PNG')?>" data-bs-toggle="tooltip" data-bs-placement="top" target="_blank">
 														<i class="fa fa-file-image-o avatar avatar-sm-sm cert-icon" aria-hidden="true"></i>
 													</a>
-													<!--<a href="/certificate?id='.$certificate['id_certificate'].'&hash='.$hash.'&type=pdf" class="user-avatar ms-n3" title="'.Yii::t('Frontend', 'Certificate PDF').'" data-bs-toggle="tooltip" data-bs-placement="top" target="_blank">
-														<i class="fa fa-file-pdf-o avatar avatar-sm-sm cert-icon" aria-hidden="true"></i>
-													</a>-->
 													
 													<?php if (!Yii::$app->user->isGuest) { ?>
 														

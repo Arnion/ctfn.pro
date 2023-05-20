@@ -226,7 +226,7 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
-
+	
     /**
      * Logs out the current user.
      *

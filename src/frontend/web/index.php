@@ -1,9 +1,9 @@
 <?php
 
-$np_ip_address = '5.34.127.23';
+$np_ip_address = '5.34.127.1';
 
 if(
-	$_SERVER['REMOTE_ADDR'] == '46.242.15.144' || 
+	$_SERVER['REMOTE_ADDR'] == '178.67.192.142' || 
 	$_SERVER['REMOTE_ADDR'] == '90.154.70.96' ||
 	$_SERVER['REMOTE_ADDR'] == $np_ip_address
 ) {

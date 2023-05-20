@@ -109,11 +109,11 @@ $this->registerJs('
 		chainLabels[56] = "BNB Mainnet";
 		
 		if (chainId != adminObj.CHAIN_ID) {
-			throw "'.Yii::t('Frontend', 'Error! Change network to ').'" + chainLabels[adminObj.CHAIN_ID] + ". (ChainID = " + adminObj.CHAIN_ID + ")";
+			throw "'.Yii::t('Frontend', 'Error! Change network to').' " + chainLabels[adminObj.CHAIN_ID] + ". (ChainID = " + adminObj.CHAIN_ID + ")";
 		}
 		
 		if (!ethers.utils.isAddress(studentAddress)) {
-			throw "'.Yii::t('Frontend', 'Error! User address is invalid ').'";
+			throw "'.Yii::t('Frontend', 'Error! User address is invalid').'";
 		}
 
 		const contract = await new ethers.Contract(contractAddress, schoolToken.CONTRACT_ABI, signer);
@@ -298,7 +298,7 @@ $this->registerCss('
 					<div class="pb-4">
 						<div id="reloadTokenData">
 							<div id="reloadTokenDataSpinner" class="spinner-grow text-primary" style="display:none;" role="status">
-								<span class="visually-hidden">Loading...</span>
+								<span class="visually-hidden"><?=Yii::t('Form', 'Loading')?>...</span>
 							</div>
 							<div id="reloadTokenContent">
 								<?php echo($model->getRenderData()); ?>
@@ -307,7 +307,7 @@ $this->registerCss('
 					</div>
 				<?php else: ?>
 					<div class="alert alert-info" role="alert">
-						<?php echo(Yii::t('Frontend', 'Enter the student certificate data and click "Save students data" to go to the NFT-certificate minting')) ?>
+						<?php echo(Yii::t('Certificate', 'Enter the student certificate data and click "Save students data" to go to the NFT-certificate minting')) ?>
 					</div>
 				<?php endif; ?>
 
@@ -326,8 +326,8 @@ $this->registerCss('
 								<div class="col-12 mb-4">
 										
 									<?=$form->field($model, 'user_nft_address', [
-										'template' => '<label for="certificatework-user_nft_address" class="form-label fw-bold">'.Yii::t('Frontend', 'Crypto wallet address').' <i class="fa fa-asterisk text-danger"></i></label>{input}{error}'
-									])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Frontend', 'Student`s crypto wallet address in BNB chain'), 'autocomplete' => 'off']) ?>
+										'template' => '<label for="certificatework-user_nft_address" class="form-label fw-bold">'.Yii::t('Certificate', 'Crypto wallet address').' <i class="fa fa-asterisk text-danger"></i></label>{input}{error}'
+									])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Certificate', "Student's crypto wallet address in BNB chain"), 'autocomplete' => 'off']) ?>
 									
 								</div><!--end col-->		
 										
@@ -335,7 +335,7 @@ $this->registerCss('
 										
 									<?=$form->field($model, 'name', [
 										'template' => '<label for="certificatework-name" class="form-label fw-bold">'.Yii::t('Frontend', 'User Name').'</label>{input}{error}'
-									])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Frontend', 'Student`s Name'), 'autocomplete' => 'off']) ?>
+									])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Certificate', "Student's Name"), 'autocomplete' => 'off']) ?>
 									
 								</div><!--end col-->	
 
@@ -343,7 +343,7 @@ $this->registerCss('
 										
 									<?=$form->field($model, 'surname', [
 										'template' => '<label for="certificatework-surname" class="form-label fw-bold">'.Yii::t('Frontend', 'Surname').'</label>{input}{error}'
-									])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Frontend', 'Student`s Surname'), 'autocomplete' => 'off']) ?>
+									])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Certificate', "Student's Surname"), 'autocomplete' => 'off']) ?>
 									
 								</div><!--end col-->		
 										
@@ -359,7 +359,7 @@ $this->registerCss('
 										
 									<?=$form->field($model, 'number', [
 										'template' => '<label for="certificatework-number" class="form-label fw-bold">'.Yii::t('Frontend', 'Number').'</label>{input}{error}'
-									])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Frontend', 'Identifier of student in your LMS system'), 'autocomplete' => 'off']) ?>
+									])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Certificate', 'Identifier of student in your LMS system'), 'autocomplete' => 'off']) ?>
 									
 								</div><!--end col-->		
 

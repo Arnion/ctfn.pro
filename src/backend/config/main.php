@@ -12,7 +12,7 @@ return [
     'controllerNamespace' => 'backend\controllers',
 	'language'=>'ru-RU',
 	'name' => 'Панель управления',
-	'homeUrl' => '', //https://admin.example.com
+	'homeUrl' => 'https://admin.ctfn.pro',
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [ 
@@ -51,14 +51,14 @@ return [
 			'identityClass' => 'backend\models\Admins',
 			'enableAutoLogin' => true,
             'identityCookie' => [
-				'name' => '', 
+				'name' => '_identity-ctfnproadmin_',  // 'identity-ctfnproadmin_y3wdpgzqsplq24hxd' + <some random string>
 				'httpOnly' => true,
 				'secure' => true,
 			],
         ],
 		'session' => [
             // this is the name of the session cookie used for login on the frontend
-            'name' => '',
+            'name' => 'identity-ctfnproadmin_', // 'identity-ctfnproadmin_y3wdpgzqsplq24hxd' + <some random string>
 			'cookieParams' => [
                 'httpOnly' => true,
 				'sameSite' => 'None',

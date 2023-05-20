@@ -15,7 +15,10 @@ use yii\web\BadRequestHttpException;
 use app\modules\profile\models\Profile;
 use app\modules\profile\components\ProfileController;
 use yii\web\Cookie;
+
 use frontend\components\SchoolToken;
+
+use frontend\components\TranslateHelper;
 
 
 /**
@@ -69,8 +72,7 @@ class DefaultController extends ProfileController
     public function actionIndex()
     {
         throw new HttpException(404 , Yii::t('Error', '404'));
-    }
-	
+    }	
 	/**
      * actionView()
      */
@@ -85,8 +87,8 @@ class DefaultController extends ProfileController
 		$model->setAttributes($client->attributes, false);
 
 		$title = Yii::t('Menu', 'View profile | CTFN — NFT-certificates for educational organizations');
-		$bigTitle =  Yii::t('Frontend', 'View profile');
-		$smallTitle = Yii::t('Frontend', 'View your profile');
+		$bigTitle =  Yii::t('Profile', 'View profile');
+		$smallTitle = Yii::t('Profile', 'View your profile');
 
 		return $this->render('view', [
 			'model' => $model,
@@ -126,8 +128,8 @@ class DefaultController extends ProfileController
 		}
 
 		$title = Yii::t('Menu', 'Edit profile | CTFN — NFT-certificates for educational organizations');
-		$bigTitle =  Yii::t('Frontend', 'Edit profile');
-		$smallTitle = Yii::t('Frontend', 'Edit your profile');
+		$bigTitle =  Yii::t('Profile', 'Edit profile');
+		$smallTitle = Yii::t('Profile', 'Edit your profile');
 		
 		return $this->render('update', [
 			'model' => $model,

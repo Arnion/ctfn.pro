@@ -112,7 +112,6 @@ $this->registerJs('
 		
 		let paramsObj = {};
 
-		
 		try {
 
 			if (await beforeProccess(is_mainnet) === false) {
@@ -157,7 +156,6 @@ $this->registerJs('
 			$("#certificateNotFound").fadeIn();
 
 			return false;
-		
 		}
 
 		let doLinks = false;
@@ -172,9 +170,13 @@ $this->registerJs('
 
 		if ("is_mainnet" in ctfnProData.params.data) {
 			if (ctfnProData.params.data.is_mainnet) {
-				$(".network_type").text("Mainnet");
+				$("#certificateTokenIdLabel").text("'.Yii::t('Frontend', 'Mainnet Token Id').'");
+				$("#certificateContractLabel").text("'.Yii::t('Frontend', 'Mainnet contract address').'");
+				$("#certificateTabLabel").text("'.Yii::t('Frontend', 'Mainnet Details').'");
 			} else {
-				$(".network_type").text("Testnet");
+				$("#certificateTokenIdLabel").text("'.Yii::t('Frontend', 'Testnet Token Id').'");
+				$("#certificateContractLabel").text("'.Yii::t('Frontend', 'Testnet contract address').'");
+				$("#certificateTabLabel").text("'.Yii::t('Frontend', 'Testnet Details').'");
 			}
 			doLinks = true;
 		}
@@ -193,7 +195,6 @@ $this->registerJs('
 			}
 		}
 
-
 		if ("contractAddress" in ctfnProData.params.data) { /// LINK
 			$("#certificateContractBlock").show();
 						
@@ -207,7 +208,7 @@ $this->registerJs('
 			doLinksToTokenId = true;
 		}
 
-		if ("tokenId" in ctfnProData.params.data) { /// LINK
+		if ("tokenId" in ctfnProData.params.data) { 
 			$("#certificateTokenIdBlock").show();
 
 			if (doLinks && doLinksToTokenId) {
@@ -220,14 +221,12 @@ $this->registerJs('
 			}
 		}
 
-		
-
 		if ("description" in ctfnProData.meta.data && ctfnProData.meta.data.description.length > 0) {
 			$("#certificateDescriptionBlock").show();
 			$("#certificateDescription").text(ctfnProData.meta.data.description);
 		}
 
-		if ("ownerAddress" in ctfnProData.params.data && ctfnProData.params.data.ownerAddress.length > 0) { /// LINK
+		if ("ownerAddress" in ctfnProData.params.data && ctfnProData.params.data.ownerAddress.length > 0) { 
 			$("#certificateOwnerBlock").show();
 			if (doLinks) {
 				let html = getHtmlLinkBscscan(ctfnProData.params.data.is_mainnet, true, ctfnProData.params.data.ownerAddress);
@@ -285,16 +284,18 @@ $this->registerJs('
 	function renderReset() {
 		$("#certificateImgBlock").hide();
 		$("#certificateImgBlock404").hide();
-		// $("#certificateImg").prop("src", "/images/item-detail-1.jpg");
 		$("#certificateImg").prop("src", "");
 		$("#ctfnBlock").hide();
 		$("#certificateName").text("");
 		$("#certificateCourse").text("");
 		$("#certificateSchool").text("");
 		$("#certificateTokenIdBlock").hide();
+		$("#certificateTokenIdLabel").text("");
 		$("#certificateTokenId").text("");
 		$("#certificateTokenId").html("");
 		$("#certificateContractBlock").hide();
+		$("#certificateContractLabel").text("");
+		$("#certificateTabLabel").text("");
 		$("#certificateContract").text("");
 		$("#certificateContract").html("");
 		$("#certificateDescriptionBlock").hide();
@@ -330,7 +331,7 @@ $this->registerJs('
 
 		if (chainId != BNBChainId) {
 			stateObj.knownError = true;
-			throw "'.Yii::t('Frontend', 'Error! Change network to ').'" + chainLabels[BNBChainId] + ". (ChainID = " + BNBChainId + ")";
+			throw "'.Yii::t('Frontend', 'Error! Change network to').' " + chainLabels[BNBChainId] + ". (ChainID = " + BNBChainId + ")";
 		}
 
 		const contract = await new ethers.Contract(contractAddress, schoolToken.CONTRACT_ABI, signer);
@@ -357,7 +358,7 @@ $this->registerJs('
 
 		if (chainId != BNBChainId) {
 			stateObj.knownError = true;
-			throw "'.Yii::t('Frontend', 'Error! Change network to ').'" + chainLabels[BNBChainId] + ". (ChainID = " + BNBChainId + ")";
+			throw "'.Yii::t('Frontend', 'Error! Change network to').' " + chainLabels[BNBChainId] + ". (ChainID = " + BNBChainId + ")";
 		}
 
 		const contract = await new ethers.Contract(contractAddress, schoolToken.CONTRACT_ABI, signer);
@@ -501,7 +502,7 @@ $this->registerCss('
 											
 										<?=$form->field($model, 'search_token_id', [
 											'template' => '<label for="viewcontract-search_token_id" class="form-label fw-bold">'.Yii::t('Frontend', 'Token Id').' <i class="fa fa-asterisk text-danger"></i></label>{input}{error}'
-										])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Frontend', 'Token id'), 'autocomplete' => 'off']) ?>
+										])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Frontend', 'Token Id'), 'autocomplete' => 'off']) ?>
 										
 									</div><!--end col-->
 
@@ -554,7 +555,7 @@ $this->registerCss('
 			</div>
 
 			<div class="col-md-6 mt-4 pt-2 mt-sm-0 pt-sm-0">
-				<div class="ms-lg-5">
+				<div class="ms-lg-4">
 					<div id="ctfnBlock" class="title-heading">
 						<h4 class="h3 fw-bold "><?php echo(Yii::t('Frontend', 'Course') . ': ')?><span id="certificateCourse"></span></h4>
 						<h4 class="h3 fw-bold "><span id="certificateName"></span></h4>
@@ -565,7 +566,7 @@ $this->registerCss('
 						<div class="col-12">
 							<ul class="nav nav-tabs border-bottom" id="myTab" role="tablist">
 								<li class="nav-item" role="presentation">
-									<button class="nav-link active" id="detail-tab" data-bs-toggle="tab" data-bs-target="#detailItem" type="button" role="tab" aria-controls="detailItemMainnet" aria-selected="true"><span class="network_type"></span><?php echo(' ' . Yii::t('Frontend', 'details'))?></button>
+									<button class="nav-link active" id="detail-tab" data-bs-toggle="tab" data-bs-target="#detailItem" type="button" role="tab" aria-controls="detailItemMainnet" aria-selected="true"><span id="certificateTabLabel"></span></button>
 								</li>
 							</ul>
 
@@ -573,11 +574,11 @@ $this->registerCss('
 								<div class="tab-pane fade show active" id="detailItem" role="tabpanel" aria-labelledby="detail-tab">
 									<div class="row">
 										<div id="certificateTokenIdBlock" class="col-12">
-											<h6><span class="network_type"></span><?php echo(' ' . Yii::t('Frontend', 'token Id'))?></h6>
+											<h6 id="certificateTokenIdLabel"></h6>
 											<h4 id="certificateTokenId" class="mb-0"></h4>
 										</div>
 										<div id="certificateContractBlock" class="col-12 mt-4 pt-2" style="word-break:break-all;overflow-wrap:break-word;">
-											<h6><span class="network_type"></span><?php echo(' ' . Yii::t('Frontend', 'contract address'))?></h6>
+											<h6 id="certificateContractLabel"></h6>	
 											<h5 id="certificateContract" class="mb-0"></h5>
 										</div>
 										<div id="certificateDescriptionBlock" class="col-12 mt-4 pt-2">

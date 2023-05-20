@@ -223,7 +223,7 @@ class Profile extends Model
 					<div class="">
 						<div class="input-group">
 							<input type="text" value="' . $school_nft_address . '" disabled class="form-control"/>
-							<a href="' . $href . '" target="_blank" id="bsccan" class="btn btn-info btn-outline-secondary" type="button" title="' . Yii::t('Frontend', 'School token address') . '">
+							<a href="' . $href . '" target="_blank" id="bsccan" class="btn btn-info btn-outline-secondary" type="button" title="' . Yii::t('Frontend', 'Token address') . '">
 								<i class="fa fa-eye" aria-hidden="true"></i>
 							</a>
 						</div>
@@ -284,7 +284,7 @@ class Profile extends Model
 		if (empty($modelProfile)) {
 			print("
 				<div>
-					There is no profile
+				".Yii::t('Frontend', 'There is no profile')."
 				</div>
 			");
 			return;
@@ -295,7 +295,7 @@ class Profile extends Model
 		if (empty($modelCertificates)) {
 			print("
 				<div>
-					There is no certificates
+					".Yii::t('Frontend', 'There is no certificates')."
 				</div>
 			");
 			return;

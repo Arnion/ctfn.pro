@@ -112,7 +112,7 @@ if (!empty($model->user_nft_address)) {
 			</div>
 
 			<div class="col-md-6 mt-4 pt-2 mt-sm-0 pt-sm-0">
-				<div class="ms-lg-5">
+				<div class="ms-lg-4">
 					<div class="title-heading">
 						<h4 class="h3 fw-bold "><?php echo(Yii::t('Frontend', 'Course') . ': ' . $model->course)?></h4>
 						<h6 class="fw-bold mb-0"><?php echo(Yii::t('Frontend', 'Education organization') . ': ' .$model->getSchoolName()) ?></h6>
@@ -140,7 +140,6 @@ if (!empty($model->user_nft_address)) {
 											<div class="col-12">
 												<h6><?php echo(Yii::t('Frontend', 'Mainnet Token Id'))?></h6>
 												<h4 class="mb-0"><?php echo($href_to_token_id_mainnet)?></h4>
-												<!-- <h4 class="mb-0"><?php // echo($metaMainnet['tokenId'])?></h4> -->
 											</div>
 											<div class="col-12 mt-4 pt-2" style="word-break:break-all;overflow-wrap:break-word;">
 												<h6><?php echo(Yii::t('Frontend', 'Mainnet contract address'))?></h6>
@@ -167,7 +166,6 @@ if (!empty($model->user_nft_address)) {
 											<div class="col-12">
 												<h6><?php echo(Yii::t('Frontend', 'Testnet Token Id'))?></h6>
 												<h4 class="mb-0"><?php echo($href_to_token_id_testnet)?></h4>
-												<!-- <h4 class="mb-0"><?php //echo($metaTestnet['tokenId'])?></h4> -->
 											</div>
 											<div class="col-12 mt-4 pt-2" style="word-break:break-all;overflow-wrap:break-word;">
 												<h6><?php echo(Yii::t('Frontend', 'Testnet contract address'))?></h6>

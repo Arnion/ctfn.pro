@@ -108,6 +108,7 @@ class ComposerStaticIniteacbf3a81d4f097429fca01ca447be86
             'Psr\\EventDispatcher\\' => 20,
             'Psr\\Container\\' => 14,
             'PhpParser\\' => 10,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
         'I' => 
         array (
@@ -360,6 +361,10 @@ class ComposerStaticIniteacbf3a81d4f097429fca01ca447be86
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'Imagine\\' => 
         array (

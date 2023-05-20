@@ -80,8 +80,8 @@ class CertificateWork extends Model
 			'number' => Yii::t('Frontend', 'Number'),
 			'user_nft_address' => Yii::t('Frontend', 'User nft address'),
 
-			'minted_on_mainnet' => Yii::t('Frontend', 'Minted of Mainnet'), 
-			'minted_on_testnet' => Yii::t('Frontend', 'Minted of Testnet'), 
+			'minted_on_mainnet' => Yii::t('Frontend', 'Minted on Mainnet'), 
+			'minted_on_testnet' => Yii::t('Frontend', 'Minted on Testnet'), 
 			'minted_by_contract_mainnet' => Yii::t('Frontend', 'Minted by contract on Mainnet'), 
 			'minted_by_contract_testnet' => Yii::t('Frontend', 'Minted by contract on Testnet'), 
 			'minted_by_address_mainnet' => Yii::t('Frontend', 'Minted by address on Mainnet'), 
@@ -270,13 +270,13 @@ class CertificateWork extends Model
 						<div class="input-group">
 							<span class="input-group-text">'.Yii::t('Frontend', 'Token').'</span>
 							<input type="text" value="' . $school_nft_address . '" disabled class="form-control bg-white""/>
-							<a href="' . $href_to_contract . '" target="_blank" id="bsccan" class="btn btn-info btn-outline-secondary" type="button" title="' . Yii::t('Frontend', 'School token address') . '">
+							<a href="' . $href_to_contract . '" target="_blank" id="bsccan" class="btn btn-info btn-outline-secondary" type="button" title="' . Yii::t('Frontend', 'Token address') . '">
 								<i class="fa fa-eye" aria-hidden="true"></i>
 							</a>
 							<div class="mx-2 middle" style="width:25px;"></div>
 							<span class="input-group-text">'.Yii::t('Frontend', 'Token Id').'</span>
 							<input type="text" value="' . $id_nft_token . '" disabled class="form-control bg-white"" style="max-width:80px;"/>
-							<a href="' . $href_to_token . '" target="_blank" id="bsccan" class="btn btn-info btn-outline-secondary" type="button" title="' . Yii::t('Frontend', 'School token address') . '">
+							<a href="' . $href_to_token . '" target="_blank" id="bsccan" class="btn btn-info btn-outline-secondary" type="button" title="' . Yii::t('Frontend', 'Token address') . '">
 								<i class="fa fa-eye" aria-hidden="true"></i>
 							</a>
 						</div>

@@ -130,7 +130,7 @@ $this->registerJs('
 		chainLabels[56] = "BNB Mainnet";
 		
 		if (chainId != adminObj.CHAIN_ID) {
-			throw "'.Yii::t('Frontend', 'Error! Change network to ').'" + chainLabels[adminObj.CHAIN_ID] + ". (ChainID = " + adminObj.CHAIN_ID + ")";
+			throw "'.Yii::t('Profile', 'Error! Change network to').' " + chainLabels[adminObj.CHAIN_ID] + ". (ChainID = " + adminObj.CHAIN_ID + ")";
 		}
 
 		const contract = await new ethers.Contract(adminObj.CONTRACT_ADDRESS, adminObj.CONTRACT_ABI, signer);
@@ -152,7 +152,7 @@ $this->registerJs('
 		// console.log("transaction return", resultTX);
 
 		if (stateObj.reloadTokenBlock) {
-			showModal("success", "' . Yii::t('Frontend', 'Success') . '", "' . Yii::t('Frontend', 'Token is created') . '");
+			showModal("success", "' . Yii::t('Profile', 'Success') . '", "' . Yii::t('Profile', 'Token is created') . '");
 			stateObj.reloadTokenBlock = false;
 			await reloadTokenBlock();
 			createTokenButton();
@@ -185,13 +185,13 @@ $this->registerJs('
 					let result = JSON.parse(response);
 					if (result.error) {
 						console.log(result.message);
-						showModal("danger", "' . Yii::t('Frontend', 'Error') . '", result.message);
+						showModal("danger", "' . Yii::t('Profile', 'Error') . '", result.message);
 					} else {
 						stateObj.reloadTokenBlock = true;
 					}
 				} catch (error) {
 					console.log(error);
-					showModal("danger", "' . Yii::t('Frontend', 'Error') . '", error);
+					showModal("danger", "' . Yii::t('Profile', 'Error') . '", error);
 				}
 			}
 		});
@@ -313,7 +313,7 @@ $this->registerCss('
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-9">
-					<h5><?=Yii::t('Frontend', 'You can create organization token, set preferred display name and manage other profile settings.')?></h5>
+					<h5><?=Yii::t('Profile', 'You can create organization token, set preferred display name and manage other profile settings')?>.</h5>
 				</div> 
 			</div>
 
@@ -339,25 +339,25 @@ $this->registerCss('
 									<div class="col-12 mb-4">
 										
 										<?=$form->field($model, 'name', [
-											'template' => '<label for="profile-name" class="form-label h6">'.Yii::t('Frontend', 'Display Name (for profile page)').'</label>{input}{error}'
-										])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Frontend', 'Will be displayed in the organization profile on CTFN.pro'), 'autocomplete' => 'off']) ?>
+											'template' => '<label for="profile-name" class="form-label h6">'.Yii::t('Profile', 'Display Name (for profile page)').'</label>{input}{error}'
+										])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Profile', 'Will be displayed in the organization profile on CTFN.pro'), 'autocomplete' => 'off']) ?>
 										
 									</div><!--end col-->
 									
 									<div class="col-12 mb-4">
-										<label for="profile-identify_name" class="form-label h6"><?=Yii::t('Frontend', 'Education organization (Token name)')?></label> <i class="fa fa-asterisk text-danger"></i>
+										<label for="profile-identify_name" class="form-label h6"><?=Yii::t('Profile', 'Education organization (Token name)')?></label> <i class="fa fa-asterisk text-danger"></i>
 							
 										<?=$form->field($model, 'identify_name', [
 											'template' => '{input}{error}'
-										])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Frontend', 'Only latin characters'), 'autocomplete' => 'off']) ?>
+										])->textInput(['type'=>'text', 'placeholder'=>Yii::t('Profile', 'Only latin characters'), 'autocomplete' => 'off']) ?>
 			
 									</div><!--end col-->
 
 									<div class="col-12 mb-4">
 
 										<?=$form->field($model, 'employee', [
-											'template' => '<label for="profile-employee" class="form-label h6">'.Yii::t('Frontend', 'Description').'</label>{input}{error}'
-										])->textInput(['type'=>'text', 'placeholder' => Yii::t('Frontend', 'Description of education organization'), 'autocomplete' => 'off']) ?>
+											'template' => '<label for="profile-employee" class="form-label h6">'.Yii::t('Profile', 'Description').'</label>{input}{error}'
+										])->textInput(['type'=>'text', 'placeholder' => Yii::t('Profile', 'Description of education organization'), 'autocomplete' => 'off']) ?>
 										
 									</div><!--end col-->
 
@@ -420,7 +420,7 @@ $this->registerCss('
 					<?php if (!empty($model->identify_name) && !$model->getErrors()) { ?>
 						<div id="reloadTokenData">
 							<div id="reloadTokenDataSpinner" class="spinner-grow text-primary" style="display:none;" role="status">
-								<span class="visually-hidden">Loading...</span>
+								<span class="visually-hidden"><?=Yii::t('Form', 'Loading')?>...</span>
 							</div>
 							<div id="reloadTokenContent">
 								<?php echo $model->getSchoolTokenData(); ?>

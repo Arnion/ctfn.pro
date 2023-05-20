@@ -20,6 +20,8 @@ use common\models\Certificate;
 use app\modules\public\models\SearchCertificate;
 use app\modules\public\models\ViewContract;
 
+use frontend\components\TranslateHelper;
+
 /**
  * Default controller for the `service` module
  */

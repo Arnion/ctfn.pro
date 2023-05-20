@@ -56,6 +56,8 @@ class SearchCertificate extends Model
 			return false;
 		}
 		
+		Yii::$app->db;
+		
 		$certificates = Certificate::searchUserNftAddress($this->user_nft_address);
 		if (empty($certificates)) {
 			return false;
