@@ -30,4 +30,19 @@ Click Create token, sign the transaction and that's it! Your unique educational 
 
 ## Creating certificate
 
+1. Enter the student certificate data and click "Save students data".
++ Crypto wallet address - student receive Soul-Bound NFT-token on this address. Recommend TrustWallet or Metamask.
++ Name and Surname - student's name and surname, will be displayed on the certificate.
++ Course - course will be displayed on the certificate.
++ Identifier - Identifier is needed for backward compatibility when integrating with LMS (not required).
+
+2. Mint NFT.
+Minting price: 0.0003 BNB + gas fee.
+After minting you can see token id on Mainnet or Testnet.
+![img-2023-05-22-22-55-23](https://github.com/Arnion/ctfn.pro/assets/6169475/868fdff1-722e-48cb-901b-479e225e1cbb)
+
+Student can import certificate in his cryptowallet (automatically on TrustWallet or manual on Metamask). Also he can receive link to png-file with certificate visualization.
+
+Example of certificate:
+![img-2023-05-22-22-58-15](https://github.com/Arnion/ctfn.pro/assets/6169475/f9873c08-a7ec-48dc-bd06-eb5708d29831)
 
