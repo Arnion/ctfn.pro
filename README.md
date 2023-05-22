@@ -86,12 +86,15 @@ Winner of contest of ideas for implementation of digital tenge by the National B
 Creator of the Crypto SDK YouTube Channel.
 + **Andrei Aniskov** (Web 2 Developer)
 10+ years experience in programming, Fullstack,
+
 PHP, Yii2, MySQL, JS
-+ **Nikita Pivikov ** (Web 3 Developer)
-5+ years in programming,Fullstack
++ **Nikita Pivikov** (Web 3 Developer)
+5+ years in programming, Fullstack
+
 Solidity, PHP, JS
 + **Rauana Madiarova** (Product Manager)
 Bachelor of Science in Computer Science, Front-end
+
 React.JS, JS
 
 ### 🤝 Potential partners:
