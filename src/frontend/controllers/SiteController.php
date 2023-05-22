@@ -134,19 +134,21 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
+	public function actionIndex()
     {
-		$model = LoadPage::getPage(1);
+
+		if (Yii::$app->language == 'ru-RU') {
+			$model = LoadPage::getPage(5);
+		} else {
+			$model = LoadPage::getPage(1);
+		}
 
 		if (empty($model)) {
 			throw new NotFoundHttpException();
 		}
 
-		$indexPage = true;
-
 		return $this->render('index', [
-            'model' => $model,
-            'indexPage' => $indexPage,
+            'model' => $model
         ]);
     }
 
