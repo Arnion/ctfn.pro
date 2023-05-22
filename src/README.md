@@ -37,10 +37,8 @@
 20. в ключе `adminUrl` укажите прямую ссылку на поддомен (как в backend main.php)
 21. в ключе `cert_salt` укажите рандомную строку длиной не менее 6 символов
 22. Опционально.  Вы можете указать настройки для postman указав следующие ключи.
-'postman_ip' => '',
-'postman_passwd' => '',
-'postman_login' => '',
-'postman_domain' => '',
+
+'postman_ip' => '', 'postman_passwd' => '', 'postman_login' => '', 'postman_domain' => '',
 
 ## Настройка файла /frontend/web/js/adminctfnpromainnet.js
 23. Укажите `CONTRACT_ADDRESS` от задеплоенного контракта в основной сети
