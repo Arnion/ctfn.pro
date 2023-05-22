@@ -4,14 +4,14 @@
 
 > Для развертывания ctfn необходим vps сервер.
 
-2. Загрузите файлы директории /src/ на vps-сервер
-3. Настройте домен на открытие /frontend/web/index.php
-4. Настройте поддомен admin для открытия /backend/web/index.php
+2. Загрузите файлы директории `/src/` на vps-сервер
+3. Настройте домен на открытие `/frontend/web/index.php`
+4. Настройте поддомен admin для открытия `/backend/web/index.php`
 
 ## Настройка конфигурационного файла /frontend/config/main.php
 5. В ключе `homeUrl` укажите прямую ссылку на домен: https://example.com
 6. В ключе `db` укажите настройки для подключения к базе данных
-7. в ключе `reCaptcha` укажите api ключи от google captcha v3 
+7. в ключе `reCaptcha` укажите api ключи от Google Captcha v3 
 
 ## Настройка конфигурационного файла /frontend/config/main-local.php
 8. В ключе `cookieValidationKey` укажите рандомную строку md5().
@@ -24,7 +24,7 @@
 11. В adminEmail укажите email адрес администратора
 
 ## Настройка конфигурационного файла /backend/config/main-local.php
-12. В ключе `cookieValidationKey` укажите рандомную строку md5().
+12. В ключе `cookieValidationKey` укажите рандомную строку `md5()`.
 
 ## Настройка конфигурационного файла /common/config/params.php
 13. в ключе `adminEmail` укажите email адрес администратора
