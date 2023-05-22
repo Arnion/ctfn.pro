@@ -19,7 +19,9 @@ CTFN is short for **C**ER**T**I**F**ICATIO**N**. If you read it from right to le
 
 🔒 The certificate is generated as a soul bound token to prevent it from being passed on to third parties. The educational organization can post the address of the Metamask wallet to which the organization's token is generated on its official website, so that anyone can verify that the certificates are signed by it.
 
-Features that are in development are listed in the Roadmap section
+The functionality of the service is available in two languages: English and Russian. You can switch the language at the bottom of the page.
+
+Features that are in development are listed in the Roadmap section.
 
 ## How it Works
 How does it work?
@@ -62,6 +64,9 @@ More than 60 certificates was mint in BNB Chain mainnet!
 [Read more about results and view code](autooffice_integration)
 
 ## 🛣️ Roadmap
+We started developing CTFN service during Zero2Hero Bootcamp by Blockchain Center (Kazakhstan) and BNB Chain in March 2023.
+
+
 We plan to add the following features to the service:
 + 🎓A personal account of the student with the ability to hide the name from the certificates themselves, the management of the public portfolio. All certificates confirming a student's skills are collected in one place.
 + 🎨Certificate design customization: ability to upload and edit your own templates. Appearance animation.
