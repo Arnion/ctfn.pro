@@ -77,6 +77,23 @@ We plan to add the following features to the service:
   + Students will be able to customize their profile and gain premium status on the platform. Mark their profile as Open to Work so employers can find them
   + Employers (hr managers) will be able to contact students with Open to Work status if their skills (verified by certificates) are suitable for them
 
+### 😎 Team:
+An experienced team of managers and developers, more than 10 years in online education. We have a good understanding of how EdTech works and how to make SaaS IT products
+
++ 👨🏻‍💻 Sergei Sadkov (CEO, founder)
+Made his first educational startup in 2008.
+Winner of contest of ideas for implementation of digital tenge by the National Bank of Kazakhstan.
+Creator of the Crypto SDK YouTube Channel.
++ 👨🏻‍💻 Andrei Aniskov (Web 2 Developer)
+10+ years experience in programming, Fullstack,
+PHP, Yii2, MySQL, JS
++ 👨🏻‍💻 Nikita Pivikov (Web 3 Developer)
+5+ years in programming,Fullstack
+Solidity, PHP, JS
++ 👩🏻‍💻 Rauana Madiarova (Product Manager)
+Bachelor of Science in Computer Science, Front-end
+React.JS, JS
+
 ### 🤝 Potential partners:
 + 🔑 Cryptoprojects:
   + Cryptoprojects can issue certificates on learning their functionality. It is possible to create a smart contract that will issue cryptoproject tokens after issuing a certificate.
@@ -88,3 +105,8 @@ We plan to add the following features to the service:
 + 👥 Job search sites 
   + Students can connect NFT certificates to their resume, making it more sheltered
   + HR can look for employees whose knowledge is verified
+
+
+## 🔗 Links
+Website: https://ctfn.pro/
+Twitter: https://twitter.com/CtfnPro
