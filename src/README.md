@@ -5,7 +5,15 @@
 2. Задеплойте `/contracts/CtfnAdmin.sol` из репозитория в тестовую и основную сети BNB
 3. Загрузите файлы директории `/src/` на vps-сервер
 4. Настройте домен на открытие `/frontend/web/index.php`
-5. Настройте поддомен admin для открытия `/backend/web/index.php`
+5. Настройте поддомен admin для открытия `/backend/web/index.php
+
+## Настройка базы данных
+Имортируйте все *.sql файлы из `/src/database/` в вашу базу данных.
+Для создания первой записи администратора для поддомена выполните следующий запрос в базуданных.
+```bash
+INSERT INTO `admins` (`email`, `password_hash`, `name`, `role`, `active`, `login`, `auth_key`) VALUES ('admin@example.com', '$2y$13$U5CaEB7lVkjNRVahaKA0MO69Ryy1oszINryZChIspGp.85fZ0E1Lu', 'admin', 1, 1, 'YWRtaW5AZXhhbXBsZS5jb20', 's66y2yAJfs0el_KdIqE35pNIk1Gt3MYR')
+```
+После завершения настройки вы сможете зайти в admin.example.com/login используя admin@example.com и пароль admin123
 
 ## Настройка конфигурационного файла /frontend/config/main.php
 6. В ключе `homeUrl` укажите прямую ссылку на домен: https://example.com
@@ -44,3 +52,5 @@
 
 ## Настройка файла /frontend/web/js/adminctfnprotestnet.js
 25. Укажите `CONTRACT_ADDRESS` от задеплоенного контракта в тестовой сети
+
+
