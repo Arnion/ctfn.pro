@@ -27,3 +27,7 @@ On the Edit profile page you can create an NFT token. Only after it is created, 
 Click Create token, sign the transaction and that's it! Your unique educational organization NFT token is created on the blockchain. Its address will be displayed on the same page.
 
 ![mainnet](https://github.com/Arnion/ctfn.pro/assets/6169475/b8ecfacb-6118-4a73-8e09-a52fc4e4f6f2)
+
+## Creating certificate
+
+
