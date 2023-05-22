@@ -38,6 +38,8 @@ How does it work?
 
 [Visualization (scheme)](https://github.com/Arnion/ctfn.pro/assets/6169475/9f354e17-980c-4bb4-afeb-ec4a18acf871) (recommended to open in a new window)
 
+[User guide is available here](USER-GUIDE.md)
+
 ### Videodemo
 Short video demonstration:
 
