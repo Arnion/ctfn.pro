@@ -1,62 +1,61 @@
 # Tech steps
-> Для развертывания ctfn необходим vps сервер.
+> You need a vps server to deploy ctfn.
 
-1. Скачайте папку `/contracts/`из репозитория.
-2. Задеплойте `/contracts/CtfnAdmin.sol` из репозитория в тестовую и основную сети BNB
-3. Загрузите файлы директории `/src/` на vps-сервер
-4. Настройте домен на открытие `/frontend/web/index.php`
-5. Настройте поддомен admin для открытия `/backend/web/index.php
+1. Download the `/contracts/` folder from the repository.
+2. Deploy `/contracts/CtfnAdmin.sol` from the repository to the test and main BNB networks
+3. Upload the files of the `/src/` directory to the vps server
+4. Configure the domain to open `/frontend/web/index.php`
+5. Configure the admin subdomain to open `/backend/web/index.php`
 
-## Настройка базы данных
+## Configuring the database
 
-6. Имортируйте все .sql файлы из `/src/database/` в вашу базу данных.
-7. Для создания первой записи администратора для поддомена выполните следующий запрос в базуданных.
+6. Import all .sql files from `/src/database/` into your database.
+7. To create the first administrator entry for a subdomain, run the following query in the database.
 
 ```bash
 INSERT INTO `admins` (`email`, `password_hash`, `name`, `role`, `active`, `login`, `auth_key`) VALUES ('admin@example.com', '$2y$13$U5CaEB7lVkjNRVahaKA0MO69Ryy1oszINryZChIspGp.85fZ0E1Lu', 'admin', 1, 1, 'YWRtaW5AZXhhbXBsZS5jb20', 's66y2yAJfs0el_KdIqE35pNIk1Gt3MYR')
 ```
-После завершения настройки вы сможете зайти в admin.example.com/login используя admin@example.com и пароль admin123
+After the configuration is complete, you can log in to admin.example.com/login using admin@example.com and the password admin123
 
-## Настройка конфигурационного файла /frontend/config/main.php
+## Configuring the /frontend/config/main.php configuration file
 
-8. В ключе `homeUrl` укажите прямую ссылку на домен: https://example.com
-9. В ключе `db` укажите настройки для подключения к базе данных
-10. в ключе `reCaptcha` укажите api ключи от Google Captcha v3 
+8. In the `homeUrl` key specify a direct link to the domain: https://example.com
+9. In the `db` key specify the settings for connecting to the database
+10. In the key `reCaptcha` specify api keys from Google Captcha v3 
 
-## Настройка конфигурационного файла /frontend/config/main-local.php
+## Configuring the configuration file /frontend/config/main-local.php
 
-11. В ключе `cookieValidationKey` укажите рандомную строку `md5()`.
+11. In the `cookieValidationKey` specify a random string `md5()`.
 
-## Настройка конфигурационного файла /backend/config/main.php
+## Configuring the /backend/config/main.php configuration file
 
-12. В ключе `homeUrl` укажите прямую ссылку на поддомен: https://admin.example.com
-13. В ключе `db` настройки для подключения к базе данных
+12. In the `homeUrl` key specify a direct link to the subdomain: https://admin.example.com
+13. In the `db` key specify settings to connect to the database
 
-## Настройка конфигурационного файла /backend/config/params.php
+## Configuring the /backend/config/params.php configuration file
 
-14. В adminEmail укажите email адрес администратора
+14. Specify the administrator's email address in adminEmail
 
-## Настройка конфигурационного файла /backend/config/main-local.php
+## Configuring the configuration file /backend/config/main-local.php
 
-15. В ключе `cookieValidationKey` укажите рандомную строку `md5()`.
+15. In the `cookieValidationKey` specify a random string `md5()`.
 
-## Настройка конфигурационного файла /common/config/params.php
+## Configuring the configuration file /common/config/params.php
 
-16. в ключе `adminEmail` укажите email адрес администратора
-17. в ключе `adminName` укажите имя администратора
-18. в ключе `senderEmail` укажите адрес отправителя email
-19. в ключе `senderName` укажите имя отправителя email
-20. в ключе `site` укажите сайт: example.com
-21. в ключе `site` укажите сайт: example.com
-22. в ключе `homeUrl` укажите прямую ссылку на домен (как в frontend main.php)
-23. в ключе `adminUrl` укажите прямую ссылку на поддомен (как в backend main.php)
-24. в ключе `cert_salt` укажите рандомную строку длиной не менее 6 символов
-25. Опционально.  Вы можете указать настройки для postman указав следующие ключи.
+16. Specify the administrator's email address in the `adminEmail` key
+17. In the `adminName` key, enter the name of the administrator
+18. Specify the sender's email address in the `senderEmail` key
+19. In the `senderName` key, enter the sender name of the email
+20. In the key `site` specify the site: example.com
+21. In the `homeUrl` key, specify a direct link to the domain (as in the frontend main.php)
+22. In the `adminUrl` key, specify a direct link to the subdomain (as in the backend main.php)
+23. in the `cert_salt` key specify a random string of at least 6 characters in length
+24. Optional.  You can specify settings for postman by specifying the following keys.
 
 'postman_ip' => '', 'postman_passwd' => '', 'postman_login' => '', 'postman_domain' => '',
 
-## Настройка файла /frontend/web/js/adminctfnpromainnet.js
-26. Укажите `CONTRACT_ADDRESS` от задеплоенного контракта в основной сети
+## Setup file /frontend/web/js/adminctfnpromainnet.js
+25. Specify the `CONTRACT_ADDRESS` from the contract on the main network
 
-## Настройка файла /frontend/web/js/adminctfnprotestnet.js
-27. Укажите `CONTRACT_ADDRESS` от задеплоенного контракта в тестовой сети
+## Setting up the /frontend/web/js/adminctfnprotestnet.js file
+26. Specify the `CONTRACT_ADDRESS` from the contract in the test network
