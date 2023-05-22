@@ -80,17 +80,17 @@ We plan to add the following features to the service:
 ### 😎 Team:
 An experienced team of managers and developers, more than 10 years in online education. We have a good understanding of how EdTech works and how to make SaaS IT products
 
-+ 👨🏻‍💻 Sergei Sadkov (CEO, founder)
++ **Sergei Sadkov** (CEO, founder)
 Made his first educational startup in 2008.
 Winner of contest of ideas for implementation of digital tenge by the National Bank of Kazakhstan.
 Creator of the Crypto SDK YouTube Channel.
-+ 👨🏻‍💻 Andrei Aniskov (Web 2 Developer)
++ **Andrei Aniskov** (Web 2 Developer)
 10+ years experience in programming, Fullstack,
 PHP, Yii2, MySQL, JS
-+ 👨🏻‍💻 Nikita Pivikov (Web 3 Developer)
++ **Nikita Pivikov ** (Web 3 Developer)
 5+ years in programming,Fullstack
 Solidity, PHP, JS
-+ 👩🏻‍💻 Rauana Madiarova (Product Manager)
++ **Rauana Madiarova** (Product Manager)
 Bachelor of Science in Computer Science, Front-end
 React.JS, JS
 
