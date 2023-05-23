@@ -41,6 +41,7 @@ How does it work?
 [User guide is available here](USER-GUIDE.md)
 + [Educational organization](USER-GUIDE.md)
 + [Student](USER-GUIDE.md#student)
++ [Employers and HR-managers](USER-GUIDE.md#employers-and-hr-managers)
 
 
 ### Videodemo
