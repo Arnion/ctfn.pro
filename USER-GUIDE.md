@@ -63,6 +63,22 @@ It is not possible to send a certificate, NFT is a Soul-Bound Token
 
 # Employers and HR-managers
 
+## Search certificates by student address
+
+Employers and hr managers can find all the certificates of a student by his crypto-wallet number and see them on one page. You just need to enter the wallet address into the search field and click **Search**
+Link: https://ctfn.pro/public/address
+
+![img-2023-05-23-13-33-57](https://github.com/Arnion/ctfn.pro/assets/6169475/afdab262-a551-4b07-9999-485b3812d824)
+
+
+## Verify NFT-certificate
+Verify NFT-certificate by **token address** and **token id** is simple. 
+
+You just need to enter the address of the **NFT-token** and its **ID** and click **Search**.
+
+Make sure you select the correct network (Mainnet or Testnet).
+
+![img-2023-05-23-13-33-57](https://github.com/Arnion/ctfn.pro/assets/6169475/11a8ff93-0a0e-4afc-9663-a61522541422)
 
 
 
