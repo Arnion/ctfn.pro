@@ -16,6 +16,7 @@ CTFN is short for **C**ER**T**I**F**ICATIO**N**. If you read it from right to le
 + 🔍 Generation of name certificates on the service or via API (using JS)
 + 💻 Viewing of all certificates issued by the organization on one page
 + 👀 Search and verification of NFT certificates
++ 🔐 Privacy: the ability to hide personal data (now works in integration with lms) 
 
 🔒 The certificate is generated as a soul bound token to prevent it from being passed on to third parties. The educational organization can post the address of the Metamask wallet to which the organization's token is generated on its official website, so that anyone can verify that the certificates are signed by it.
 
@@ -74,7 +75,7 @@ We started developing CTFN service during Zero2Hero Bootcamp by Blockchain Cente
 
 
 We plan to add the following features to the service:
-+ 🎓A personal account of the student with the ability to hide the name from the certificates themselves, the management of the public portfolio. All certificates confirming a student's skills are collected in one place. This privacy feature already worked in LMS-integration with autooffice.
++ 🎓A personal account of the student with the ability to hide the name from the certificates themselves, the management of the public portfolio. All certificates confirming a student's skills are collected in one place. This privacy feature already worked in [LMS-integration with autooffice](autooffice_integration/readme.md#-integration-with-the-lms-autooffice-platform).
 + 🎨Certificate design customization: ability to upload and edit your own templates. Appearance animation.
 + 📊Integration with Google Spreadsheet, which will allow uploading lists to generate NFT certificates and speed up the graduation process. With this feature students can submit their wallet address through the Google Form. The educational organization will immediately receive a list of those who wish to receive an NFT certificate.
 + 🤖An API to communicate with popular LMS platforms that will allow certificates to be generated automatically after a student completes a course
