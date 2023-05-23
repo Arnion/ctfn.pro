@@ -46,3 +46,23 @@ Student can import certificate in his cryptowallet (automatically on TrustWallet
 Example of certificate:
 ![img-2023-05-22-22-58-15](https://github.com/Arnion/ctfn.pro/assets/6169475/f9873c08-a7ec-48dc-bd06-eb5708d29831)
 
+
+# Student
+
+## Importing certificate in Cryptowallet
+
+
+Importing the NFT certificate into the TrustWallet is automatic.
+
+To import the certificate into a Metamask wallet, the student needs to know the **NFT token address** and **ID**. Then switch to the network (BNB Mainnet or BNB Testnet) in Metamask and click **Import NFT** in the NFT tab.
+
+![img-2023-05-23-13-15-09](https://github.com/Arnion/ctfn.pro/assets/6169475/ece28a97-ce4b-41dd-b2cf-bd62a08f2020)
+
+
+It is not possible to send a certificate, NFT is a Soul-Bound Token
+
+# Employers and HR-managers
+
+
+
+
