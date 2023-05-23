@@ -1,11 +1,13 @@
 # Integration with existing systems
 
-To test the functionality of the service, we developed an integration with the LMS platform AutoOffice and held a training webinar for students of one of the educational organizations.
+To test the functionality of the service, we developed an integration with the LMS platform AutoOffice and held a training webinar for students of one of the educational organizations. 
 
 ## 💻 Integration with the LMS AutoOffice platform.
 Users were able to request their certificates from their personal accounts.	
 The administration of the online school was able to mint certificates using the smart contract from CTFN.PRO on the BNB Smart Chain Mainnet. 
 JavaScript library was used to connect CTFN.
+
+This integration will enable the function of hiding private user data. The student can disable the display of first and last name on the certificate on the blockchain with one click in the personal cabinet.
 
 ## 👨🏻‍🎓 Education webinar 
 Webinar was held for students of the Arnion Online School, teaching them how to create a Metamask wallet and import their NFT-certificates.
