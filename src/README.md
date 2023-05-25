@@ -55,7 +55,7 @@ After the configuration is complete, you can log in to admin.example.com/login u
 'postman_ip' => '', 'postman_passwd' => '', 'postman_login' => '', 'postman_domain' => '',
 
 ## Setup file /frontend/web/js/adminctfnpromainnet.js
-25. Specify the `CONTRACT_ADDRESS` from the contract on the main network
+25. Specify the `CONTRACT_ADDRESS` of the contract on the main network
 
 ## Setting up the /frontend/web/js/adminctfnprotestnet.js file
-26. Specify the `CONTRACT_ADDRESS` from the contract in the test network
+26. Specify the `CONTRACT_ADDRESS` of the contract on the test network
