@@ -17,7 +17,7 @@ INSERT INTO `admins` (`email`, `password_hash`, `name`, `role`, `active`, `login
 ```
 After the configuration is complete, you can log in to admin.example.com/login using admin@example.com and the password admin123
 
-## Configuring the /frontend/config/main.php configuration file
+## Configuring the configuration file /frontend/config/main.php
 
 8. In the `homeUrl` key specify a direct link to the domain: https://example.com
 9. In the `db` key specify the settings for connecting to the database
@@ -27,12 +27,12 @@ After the configuration is complete, you can log in to admin.example.com/login u
 
 11. In the `cookieValidationKey` specify a random string `md5()`.
 
-## Configuring the /backend/config/main.php configuration file
+## Configuring the configuration file /backend/config/main.php
 
 12. In the `homeUrl` key specify a direct link to the subdomain: https://admin.example.com
 13. In the `db` key specify settings to connect to the database
 
-## Configuring the /backend/config/params.php configuration file
+## Configuring the configuration file /backend/config/params.php
 
 14. Specify the administrator's email address in adminEmail
 
@@ -54,7 +54,7 @@ After the configuration is complete, you can log in to admin.example.com/login u
 
 'postman_ip' => '', 'postman_passwd' => '', 'postman_login' => '', 'postman_domain' => '',
 
-## Setup file /frontend/web/js/adminctfnpromainnet.js
+## Setting up the /frontend/web/js/adminctfnpromainnet.js
 25. Specify the `CONTRACT_ADDRESS` of the contract on the main network
 
 ## Setting up the /frontend/web/js/adminctfnprotestnet.js file
